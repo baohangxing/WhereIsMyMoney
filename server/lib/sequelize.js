@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize'); // 引入sequelize
 const CONFIG = require('../config/config');
-const user = require('../model/user');
-const bill = require('../model/bill');
-const userType = require('../model/userType');
-const defaultType = require('../model/defaultType');
+const user = require('../models/user');
+const bill = require('../models/bill');
+const userType = require('../models/userType');
+const defaultType = require('../models/defaultType');
 
 const sequelize = new Sequelize(`${CONFIG.mysql.database}`, `${CONFIG.mysql.user}`, `${CONFIG.mysql.password}`, {
     host: `${CONFIG.host}`,
