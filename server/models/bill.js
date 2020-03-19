@@ -17,6 +17,10 @@ const bill = {
         type: Sequelize.TINYINT(1),
         allowNull: false
     },
+    amount: {
+        type: Sequelize.DECIMAL(8, 2),
+        allowNull: false,
+    },
     defaultType: {
         type: Sequelize.TINYINT(1),
         allowNull: false,
