@@ -29,15 +29,15 @@ const UserModel = sequelize.define('user', user, {
 const BillModel = sequelize.define('bill', bill, {
     timestamps: false
 });
-const DefaultTypeModel = sequelize.define('defaultType', defaultType, {
+const DefaultTypeModel = sequelize.define('defaultTypes', defaultType, {
     timestamps: false
 });
-const UserType = sequelize.define('userType', userType, {
+const UserTypeModel = sequelize.define('userTypes', userType, {
     timestamps: false
 });
 module.exports = {
     UserModel,
     BillModel,
     DefaultTypeModel,
-    UserType
+    UserTypeModel
 };
