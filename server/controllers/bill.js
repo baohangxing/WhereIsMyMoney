@@ -1,4 +1,5 @@
 const BillModel = require('../lib/sequelize.js').BillModel;
+const sequelize = require('sequelize');
 
 class BillController {
 
@@ -162,6 +163,8 @@ class BillController {
      * @apiGroup Bill
      * @apiParam {string} userId 用户userId
      * @apiParam {string} size 分页大小 （不填为10）
+     * @apiParam {string} startTime 开始时间 （可选，但需和endTime一起使用）
+     * @apiParam {string} endTime 结束时间 （可选, 但需和startTime一起使用）
      * @apiParam {string} current 分页页码 （不填为1）
      * @apiParam {string} type 账单类型 （不填为全部）
      * @apiSuccess {json} result
@@ -218,10 +221,12 @@ class BillController {
      */
     static async getPage(ctx) {
         const data = ctx.query;
+        const Op = sequelize.Op;
 
         if (!data.userId) {
             return ctx.sendError('000002', '参数不合法');
         }
+
         let where = {
             userId: data.userId,
             deleteFlag: 0
@@ -229,6 +234,13 @@ class BillController {
         if (data.type) where.type = data.type;
         let pageSize = Number(data.size) || 10;
         let page = Number(data.current) || 1;
+
+        if (data.startTime && data.endTime) {
+            where.createdTime = {
+                [Op.gte]: data.startTime,
+                [Op.lte]: data.endTime
+            }
+        }
         const bills = await BillModel.findAndCountAll({
             where: where,
             offset: (page - 1) * pageSize,

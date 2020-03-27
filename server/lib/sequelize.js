@@ -19,8 +19,10 @@ const sequelize = new Sequelize(`${CONFIG.mysql.database}`, `${CONFIG.mysql.user
         timestamps: false
     },
     dialectOptions: {
+        dateStrings: true,
+        typeCast: true,
         useUTC: false //for reading from database
-    }
+    },
 });
 
 const UserModel = sequelize.define('user', user, {
