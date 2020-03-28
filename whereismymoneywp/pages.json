@@ -1,18 +1,25 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/login",
+			"style": {}
+		}, {
 			"path": "pages/index",
 			"style": {
 				"navigationStyle": "custom",
 				"disableScroll": true,
-				"app-plus" : {
-					"bounce" : "none" // 取消iOS回弹,避免和下拉刷新冲突 (小程序无法取消, 点此查看H5端的取消方法... )
+				"app-plus": {
+					"bounce": "none" // 取消iOS回弹,避免和下拉刷新冲突 (小程序无法取消, 点此查看H5端的取消方法... )
 				}
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/home",
+            "style" : {}
+        }
+    ],
 	"globalStyle": {
 		"navigationStyle": "custom",
-		"navigationBarTextStyle" :"black"
+		"navigationBarTextStyle": "black"
 	}
 }

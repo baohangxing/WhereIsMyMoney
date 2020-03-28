@@ -1,5 +1,16 @@
 const state = {
-	test: 1
+
+	userInfo: {
+		id: null,
+		name: null,
+		email: null,
+		useDays: null,
+		avatar: null,
+		weixinId: null,
+		qqId: null
+	},
+
+
 }
 
 export default state
