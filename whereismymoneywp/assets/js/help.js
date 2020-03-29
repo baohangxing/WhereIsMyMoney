@@ -48,6 +48,18 @@ export function debounce(func, wait = 500, immediate = true) {
 	}
 }
 
+/**
+ * 获取token
+ */
+export function genAuth() {
+	if (!!uni.getStorageSync('accessToken')) {
+		const token = uni.getStorageSync('accessToken')
+		const auth = 'Bearer' + ' ' + token
+		return auth
+	} else {
+		return ''
+	}
+}
 
 /**
  * 节流函数

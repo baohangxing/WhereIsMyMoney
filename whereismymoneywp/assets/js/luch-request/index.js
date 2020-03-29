@@ -1,5 +1,10 @@
 import Request from './request'
 import CONFIG from '@/config/index';
+import {
+	genAuth
+} from '@/assets/js/help.js'
+
+
 
 const test = new Request()
 test.setConfig((config) => { /* 设置全局配置 */
@@ -50,8 +55,7 @@ http.setConfig((config) => { /* 设置全局配置 */
 	config.baseUrl = CONFIG.API /* 根域名不同 */
 	config.header = {
 		...config.header,
-		a: 1,
-		b: 2
+		"Authorization": genAuth()
 	}
 	return config
 })

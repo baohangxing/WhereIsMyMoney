@@ -46,7 +46,7 @@ class UserController {
 
     /**
      * @api {post} /api/user/login 用户登录
-     * @apiDescription 用户注册
+     * @apiDescription 用户登录
      * @apiName login
      * @apiGroup User
      * @apiParam {string} name 用户名
@@ -87,7 +87,8 @@ class UserController {
                 id: result.id
             }, CONFIG.jwt_secret, {expiresIn: '30d'});
             let data = {
-                token: token
+                token: token,
+                userInfo: result,
             };
             return ctx.send(data, '登录成功');
         } else {
@@ -96,7 +97,7 @@ class UserController {
     }
 
     /**
-     * @api {PUT} /api/user/userInfo 修改用户信息
+     * @api {PUT} /api/user/updateInfo 修改用户信息
      * @apiDescription 修改用户信息
      * @apiName updateInfo
      * @apiGroup User
@@ -159,9 +160,9 @@ class UserController {
     }
 
     /**
-     * @api {post} /api/user/userInfo 获取用户信息
+     * @api {get} /api/user/info 获取用户信息
      * @apiDescription 获取用户信息
-     * @apiName userInfo
+     * @apiName info
      * @apiGroup User
      * @apiParam {string} id 用户id
      * @apiSuccess {json} result

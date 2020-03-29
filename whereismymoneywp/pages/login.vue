@@ -51,6 +51,7 @@
 
 <script type="text/javascript">
 import validate from '@/assets/js/validate';
+import { USER_LOGIN } from '@/common/api.js';
 
 export default {
 	name: 'loginForm',
@@ -139,11 +140,11 @@ export default {
 				mask: true
 			});
 
-			this.$http
-				.post('/user/login', params)
+			USER_LOGIN(params)
 				.then(result => {
 					if (result.data.code == '000001') {
 						uni.setStorageSync('accessToken', result.data.data.token);
+						this.$store.commit('setUserInfo', result.data.data.userInfo);
 						uni.navigateTo({
 							url: '/pages/home'
 						});
