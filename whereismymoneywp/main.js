@@ -13,6 +13,8 @@ App.mpType = 'app'
 import icon from "./components/icon.vue"
 Vue.component("icon", icon)
 
+import cuCustom from "./components/cu-custom.vue"
+Vue.component("cu-custom", cuCustom)
 
 const app = new Vue({
 	...App
