@@ -1,3 +1,8 @@
+import {
+	http
+} from '@/assets/js/luch-request/index.js';
+
+
 /**
  * 裁剪字符串
  * 
@@ -52,13 +57,23 @@ export function debounce(func, wait = 500, immediate = true) {
  * 获取token
  */
 export function genAuth() {
-	if (!!uni.getStorageSync('accessToken')) {
-		const token = uni.getStorageSync('accessToken')
+	const token = uni.getStorageSync('accessToken')
+	if (!!token) {
 		const auth = 'Bearer' + ' ' + token
 		return auth
 	} else {
 		return ''
 	}
+}
+
+export function setHeader() {
+	http.setConfig((config) => {
+		config.header = {
+			...config.header,
+			"Authorization": genAuth()
+		}
+		return config
+	})
 }
 
 /**

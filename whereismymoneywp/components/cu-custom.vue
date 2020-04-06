@@ -3,7 +3,7 @@
 		<view class="cu-custom" :style="[{ height: CustomBar + 'px' }]">
 			<view class="cu-bar fixed" :style="style" :class="[bgImage != '' ? 'none-bg text-white bg-img' : '', bgColor]">
 				<view class="action" @tap="BackPage" v-if="isBack">
-					<icon name="icon-icon-return" color="#333333"></icon>
+					<icon name="icon-return" color="#333333"></icon>
 					<slot name="backText"></slot>
 				</view>
 				<view class="content" :style="[{ top: StatusBar + 'px' }]"><slot name="content"></slot></view>
@@ -58,7 +58,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .cu-bar {
 	display: flex;
 	position: relative;

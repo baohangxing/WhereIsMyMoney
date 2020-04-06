@@ -51,7 +51,8 @@
 
 <script type="text/javascript">
 import validate from '@/assets/js/validate';
-import { USER_LOGIN } from '@/common/api.js';
+import { USER_LOGIN, DT_GETALL, UT_GETALL } from '@/common/api.js';
+import { setHeader } from '@/assets/js/help.js';
 
 export default {
 	name: 'loginForm',
@@ -144,10 +145,12 @@ export default {
 				.then(result => {
 					if (result.data.code == '000001') {
 						uni.setStorageSync('accessToken', result.data.data.token);
+						setHeader();
 						this.$store.commit('setUserInfo', result.data.data.userInfo);
 						uni.navigateTo({
 							url: '/pages/home'
 						});
+						this.getTypesInfo();
 					} else {
 						uni.showToast({
 							title: result.data.msg,
@@ -164,6 +167,19 @@ export default {
 				.finally(() => {
 					uni.hideLoading();
 				});
+		},
+		getTypesInfo() {
+			DT_GETALL().then(result => {
+				if (result.data.code == '000001') {
+					this.$store.commit('setTypes', result.data.data);
+				}
+			});
+
+			UT_GETALL().then(result => {
+				if (result.data.code == '000001') {
+					this.$store.commit('setMyTypes', result.data.data);
+				}
+			});
 		},
 		initValidate() {
 			let rules = {
@@ -230,7 +246,7 @@ export default {
 			align-content: center;
 			font-size: 14px;
 			font-weight: bold;
-
+			margin-bottom: 20px;
 			.line {
 				width: 2px;
 				height: 18px;

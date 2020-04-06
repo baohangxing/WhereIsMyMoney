@@ -22,6 +22,10 @@
             "path" : "pages/addBill",
             "style" : {}
         }
+        ,{
+            "path" : "pages/billDetaill",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationStyle": "custom",

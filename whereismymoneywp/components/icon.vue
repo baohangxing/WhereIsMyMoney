@@ -1,5 +1,5 @@
 <template>
-	<view class="icon-class" :class="name" :style="{ color: color, fontSize: size + 'px', fontWeight: bold ? 'bold' : 'normal' }"></view>
+	<view class="icon-class" :class="'icon-'+name" :style="{ color: color, fontSize: size + 'px', fontWeight: bold ? 'bold' : 'normal' }"></view>
 </template>
 
 <script>
@@ -25,7 +25,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @font-face {
 	font-family: 'iconfont'; /* project id 1700862 */
 	src: url('//at.alicdn.com/t/font_1700862_5kkhjak2mmt.eot');

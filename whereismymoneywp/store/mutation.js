@@ -12,6 +12,13 @@ const mutations = {
 			state.userInfo.weixinId = info.weixinId
 			state.userInfo.qqId = info.qqId
 		}
+	},
+	setTypes(state, data) {
+		state.system.types = data
+	},
+
+	setMyTypes(state, data) {
+		state.system.myTypes = data
 	}
 }
 

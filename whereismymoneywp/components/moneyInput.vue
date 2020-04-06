@@ -1,0 +1,316 @@
+<template>
+	<view>
+		<view class="input-container">
+			<div class="top">
+				<picker mode="date" class="top-item" start="2000-01-01" end="2040-12-30" @change="DateChange">{{ date }}</picker>
+				<div class="top-item tip" @tap="openTipInput">{{ shortifyContent(tipSave, 8) || '备注' }}</div>
+				<div class="input-number">{{ showNumber }}</div>
+			</div>
+			<div class="container">
+				<div class="left-container">
+					<div v-for="item in leftItems" class="left-item" @tap="tapNumber(item)">{{ item }}</div>
+				</div>
+				<div class="right-container">
+					<div v-for="item in rightItems" class="right-item" @tap="tapOption(item)">{{ item }}</div>
+				</div>
+			</div>
+		</view>
+		<div class="tip-input-container" v-if="showTipInput">
+			<div class="tip">备注</div>
+			<input v-model="tip" />
+			<div class="btn-container">
+				<div class="close-btn" @tap="closleTipInput">取消</div>
+				<div class="confirm-btn" @tap="confirnTipInput">确定</div>
+			</div>
+		</div>
+		<div class="md-overlay" v-if="showTipInput" @touchmove.stop.prevent="closleTipInput" @tap="closleTipInput"></div>
+	</view>
+</template>
+
+<script>
+export default {
+	data() {
+		return {
+			leftItems: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '0', '.'],
+			rightItems: ['删除', '清零', '再记', '保存'],
+			number: '0',
+			tip: '',
+			tipSave: '',
+			date: '',
+			showTipInput: false
+		};
+	},
+	created() {
+		this.initDate();
+	},
+	computed: {
+		showNumber() {
+			let sum = 0;
+			let arr = this.number.split('+');
+			for (let i = 0; i < arr.length - 1; i++) {
+				sum += Number(arr[i]);
+			}
+			let lastAdd = this.number.lastIndexOf('+');
+
+			if (arr.length >= 3) {
+				return sum.toString() + this.number.substr(lastAdd);
+			} else {
+				return this.number;
+			}
+		}
+	},
+	methods: {
+		DateChange(e) {
+			let value = e.detail.value;
+			let date = '';
+			if (value.substr(0, 4) == new Date().getFullYear()) {
+				let arr = value.substr(5).split('-');
+				this.date = Number(arr[0]) + '-' + Number(arr[1]);
+			} else {
+				this.date = value.substr(2);
+				let arr = value.substr(5).split('-');
+				this.date = arr[0] + '-' + Number(arr[1]) + '-' + Number(arr[2]);
+			}
+		},
+		initDate() {
+			let time = new Date();
+			let m = time.getMonth() + 1;
+			let d = time.getDate();
+			this.date = m.toString() + '-' + d.toString();
+		},
+		tapNumber(number) {
+			if (number == '+') {
+				if (this.number.substr(-1) != '+' && this.number.substr(-1) != '.') this.number += number;
+			} else if (number == '.') {
+				if (
+					!this.number
+						.split('+')
+						.pop()
+						.includes('.')
+				)
+					this.number += number;
+			} else {
+				if (this.number == '0') {
+					this.number = number;
+				} else {
+					this.number += number;
+				}
+			}
+			console.log(this.number, this.showNumber);
+		},
+		closleTipInput() {
+			this.showTipInput = false;
+			this.tip = this.tipSave;
+		},
+		openTipInput() {
+			this.showTipInput = true;
+		},
+		confirnTipInput() {
+			this.tipSave = this.tip;
+			this.closleTipInput();
+		},
+		tapOption(option) {
+			switch (option) {
+				case '删除':
+					if (this.number.length == 1) {
+						this.number = '0';
+					} else {
+						this.number = this.number.substr(0, this.number.length - 1);
+					}
+					break;
+				case '清零':
+					this.number = '0';
+					break;
+				case '再记':
+					this.$emit('saveAndWrite', this.getData());
+					break;
+				case '保存':
+					this.$emit('save', this.getData());
+					break;
+				default:
+					break;
+			}
+		},
+		getData() {
+			let data = {};
+			data.tip = this.tipSave;
+
+			let sum = 0;
+			let arr = this.number.split('+');
+			for (let i = 0; i < arr.length; i++) {
+				sum += Number(arr[i]);
+			}
+			data.money = sum;
+
+			let dateArr = this.date.split('-');
+			if (dateArr.length == 2) {
+				dateArr.unshift(new Date().getFullYear().toString());
+			} else {
+				dateArr[0] = '20' + dateArr[0];
+			}
+			data.date = new Date(dateArr[0], dateArr[1], dateArr[2]).getTime();
+			return data;
+		}
+	}
+};
+</script>
+
+<style lang="scss" scoped>
+.input-container {
+	position: fixed;
+	bottom: 0;
+	bottom: constant(safe-area-inset-bottom);
+	bottom: env(safe-area-inset-bottom);
+	left: 0;
+	height: 224px;
+	width: 100vw;
+	background-color: #ffffff;
+	box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.16);
+
+	.top {
+		height: 44px;
+		width: calc(100% - 36px);
+		padding: 0 13px;
+		display: flex;
+		align-items: center;
+		border-bottom: 1px solid rgba(168, 163, 163, 0.1);
+
+		.top-item {
+			padding: 0 15px;
+			height: 20px;
+			background: #a8a3a3;
+			border-radius: 10px;
+			margin: 0 5px;
+			line-height: 20px;
+			display: inline-block;
+			font-size: 10px;
+			color: #333333;
+		}
+
+		.input-number {
+			height: 30px;
+			width: 150px;
+			margin-left: auto;
+			margin-right: 10px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			line-height: 30px;
+			text-align: right;
+			font-size: 16px;
+			font-family: Barlow-SemiBoldItalic;
+			font-weight: 600;
+			color: #333333;
+		}
+	}
+
+	.container {
+		display: flex;
+		height: 180px;
+		width: 100%;
+		padding-top: 4px;
+
+		.left-container {
+			display: flex;
+			height: 170px;
+			width: 75%;
+			flex-wrap: wrap;
+			align-content: flex-start;
+
+			.left-item {
+				width: 33.333%;
+				height: 40px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				font-size: 18px;
+				font-family: Barlow-SemiBoldItalic;
+				font-weight: 600;
+				color: #333333;
+			}
+		}
+
+		.right-container {
+			display: flex;
+			flex-direction: column;
+			height: 170px;
+			width: 18%;
+
+			.right-item {
+				width: 100%;
+				height: 40px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 12px;
+				color: #333333;
+			}
+
+			.right-item:last-child {
+				color: #f01313;
+			}
+		}
+	}
+}
+
+.md-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 99999;
+}
+
+.tip-input-container {
+	position: fixed;
+	top: 200px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 240px;
+	z-index: 999999;
+	padding: 25px 20px;
+	background-color: #ffffff;
+	border-radius: 4px;
+	box-sizing: border-box;
+	.tip {
+		font-size: 14px;
+		font-weight: 600;
+		margin-bottom: 15px;
+		margin-left: 5px;
+	}
+
+	input {
+		height: 30px;
+		width: 200px;
+		margin-bottom: 15px;
+		border-bottom: 1px solid #07bbff;
+		font-size: 14px;
+		color: #333333;
+	}
+	.btn-container {
+		height: 40px;
+		width: 100%;
+		display: flex;
+		align-items: center;
+
+		.close-btn {
+			line-height: 40px;
+			color: #333333;
+			padding: 0 10px;
+			margin-left: auto;
+			margin-right: 10px;
+			font-size: 12px;
+		}
+		.confirm-btn {
+			line-height: 40px;
+			color: #07bbff;
+			padding: 0 10px;
+			margin-right: 5px;
+			font-size: 12px;
+		}
+	}
+}
+</style>

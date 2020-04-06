@@ -10,7 +10,10 @@ const state = {
 		qqId: null
 	},
 
-
+	system: {
+		types: null,
+		myTypes: null,
+	}
 }
 
 export default state

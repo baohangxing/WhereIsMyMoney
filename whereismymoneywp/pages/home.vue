@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="fixed-btn" @tap="goToAddBill"><icon name="icon-icon_add" color="#FFF"></icon></view>
+		<view class="fixed-btn" @tap="goToAddBill"><icon name="icon_add" color="#FFF"></icon></view>
 	</view>
 </template>
 
@@ -9,6 +9,11 @@ export default {
 	data() {
 		return {};
 	},
+	computed: {
+		useId() {
+			return this.$store.state.userInfo.id;
+		}
+	},
 	onLoad() {
 		if (!uni.getStorageSync('accessToken')) {
 			uni.navigateTo({
@@ -16,7 +21,6 @@ export default {
 			});
 		}
 	},
-	computed: {},
 	methods: {
 		goToAddBill() {
 			uni.navigateTo({
@@ -27,7 +31,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .fixed-btn {
 	position: fixed;
 	left: 50%;

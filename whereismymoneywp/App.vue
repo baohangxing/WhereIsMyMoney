@@ -1,8 +1,13 @@
 <script>
 import Vue from 'vue';
+import { shortifyContent } from '@/assets/js/help.js';
+
 export default {
 	onLaunch: function() {
 		console.log('App Launch');
+
+		Vue.prototype.shortifyContent = shortifyContent;
+
 		uni.getSystemInfo({
 			success: function(e) {
 				Vue.prototype.StatusBar = e.statusBarHeight;
