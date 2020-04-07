@@ -39,11 +39,11 @@ export default {
 	bottom: 44px;
 	width: 44px;
 	height: 44px;
-	background: #07bbff;
+	background: $system-color-blue;
 	box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.16);
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border-radius: 50%;
+	border-radius: $border-radius-circle;
 }
 </style>

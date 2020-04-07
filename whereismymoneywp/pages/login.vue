@@ -244,13 +244,13 @@ export default {
 			display: flex;
 			justify-content: center;
 			align-content: center;
-			font-size: 14px;
+			font-size: $font-size-base;
 			font-weight: bold;
 			margin-bottom: 20px;
 			.line {
 				width: 2px;
 				height: 18px;
-				background-color: #f0c252;
+				background-color: $system-color-blue;
 				margin: 6px 20px;
 			}
 
@@ -263,7 +263,7 @@ export default {
 			box-sizing: border-box;
 			height: 60px;
 			width: 100%;
-			border-bottom: 1px solid #c7c7c7;
+			border-bottom: 1px solid $border-color-grey;
 
 			.input-part {
 				width: 100%;
@@ -272,11 +272,11 @@ export default {
 
 				input {
 					height: 60px;
-					font-size: 20px;
+					font-size: $font-size-lllg;
 					border: none;
 					width: 100%;
 					text-align: center;
-					color: #333333;
+					color: $text-color;
 					font-family: Barlow-Bold;
 				}
 			}
@@ -286,7 +286,7 @@ export default {
 			box-sizing: border-box;
 			height: 60px;
 			width: 100%;
-			border-bottom: 1px solid #c7c7c7;
+			border-bottom: 1px solid $border-color-grey;
 
 			.input-part {
 				width: 100%;
@@ -295,18 +295,18 @@ export default {
 
 				input {
 					height: 60px;
-					font-size: 20px;
+					font-size: $font-size-lllg;
 					border: none;
 					width: 100%;
 					text-align: center;
-					color: #333333;
+					color: $text-color;
 					font-family: Barlow-Bold;
 				}
 			}
 		}
 
 		.inputactive {
-			border-bottom: 1px solid #181419;
+			border-bottom: 1px solid $border-color-black;
 		}
 
 		.login-button {
@@ -319,14 +319,14 @@ export default {
 				width: 80px;
 				height: 40px;
 				border-radius: 20px;
-				border: 3px solid #f0c252;
+				border: 3px solid $system-color-blue;
 				box-sizing: border-box;
-				background-color: #000000;
+				background-color: $bg-color;
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				font-size: 16px;
-				color: #f0c252;
+				font-size: $font-size-lg;
+				color: $system-color-blue;
 			}
 		}
 	}

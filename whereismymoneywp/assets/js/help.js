@@ -11,6 +11,9 @@ import {
  * @return {string}               裁剪后的字符串
  */
 export const shortifyContent = (content, len) => {
+	if (!content) {
+		return ''
+	}
 	if (content.length < len) {
 		return content
 	}

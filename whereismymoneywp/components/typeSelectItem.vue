@@ -55,8 +55,8 @@ export default {
 
 	.name {
 		margin-top: 8px;
-		font-size: 10px;
-		color: #707070;
+		font-size: $font-size-ssm;
+		color: $text-color-grey;
 	}
 }
 </style>

@@ -48,7 +48,7 @@ export default {
 
 <style lang="scss" scoped>
 .add-bill-container {
-	background-color: #f8f8f8;
+	background-color: $bg-color-grey;
 	height: 100vh;
 	width: 100vw;
 

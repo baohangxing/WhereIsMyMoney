@@ -210,38 +210,7 @@ export default {
 	max-width: 50%;
 }
 
-.cu-bar .search-form {
-	background-color: #f5f5f5;
-	line-height: 64upx;
-	height: 64upx;
-	font-size: 24upx;
-	color: #333333;
-	flex: 1;
-	display: flex;
-	align-items: center;
-	margin: 0 30upx;
-}
 
-.cu-bar .search-form + .action {
-	margin-right: 30upx;
-}
-
-.cu-bar .search-form input {
-	flex: 1;
-	padding-right: 30upx;
-	height: 64upx;
-	line-height: 64upx;
-	font-size: 26upx;
-	background-color: transparent;
-}
-
-.cu-bar .search-form [class*='cuIcon-'] {
-	margin: 0 0.5em 0 0.8em;
-}
-
-.cu-bar .search-form [class*='cuIcon-']::before {
-	top: 0upx;
-}
 
 .cu-bar.fixed,
 .nav.fixed {

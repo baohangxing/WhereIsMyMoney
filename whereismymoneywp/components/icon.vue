@@ -40,7 +40,7 @@ export default {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	display: inline-block;
-	color: #999;
+	color: $text-color-grey;
 	vertical-align: middle;
 	line-height: 1;
 	padding-top: -1px;

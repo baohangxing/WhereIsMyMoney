@@ -164,7 +164,7 @@ export default {
 	left: 0;
 	height: 224px;
 	width: 100vw;
-	background-color: #ffffff;
+	background-color: $bg-color;
 	box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.16);
 
 	.top {
@@ -178,13 +178,13 @@ export default {
 		.top-item {
 			padding: 0 15px;
 			height: 20px;
-			background: #a8a3a3;
+			background: $bg-color-deep-grey;
 			border-radius: 10px;
 			margin: 0 5px;
 			line-height: 20px;
 			display: inline-block;
-			font-size: 10px;
-			color: #333333;
+			font-size: $font-size-ssm;
+			color: $text-color;
 		}
 
 		.input-number {
@@ -197,10 +197,10 @@ export default {
 			white-space: nowrap;
 			line-height: 30px;
 			text-align: right;
-			font-size: 16px;
+			font-size: $font-size-lg;
 			font-family: Barlow-SemiBoldItalic;
 			font-weight: 600;
-			color: #333333;
+			color: $text-color;
 		}
 	}
 
@@ -224,10 +224,10 @@ export default {
 				justify-content: center;
 				align-items: center;
 
-				font-size: 18px;
+				font-size: $font-size-llg;
 				font-family: Barlow-SemiBoldItalic;
 				font-weight: 600;
-				color: #333333;
+				color: $text-color;
 			}
 		}
 
@@ -243,12 +243,12 @@ export default {
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				font-size: 12px;
-				color: #333333;
+				font-size: $font-size-sm;
+				color: $text-color;
 			}
 
 			.right-item:last-child {
-				color: #f01313;
+				color: $system-color-red;
 			}
 		}
 	}
@@ -272,11 +272,11 @@ export default {
 	width: 240px;
 	z-index: 999999;
 	padding: 25px 20px;
-	background-color: #ffffff;
-	border-radius: 4px;
+	background-color: $bg-color;
+	border-radius: $border-radius-sm;
 	box-sizing: border-box;
 	.tip {
-		font-size: 14px;
+		font-size: $font-size-base;
 		font-weight: 600;
 		margin-bottom: 15px;
 		margin-left: 5px;
@@ -286,9 +286,9 @@ export default {
 		height: 30px;
 		width: 200px;
 		margin-bottom: 15px;
-		border-bottom: 1px solid #07bbff;
-		font-size: 14px;
-		color: #333333;
+		border-bottom: 1px solid $system-color-blue;
+		font-size: $font-size-base;
+		color: $text-color;
 	}
 	.btn-container {
 		height: 40px;
@@ -298,18 +298,18 @@ export default {
 
 		.close-btn {
 			line-height: 40px;
-			color: #333333;
+			color: $text-color;
 			padding: 0 10px;
 			margin-left: auto;
 			margin-right: 10px;
-			font-size: 12px;
+			font-size: $font-size-sm;
 		}
 		.confirm-btn {
 			line-height: 40px;
-			color: #07bbff;
+			color: $system-color-blue;
 			padding: 0 10px;
 			margin-right: 5px;
-			font-size: 12px;
+			font-size: $font-size-sm;
 		}
 	}
 }

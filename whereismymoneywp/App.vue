@@ -42,7 +42,6 @@ export default {
 
 <style lang="scss">
 /*每个页面公共css */
-@import 'assets/css/global.css';
 @import 'assets/css/normalize.css';
 @import 'assets/css/font.css';
 </style>
