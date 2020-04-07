@@ -147,6 +147,7 @@ export default {
 						uni.setStorageSync('accessToken', result.data.data.token);
 						setHeader();
 						this.$store.commit('setUserInfo', result.data.data.userInfo);
+						uni.setStorageSync('userId', result.data.data.userInfo.id);
 						uni.navigateTo({
 							url: '/pages/home'
 						});

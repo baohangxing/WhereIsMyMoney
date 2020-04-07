@@ -6,6 +6,9 @@ body {
 	font-family: 'PingFang SC', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
 }
 
+div {
+	box-sizing: border-box;
+}
 /* 颜色变量 */
 
 /* 系统主题相关颜色 */
@@ -21,10 +24,10 @@ $color-error: #dd524d;
 
 /* 文字基本颜色 */
 $text-color: #333; //基本色
+$text-color-balck: #000000;
 $text-color-inverse: #fff; //反色
 $text-color-grey: #999; //辅助灰色，如加载更多的提示信息
-$text-color-placeholder: #808080;
-$text-color-disable: #c0c0c0;
+$text-color-litte-grey: #707070;
 
 /* 背景颜色 */
 $bg-color: #ffffff;
@@ -47,7 +50,6 @@ $font-size-lg: 16px;
 $font-size-llg: 18px;
 $font-size-lllg: 20px;
 
-
 /* Border Radius */
 $border-radius-sm: 4px;
 $border-radius-circle: 50%;
@@ -64,3 +66,8 @@ $spacing-col-lg: 24upx;
 
 /* 透明度 */
 $opacity-disabled: 0.3; // 组件禁用态的透明度
+
+/* 阴影 */
+$box-shadow-box: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+$box-shadow-btn: 0 6px 6px 0 rgba(0, 0, 0, 0.16);
+$box-shadow-up: 0 -2px 6px 0 rgba(0, 0, 0, 0.16);

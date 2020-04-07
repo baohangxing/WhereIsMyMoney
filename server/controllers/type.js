@@ -28,7 +28,7 @@ class TypeController {
      */
     static async add(ctx) {
         const data = ctx.request.body;
-        if (!data.name || !data.type || !data.icon) {
+        if (!data.name || data.type == null || !data.icon) {
             return ctx.sendError('000002', '参数不合法');
         }
         const result = await DefaultTypeModel.create({
@@ -106,7 +106,7 @@ class TypeController {
         if (data.name) {
             update.name = data.name
         }
-        if (data.type) {
+        if (data.type != null) {
             update.type = data.type
         }
         if (data.icon) {

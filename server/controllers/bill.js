@@ -38,7 +38,7 @@ class BillController {
      */
     static async add(ctx) {
         const data = ctx.request.body;
-        if (!data.userId || !data.type || !data.defaultType || !data.typeId || !data.time || !data.amount) {
+        if (data.userId == null || data.type == null || data.defaultType == null || data.typeId == null || data.time == null || data.amount == null) {
             return ctx.sendError('000002', '参数不合法');
         }
         const result = await BillModel.create({
@@ -125,22 +125,22 @@ class BillController {
             return ctx.sendError('000002', '参数不合法');
         }
         let update = {};
-        if (data.type) {
+        if (data.type != null) {
             update.type = data.type
         }
-        if (data.amount) {
+        if (data.amount != null) {
             update.amount = data.amount
         }
-        if (data.defaultType) {
+        if (data.defaultType != null) {
             update.defaultType = data.defaultType
         }
-        if (data.typeId) {
+        if (data.typeId != null) {
             update.typeId = data.typeId
         }
-        if (data.time) {
+        if (data.time != null) {
             update.time = data.time
         }
-        if (data.description) {
+        if (data.description != null) {
             update.description = data.description
         }
         const result = await BillModel.update(update, {

@@ -96,7 +96,6 @@ export default {
 					this.number += number;
 				}
 			}
-			console.log(this.number, this.showNumber);
 		},
 		closleTipInput() {
 			this.showTipInput = false;
@@ -148,7 +147,7 @@ export default {
 			} else {
 				dateArr[0] = '20' + dateArr[0];
 			}
-			data.date = new Date(dateArr[0], dateArr[1], dateArr[2]).getTime();
+			data.date = new Date(dateArr[0], dateArr[1], dateArr[2]).toISOString();
 			return data;
 		}
 	}
@@ -165,7 +164,7 @@ export default {
 	height: 224px;
 	width: 100vw;
 	background-color: $bg-color;
-	box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.16);
+	box-shadow: $box-shadow-up;
 
 	.top {
 		height: 44px;

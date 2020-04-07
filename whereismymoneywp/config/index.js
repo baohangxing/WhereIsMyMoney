@@ -8,8 +8,8 @@ const config={
 	wxiAppid: 'wx885fb9a3d2d72e2f',
     runLocal:false,//本地模式，不发送ajax请求服务器
 
-    //API: localhost,
-	API: production,
+    API: localhost,
+	//API: production,
 }
 
 export default config

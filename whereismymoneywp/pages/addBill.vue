@@ -2,7 +2,12 @@
 	<view class="add-bill-container">
 		<cu-custom isBack="true"><view slot="content">收入</view></cu-custom>
 		<view class="types-container">
-			<div v-for="item in types"><type-select-item :item="item" :isSelected="isSelectedId == item.id" @tap="selectItem(item.id)"></type-select-item></div>
+			<div v-for="item in types">
+				<type-select-item :item="item" :isSelected="isSelectedId == item.id && defaultType == 1" @tap="selectItem(item.id, true)"></type-select-item>
+			</div>
+			<div v-for="item in myTypes">
+				<type-select-item :item="item" :isSelected="isSelectedId == item.id && defaultType == 0" @tap="selectItem(item.id, false)"></type-select-item>
+			</div>
 		</view>
 		<money-input @save="saveBill" @saveAndWrite="saveAndWrite"></money-input>
 	</view>
@@ -11,11 +16,14 @@
 <script>
 import typeSelectItem from '@/components/typeSelectItem.vue';
 import moneyInput from '@/components/moneyInput.vue';
+import { BILL_ADD } from '@/common/api.js';
 
 export default {
 	data() {
 		return {
-			isSelectedId: null
+			isSelectedId: null,
+			type: 0, //账单的类型 0支出 1收入
+			defaultType: 1 //账单的类型是否是官方的类型 0不是 1是
 		};
 	},
 	components: {
@@ -28,19 +36,55 @@ export default {
 		},
 		myTypes() {
 			return this.$store.state.system.myTypes;
+		},
+		userId() {
+			return this.$store.state.userInfo.id;
 		}
 	},
 	methods: {
-		selectItem(id) {
+		selectItem(id, defaultType) {
 			this.isSelectedId = id;
+			this.defaultType = defaultType ? 1 : 0;
 		},
 		saveBill(data) {
-			console.log(data);
-			uni.navigateBack({});
+			this.postBill(data).then(result => {
+				if (result) {
+					//todo
+					uni.navigateBack({});
+				} else {
+					uni.showToast({
+						icon: 'none',
+						title: '服务器挂了'
+					});
+				}
+			});
 		},
 		saveAndWrite(data) {
-			console.log(data);
-			this.isSelectedId = null;
+			this.postBill(data).then(result => {
+				if (result) {
+					//todo
+				} else {
+					uni.showToast({
+						icon: 'none',
+						title: '服务器挂了'
+					});
+				}
+			});
+		},
+		postBill: async function(data) {
+			return await BILL_ADD({
+				userId: this.userId,
+				defaultType: this.defaultType,
+				typeId: this.isSelectedId,
+				type: this.type,
+				time: data.date,
+				amount: data.money,
+				description: data.tip
+			}).then(result => {
+				if (result.data.code == '000001') {
+					return true;
+				} else return false;
+			});
 		}
 	}
 };
@@ -53,8 +97,8 @@ export default {
 	width: 100vw;
 
 	.types-container {
-		height: calc(100vh - 64px - 224px);
-		padding-top: 20px;
+		height: calc(100vh - 74px - 224px);
+		padding-top: 10px;
 		overflow: scroll;
 		width: 100vw;
 		display: flex;

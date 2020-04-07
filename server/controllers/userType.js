@@ -30,7 +30,7 @@ class UserTypeController {
      */
     static async add(ctx) {
         const data = ctx.request.body;
-        if (!data.name || !data.type || !data.icon || !data.userId) {
+        if (data.name == null || data.type == null || !data.icon || !data.userId) {
             return ctx.sendError('000002', '参数不合法');
         }
         const result = await UserTypeModel.create({
@@ -111,7 +111,7 @@ class UserTypeController {
         }
         let update = {};
         if (data.name) update.name = data.name;
-        if (data.type) update.type = data.type;
+        if (data.type != null) update.type = data.type;
         if (data.icon) update.icon = data.icon;
         const result = await UserTypeModel.update(update, {
             where: {
