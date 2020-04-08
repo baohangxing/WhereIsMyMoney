@@ -13,6 +13,7 @@ const state = {
 	system: {
 		types: null,
 		myTypes: null,
+		showUserPage: false
 	}
 }
 

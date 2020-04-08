@@ -19,6 +19,10 @@ const mutations = {
 
 	setMyTypes(state, data) {
 		state.system.myTypes = data
+	},
+
+	setShowUserPage(state, data) {
+		state.system.showUserPage = !state.system.showUserPage
 	}
 }
 

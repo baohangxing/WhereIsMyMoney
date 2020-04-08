@@ -1,6 +1,6 @@
 <template>
 	<view class="add-bill-container">
-		<cu-custom isBack="true"><view slot="content">收入</view></cu-custom>
+		<cu-custom><view slot="content">收入</view></cu-custom>
 		<view class="types-container">
 			<div v-for="item in types">
 				<type-select-item :item="item" :isSelected="isSelectedId == item.id && defaultType == 1" @tap="selectItem(item.id, true)"></type-select-item>

@@ -25,6 +25,10 @@
             "path" : "pages/billDetaill",
             "style" : {}
         }
+        ,{
+            "path" : "pages/statistics",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationStyle": "custom",

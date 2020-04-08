@@ -1,11 +1,15 @@
 <template>
-	<view class="cu-bar fixed" :style="style">
-		<view class="action" @tap="BackPage" v-if="isBack">
-			<icon name="icon-return" color="#333333"></icon>
-			<slot name="backText"></slot>
+	<view>
+		<view class="cu-bar fixed" :style="style">
+			<view class="action">
+				<icon name="icon-return" color="#333333" size="28" @tap="BackPage" v-if="isBack"></icon>
+				<icon name="icon_menu" color="#333333" size="28" @tap="setShowUserPage" v-else></icon>
+				<slot name="backText"></slot>
+			</view>
+			<view class="content" :style="[{ top: StatusBar + 'px' }]"><slot name="content"></slot></view>
+			<slot name="right"></slot>
 		</view>
-		<view class="content" :style="[{ top: StatusBar + 'px' }]"><slot name="content"></slot></view>
-		<slot name="right"></slot>
+		<view class="block-div" :style="style"></view>
 	</view>
 </template>
 
@@ -29,7 +33,7 @@ export default {
 	props: {
 		isBack: {
 			type: [Boolean, String],
-			default: false
+			default: true
 		}
 	},
 	methods: {
@@ -37,6 +41,9 @@ export default {
 			uni.navigateBack({
 				delta: 1
 			});
+		},
+		setShowUserPage() {
+			this.$emit('setShowUserPage');
 		}
 	}
 };
@@ -85,7 +92,6 @@ export default {
 		font-size: 32upx;
 		line-height: 60upx;
 		cursor: none;
-		pointer-events: none;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
@@ -98,6 +104,10 @@ export default {
 	top: 0;
 	z-index: 1024;
 	box-shadow: 0 1upx 6upx rgba(0, 0, 0, 0.1);
+	box-sizing: border-box;
+}
+
+.block-div {
 	box-sizing: border-box;
 }
 </style>

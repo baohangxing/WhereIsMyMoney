@@ -9,6 +9,14 @@ body {
 div {
 	box-sizing: border-box;
 }
+
+::-webkit-scrollbar {
+	display: none;
+	width: 0 !important;
+	height: 0 !important;
+	-webkit-appearance: none;
+	background: transparent;
+}
 /* 颜色变量 */
 
 /* 系统主题相关颜色 */
@@ -34,6 +42,7 @@ $bg-color: #ffffff;
 $bg-color-grey: #f8f8f8;
 $bg-color-white-grey: #f5f5f5;
 $bg-color-deep-grey: #a8a3a3;
+$bg-color-mask: rgba(#000000, 0.4);
 
 /* 边框颜色 */
 $border-color: #c8c7cc;

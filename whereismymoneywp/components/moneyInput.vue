@@ -67,8 +67,7 @@ export default {
 				let arr = value.substr(5).split('-');
 				this.date = Number(arr[0]) + '-' + Number(arr[1]);
 			} else {
-				this.date = value.substr(2);
-				let arr = value.substr(5).split('-');
+				let arr = value.substr(2).split('-');
 				this.date = arr[0] + '-' + Number(arr[1]) + '-' + Number(arr[2]);
 			}
 		},
