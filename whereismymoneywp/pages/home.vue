@@ -1,14 +1,12 @@
 <template>
 	<view class="home-container">
+		<mescroll-body :up="upOption" :down="downOption" @down="downCB">
+			<div style="width:100%" :style="{ height: navHeight }"></div>
+			<income-sum></income-sum>
+			<income-parts></income-parts>
+		</mescroll-body>
+
 		<cu-custom isBack="true"><view slot="content">收入</view></cu-custom>
-
-		<div class="scroll-container">
-			<mescroll-uni :down="downOption" @down="schoolDownCB" @up="upCallback">
-				<income-sum></income-sum>
-				<income-parts></income-parts>
-			</mescroll-uni>
-		</div>
-
 		<view class="fixed-btn" @tap="goToAddBill"><icon name="icon_add" color="#FFF"></icon></view>
 	</view>
 </template>
@@ -17,25 +15,32 @@
 import { USER_GET_INFO, DT_GETALL, UT_GETALL } from '@/common/api.js';
 import incomeSum from '@/components/incomeSum.vue';
 import incomeParts from '@/components/incomeParts.vue';
-import MescrollUni from '@/components/mescroll-uni/mescroll-uni.vue';
+import MescrollBody from '@/components/mescroll-uni/mescroll-body.vue';
 
 export default {
 	data() {
 		return {
 			downOption: {
-				fps: 90
+				fps: 90,
+				downTipOff: '-60px'
+			},
+			upOption: {
+				use: false
 			}
 		};
 	},
 	computed: {
 		userId() {
 			return this.$store.state.userInfo.id;
+		},
+		navHeight() {
+			return `${this.StatusBar + 40}px`;
 		}
 	},
 	components: {
 		incomeSum,
 		incomeParts,
-		MescrollUni
+		MescrollBody
 	},
 	onLoad() {
 		if (!uni.getStorageSync('accessToken')) {
@@ -53,8 +58,9 @@ export default {
 				url: '/pages/addBill'
 			});
 		},
-		schoolDownCB() {},
-		upCallback() {},
+		downCB(mescroll) {
+			mescroll.endSuccess();
+		},
 		initDate() {
 			if (!this.$store.state.userInfo.id) {
 				USER_GET_INFO({ id: uni.getStorageSync('userId') }).then(result => {
@@ -90,6 +96,8 @@ export default {
 .scroll-container {
 	height: calc(100vh - 64px);
 	width: 100vw;
+	position: fixed;
+	bottom: 0;
 }
 
 .fixed-btn {

@@ -3,8 +3,7 @@
 		{
 			"path": "pages/home",
 			"style": {
-				"navigationStyle": "custom",
-				"disableScroll": true,
+				"disableScroll": false,
 				"app-plus": {
 					"bounce": "none" // 取消iOS回弹,避免和下拉刷新冲突 (小程序无法取消, 点此查看H5端的取消方法... )
 				}

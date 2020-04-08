@@ -56,8 +56,7 @@ export default {
 
 	.items-container {
 		width: 100%;
-		padding: 0 10px;
-		margin-bottom: 6px;
+		padding: 0 10px 6px 10px;
 
 		.item-container {
 			height: 26px;
