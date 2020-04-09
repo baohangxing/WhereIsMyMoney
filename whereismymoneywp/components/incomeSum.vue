@@ -84,6 +84,7 @@ export default {
 				font-size: $font-size-lg;
 				line-height: 26px;
 				font-weight: bold;
+				font-family: Barlow-Bold;
 			}
 		}
 	}

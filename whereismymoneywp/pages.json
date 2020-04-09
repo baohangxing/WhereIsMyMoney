@@ -9,27 +9,21 @@
 				}
 			}
 		},
-	    {
-            "path" : "pages/login",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/setting",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/addBill",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/billDetaill",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/statistics",
-            "style" : {}
-        }
-    ],
+		{
+			"path": "pages/login",
+			"style": {}
+		}, {
+			"path": "pages/setting",
+			"style": {}
+		}, {
+			"path": "pages/addBill",
+			"style": {}
+		}, {
+			"path": "pages/billDetaill",
+			"style": {}
+		}
+
+	],
 	"globalStyle": {
 		"navigationStyle": "custom",
 		"navigationBarTextStyle": "black"

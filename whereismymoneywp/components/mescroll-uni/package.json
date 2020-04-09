@@ -1,0 +1,39 @@
+{
+  "_from": "mescroll-uni@^1.1.5",
+  "_id": "mescroll-uni@1.1.8",
+  "_inBundle": false,
+  "_integrity": "sha512-l1JJP6NVc5pCkojNWz7U1kcdw7f40ZDS1PGJ8NEI5/TDn22AKahLQJCdKTWwpx+jOZWX+aSiwFsIvcz11cnidQ==",
+  "_location": "/mescroll-uni",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "mescroll-uni@^1.1.5",
+    "name": "mescroll-uni",
+    "escapedName": "mescroll-uni",
+    "rawSpec": "^1.1.5",
+    "saveSpec": null,
+    "fetchSpec": "^1.1.5"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/mescroll-uni/-/mescroll-uni-1.1.8.tgz",
+  "_shasum": "b0fdf72a092b143d9da1dea8b186b04647648925",
+  "_spec": "mescroll-uni@^1.1.5",
+  "_where": "/Users/J/dev/Braineex",
+  "author": {
+    "name": "wenju"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "mescroll-uni -支持uni-app的下拉刷新上拉加载组件",
+  "license": "MIT",
+  "main": "mescroll-uni.vue",
+  "name": "mescroll-uni",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.1.8"
+}
