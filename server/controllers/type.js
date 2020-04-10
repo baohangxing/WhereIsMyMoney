@@ -118,6 +118,7 @@ class TypeController {
             }
         });
         const afterUpdate = await DefaultTypeModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 id: data.id,
             }
@@ -159,6 +160,7 @@ class TypeController {
         const data = ctx.query;
 
         const types = await DefaultTypeModel.findAll({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 deleteFlag: 0
             },
@@ -195,6 +197,7 @@ class TypeController {
             return ctx.sendError('000002', '参数不合法');
         }
         const type = await DefaultTypeModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 id: data.id,
                 deleteFlag: 0

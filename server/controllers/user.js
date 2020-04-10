@@ -29,6 +29,7 @@ class UserController {
             return ctx.sendError('000002', '参数不合法');
         }
         const checkUser = await userModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 name: data.name,
             }
@@ -79,6 +80,7 @@ class UserController {
             where.email = data.email
         }
         const result = await userModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
             where: where
         });
         if (result !== null) {
@@ -126,6 +128,7 @@ class UserController {
         let update = {};
         if (data.name) {
             let nameUser = await userModel.findOne({
+                attributes: {exclude: ['deleteFlag']},
                 where: {
                     name: data.name,
                 }
@@ -135,6 +138,7 @@ class UserController {
         }
         if (data.email) {
             let nameUser = await userModel.findOne({
+                attributes: {exclude: ['deleteFlag']},
                 where: {
                     email: data.email,
                 }
@@ -190,6 +194,7 @@ class UserController {
             return ctx.sendError('000002', '参数不合法');
         }
         const user = await userModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 id: data.id,
             }

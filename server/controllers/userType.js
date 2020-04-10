@@ -120,6 +120,7 @@ class UserTypeController {
             }
         });
         const afterUpdate = await UserTypeModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 id: data.id,
                 userId: data.userId
@@ -167,6 +168,7 @@ class UserTypeController {
             return ctx.sendError('000002', '参数不合法');
         }
         const types = await UserTypeModel.findAll({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 deleteFlag: 0,
                 userId: data.userId
@@ -205,6 +207,7 @@ class UserTypeController {
             return ctx.sendError('000002', '参数不合法');
         }
         const type = await UserTypeModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 id: data.id,
                 deleteFlag: 0

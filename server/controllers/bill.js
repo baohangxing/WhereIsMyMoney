@@ -144,6 +144,7 @@ class BillController {
             update.description = data.description
         }
         const result = await BillModel.update(update, {
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 id: data.id,
             }
@@ -242,6 +243,7 @@ class BillController {
             }
         }
         const bills = await BillModel.findAndCountAll({
+            attributes: {exclude: ['deleteFlag']},
             where: where,
             offset: (page - 1) * pageSize,
             limit: pageSize
@@ -249,6 +251,277 @@ class BillController {
         bills.size = data.size || 10;
         bills.current = data.current || 1;
         return ctx.send(bills);
+    }
+
+    /**
+     * @api {get} /api/bill/getSumInfo 获取月年的账单结余信息
+     * @apiDescription 获取月年的账单结余信息
+     * @apiName getSumInfo
+     * @apiGroup Bill
+     * @apiParam {string} userId 用户userId
+     * @apiParam {string} year 年份
+     * @apiParam {string} month 月份 （可选，不填为一整年）
+     * @apiSuccess {json} result
+     * @apiSuccessExample {json} Success-Response:
+     *  {
+     *    "code": "000001",
+     *    "data": {
+     *      "incomeSum": 494,
+     *      "outcomeSum": 559.04
+     *    },
+     *    "msg": "请求成功"
+     *  }
+     * @apiSampleRequest http://localhost:3000/api/bill/getSumInfo
+     * @apiVersion 1.0.0
+     */
+    static async getSumInfo(ctx) {
+        const data = ctx.query;
+        const Op = sequelize.Op;
+
+        if (!data.userId || !data.year) {
+            return ctx.sendError('000002', '参数不合法');
+        }
+
+        let inWhere = {
+            userId: data.userId,
+            deleteFlag: 0,
+            type: 1
+        };
+
+        let outWhere = {
+            userId: data.userId,
+            deleteFlag: 0,
+            type: 0
+        };
+
+        let startTime = new Date(data.year, data.month ? data.month - 1 : 0, 0).toISOString();
+        let endTime = new Date(data.month ? data.year : data.year + 1, data.month ? data.month : 0, 0).toISOString();
+
+        inWhere.time = {
+            [Op.gte]: startTime,
+            [Op.lt]: endTime,
+        };
+
+        outWhere.time = {
+            [Op.gte]: startTime,
+            [Op.lt]: endTime,
+        };
+
+
+        let income = await BillModel.sum('amount', {
+            where: inWhere
+        });
+
+        let outcome = await BillModel.sum('amount', {
+            where: outWhere
+        });
+
+        let info = {
+            incomeSum: income,
+            outcomeSum: outcome
+        };
+        return ctx.send(info);
+    }
+
+
+    /**
+     * @api {get} /api/bill/getMonthDetailList 获取某月的账单信息
+     * @apiDescription 获取月年的账单结余信息
+     * @apiName getMonthDetailList
+     * @apiGroup Bill
+     * @apiParam {string} userId 用户userId
+     * @apiParam {string} year 年份
+     * @apiParam {string} month 月份
+     * @apiSuccess {json} result
+     * @apiSuccessExample {json} Success-Response:
+     *  {
+     *    "code": "000001",
+     *   "data": [
+     *     {
+     *      "day": 9,
+     *      "incomeSum": 0,
+     *      "outcomeSum": 36
+     *      "billList": [
+     *      {
+     *         "id": 73,
+     *         "userId": 11111,
+     *        "type": 0,
+     *        "amount": "36.00",
+     *       "defaultType": 1,
+     *       "typeId": 7,
+     *      "time": "2020-05-09 00:00:00",
+     *       "createdTime": "2020-04-09 19:34:09",
+     *       "description": ""
+     *      }
+     *    ]
+     *    }
+     *   ],
+     *   "msg": "请求成功"
+     *  }
+     * @apiSampleRequest http://localhost:3000/api/bill/getMonthDetailList
+     * @apiVersion 1.0.0
+     */
+    static async getMonthDetailList(ctx) {
+        const data = ctx.query;
+        const Op = sequelize.Op;
+
+        if (!data.userId || !data.year || !data.month) {
+            return ctx.sendError('000002', '参数不合法');
+        }
+
+        let where = {
+            userId: data.userId,
+            deleteFlag: 0
+        };
+
+        let startTime = new Date(data.year, data.month - 1, 0).toISOString();
+        let endTime = new Date(data.year, data.month, 0).toISOString();
+
+        where.time = {
+            [Op.gte]: startTime,
+            [Op.lt]: endTime,
+        };
+
+
+        let list = await BillModel.findAll({
+            attributes: {exclude: ['deleteFlag']},
+            where: where
+        });
+
+        let info = new Array(31);
+        let days = [];
+        list.forEach(item => {
+            let day = Number(item.time.toString().slice(8, 10));
+            let index = days.indexOf(day);
+            if (index === -1) {
+                info[day] = {
+                    day: day,
+                    incomeSum: item.type == 1 ? Number(item.amount) : 0,
+                    outcomeSum: item.type == 0 ? Number(item.amount) : 0,
+                    billList: [item],
+                };
+                days.push(day)
+            } else {
+                info[day].billList.push(item);
+                if (item.type == 1) {
+                    info[day].incomeSum += Number(item.amount);
+                } else {
+                    info[day].outcomeSum += Number(item.amount);
+                }
+            }
+        });
+        let finalInfo = info.filter(item => item.day !== undefined);
+        return ctx.send(finalInfo);
+    }
+
+    /**
+     * @api {get} /api/bill/getMonthTypeList 获取年月的账单分类信息
+     * @apiDescription 获取年月的账单分类信息
+     * @apiName getMonthTypeList
+     * @apiGroup Bill
+     * @apiParam {string} userId 用户userId
+     * @apiParam {string} year 年份
+     * @apiParam {string} type 收入支出 //账单的类型 0支出 1收入
+     * @apiParam {string} month 月份（可选）
+     * @apiSuccess {json} result
+     * @apiSuccessExample {json} Success-Response:
+     *  {
+     *   "code": "000001",
+     *  "data": [
+     *    {
+     *     "typeId": 7,
+     *     "defaultType": 1,
+     *     "Sum": 36,
+     *     "billList": [
+     *      {
+     *         "id": 73,
+     *        "userId": 11111,
+     *        "type": 0,
+     *        "amount": "36.00",
+     *         "defaultType": 1,
+     *         "typeId": 7,
+     *        "time": "2020-05-09 00:00:00",
+     *        "createdTime": "2020-04-09 19:34:09",
+     *        "description": ""
+     *      }
+     *     ]
+     *    }
+     *   ],
+     *   "msg": "请求成功"
+     *  }
+     * @apiSampleRequest http://localhost:3000/api/bill/getMonthTypeList
+     * @apiVersion 1.0.0
+     */
+    static async getMonthTypeList(ctx) {
+        const data = ctx.query;
+        const Op = sequelize.Op;
+
+        if (!data.userId || !data.year || !data.type) {
+            return ctx.sendError('000002', '参数不合法');
+        }
+
+        let where = {
+            userId: data.userId,
+            deleteFlag: 0,
+            type: data.type
+        };
+
+        let startTime = new Date(data.year, data.month ? data.month - 1 : 0, 0).toISOString();
+        let endTime = new Date(data.month ? data.year : data.year + 1, data.month ? data.month : 0, 0).toISOString();
+
+        where.time = {
+            [Op.gte]: startTime,
+            [Op.lt]: endTime,
+        };
+
+
+        let list = await BillModel.findAll({
+            attributes: {exclude: ['deleteFlag']},
+            where: where
+        });
+
+        let info = [];
+        let UserType = [];
+        let defaultType = [];
+        let typeArr = [];
+        list.forEach(item => {
+            let type = item.typeId;
+            let index = -1;
+            index = defaultType.indexOf(type);
+            if (item.defaultType) {
+                if (index === -1) {
+                    info.push({
+                        typeId: type,
+                        defaultType: 1,
+                        Sum: Number(item.amount),
+                        billList: [item]
+                    });
+                    typeArr.push(type);
+                    defaultType.push(type);
+                } else {
+                    let arrIndex = typeArr.indexOf(type);
+                    info[arrIndex].billList.push(item);
+                    info[arrIndex].Sum += Number(item.amount);
+                }
+            } else {
+                index = UserType.indexOf(type);
+                if (index === -1) {
+                    info.push({
+                        typeId: type,
+                        defaultType: 0,
+                        Sum: Number(item.amount),
+                        billList: [item],
+                    });
+                    typeArr.push(type);
+                    UserType.push(type);
+                } else {
+                    let arrIndex = typeArr.indexOf(type);
+                    info[arrIndex].billList.push(item);
+                    info[arrIndex].Sum += Number(item.amount);
+                }
+            }
+        });
+        return ctx.send(info);
     }
 
     /**
@@ -285,6 +558,7 @@ class BillController {
             return ctx.sendError('000002', '参数不合法');
         }
         const bill = await BillModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 id: data.id,
                 deleteFlag: 0
