@@ -16,7 +16,6 @@ class UserTypeController {
      * {
      *   "code": "000001",
      *   "data": {
-     *     "deleteFlag": 0,
      *     "userId": 11111,
      *     "id": 1,
      *     "name": "加气油",
@@ -96,8 +95,7 @@ class UserTypeController {
      *     "userId": 11111,
      *     "name": "加油 修改后",
      *     "type": 0,
-     *     "icon": "e77d",
-     *     "deleteFlag": 0
+     *     "icon": "e77d"
      *   },
      *   "msg": "修改成功"
      * }
@@ -145,16 +143,14 @@ class UserTypeController {
      *       "userId": 11111,
      *       "name": "网购",
      *       "type": 0,
-     *       "icon": "e77d",
-     *       "deleteFlag": 0
+     *       "icon": "e77d"
      *     },
      *     {
      *       "id": 3,
      *       "userId": 11111,
      *       "name": "加油",
      *       "type": 0,
-     *       "icon": "e777",
-     *       "deleteFlag": 0
+     *       "icon": "e777"
      *     }
      *   ],
      *   "msg": "请求成功"
@@ -192,8 +188,7 @@ class UserTypeController {
      *     "userId": 11111,
      *     "name": "网购",
      *     "type": 0,
-     *     "icon": "e77d",
-     *     "deleteFlag": 0
+     *     "icon": "e77d"
      *   },
      *   "msg": "请求成功"
      * }

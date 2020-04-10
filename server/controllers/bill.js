@@ -21,7 +21,6 @@ class BillController {
      *   "code": "000001",
      *   "data": {
      *     "createdTime": "2020-03-19T14:27:55.179Z",
-     *     "deleteFlag": 0,
      *     "id": 63,
      *     "userId": "11111",
      *     "type": "0",
@@ -104,7 +103,6 @@ class BillController {
      *      "code": "000001",
      *      "data": {
      *          "createdTime": "2020-03-19T14:27:55.179Z",
-     *          "deleteFlag": 0,
      *          "id": 63,
      *          "userId": "11111",
      *          "type": "0",
@@ -185,7 +183,6 @@ class BillController {
      *          "time": "2020-03-19T14:14:02.000Z",
      *          "createdTime": "2020-03-19T14:14:02.000Z",
      *          "description": "for test 2222222222",
-     *         "deleteFlag": 0
      *       },
      *        {
      *          "id": 17,
@@ -197,7 +194,6 @@ class BillController {
      *          "time": "2020-03-19T14:14:02.000Z",
      *          "createdTime": "2020-03-19T14:14:02.000Z",
      *          "description": "for test 2222222222",
-     *          "deleteFlag": 0
      *        },
      *        {
      *          "id": 18,
@@ -209,7 +205,6 @@ class BillController {
      *          "time": "2020-03-19T14:14:02.000Z",
      *          "createdTime": "2020-03-19T14:14:02.000Z",
      *          "description": "for test 2222222222",
-     *          "deleteFlag": 0
      *        }
      *      ],
      *      "size": "3",
@@ -544,7 +539,6 @@ class BillController {
      *          "time": "2020-03-19T14:14:02.000Z",
      *          "createdTime": "2020-03-19T14:14:02.000Z",
      *          "description": "for test 2222222222",
-     *         "deleteFlag": 0
      *    },
      *    "msg": "请求成功"
      *  }
