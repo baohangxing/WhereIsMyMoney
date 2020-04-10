@@ -1,17 +1,17 @@
 <template>
 	<view class="sum-container">
 		<div class="item-container align-center">
-			<div class="item-title">{{ sumData.month || 12 }}结余</div>
-			<div class="item-smount">{{ sumData.income || '+1222.00' }}</div>
+			<div class="item-title">{{ selectedDateInfo.month }}月结余</div>
+			<div class="item-smount">{{ sumLeft }}</div>
 		</div>
 		<div class="items-container">
 			<div class="item-container">
 				<div class="item-title">月收入</div>
-				<div class="item-smount">{{ sumData.income || '2222.00' }}</div>
+				<div class="item-smount">{{ sumData.incomeSum }}</div>
 			</div>
 			<div class="item-container">
 				<div class="item-title">月支出</div>
-				<div class="item-smount">{{ sumData.income || '1000.00' }}</div>
+				<div class="item-smount">{{ sumData.outcomeSum }}</div>
 			</div>
 		</div>
 	</view>
@@ -22,10 +22,15 @@ export default {
 	data() {
 		return {};
 	},
-	props: {
-		sumData: {
-			type: Object,
-			default: {}
+	computed: {
+		sumData() {
+			return this.$store.state.billData;
+		},
+		sumLeft() {
+			return (this.sumData.incomeSum - this.sumData.outcomeSum).toFixed(2);
+		},
+		selectedDateInfo() {
+			return this.$store.state.selectedDateInfo;
 		}
 	}
 };
@@ -48,11 +53,11 @@ export default {
 		flex-wrap: wrap;
 		align-items: flex-start;
 	}
-	
-	.align-center{
+
+	.align-center {
 		margin: 0 auto;
 	}
-	
+
 	.item-container {
 		height: 50px;
 		width: 40%;

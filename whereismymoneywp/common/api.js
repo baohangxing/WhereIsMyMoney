@@ -122,6 +122,26 @@ export const BILL_GET_BY_ID = params => {
 	return http.get('/bill/get', params)
 }
 
+/**
+ * @description 获取年月的账单分类信息
+ */
+export const BILL_GET_GROUP0BY_TYPE = params => {
+	return http.get('/bill/getMonthTypeList', params)
+}
+
+/**
+ * @description 获取月年的账单结余信息
+ */
+export const BILL_GET_MY_SUM = params => {
+	return http.get('/bill/getSumInfo', params)
+}
+
+/**
+ * @description 获取某月的账单信息
+ */
+export const BILL_GET_GROUP0BY_MONTH = params => {
+	return http.get('/bill/getMonthDetailList', params)
+}
 
 /**
  * @description 获取账单信息

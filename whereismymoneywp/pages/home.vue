@@ -3,7 +3,7 @@
 		<cu-custom @setShowUserPage="setShowUserPage" :isBack="false">
 			<div slot="content">
 				<picker mode="date" fields="month" class="data-container" start="2000-01-01" end="2040-12-30" @change="DateChange">
-					{{ date }}
+					{{ selectedDateInfo.year != dateInfo.year ? showYear + '-' : '' }}{{ selectedDateInfo.month }}月
 					<icon class="icon" name="arrow-down" color="#333333" size="16"></icon>
 				</picker>
 			</div>
@@ -19,8 +19,8 @@
 			</swiper-item>
 			<swiper-item>
 				<mescroll-uni :up="upOption" :down="downOption" @down="trendDownCB">
-					<income-sum></income-sum><income-parts></income-parts>
-					
+					<income-sum></income-sum>
+					<income-parts></income-parts>
 				</mescroll-uni>
 			</swiper-item>
 		</swiper>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { USER_GET_INFO, DT_GETALL, UT_GETALL } from '@/common/api.js';
+import { USER_GET_INFO, DT_GETALL, UT_GETALL, BILL_GET_GROUP0BY_TYPE, BILL_GET_MY_SUM, BILL_GET_GROUP0BY_MONTH } from '@/common/api.js';
 import MescrollUni from '@/components/mescroll-uni/mescroll-uni.vue';
 import userPage from '@/components/userPage.vue';
 import incomeSum from '@/components/incomeSum.vue';
@@ -43,20 +43,16 @@ export default {
 	data() {
 		return {
 			downOption: {
-				fps: 90
-				// downTipOff: '-60px'
+				fps: 90,
+				auto: true
 			},
 			upOption: {
 				use: false
 			},
-			date: '',
 			TabCur: 0
 		};
 	},
 	computed: {
-		userId() {
-			return this.$store.state.userInfo.id;
-		},
 		statusBarHeight() {
 			return `${this.StatusBar}px`;
 		},
@@ -65,6 +61,15 @@ export default {
 		},
 		navHeight() {
 			return `${this.StatusBar + 40}px`;
+		},
+		dateInfo() {
+			return this.$store.state.dateInfo;
+		},
+		selectedDateInfo() {
+			return this.$store.state.selectedDateInfo;
+		},
+		showYear() {
+			return this.selectedDateInfo.year.toString().substr(2, 2);
 		}
 	},
 	components: {
@@ -84,27 +89,20 @@ export default {
 	},
 	created() {
 		this.initData();
-		this.initDate();
 	},
 	methods: {
 		swiperTab: function(e) {
 			this.TabCur = e.detail.current;
 		},
-		initDate() {
-			let time = new Date();
-			let m = time.getMonth() + 1;
-			this.date = m.toString() + '月';
-		},
 		DateChange(e) {
 			let value = e.detail.value;
-			let date = '';
-			if (value.substr(0, 4) == new Date().getFullYear()) {
-				let arr = value.substr(5).split('-');
-				this.date = Number(arr[0]) + '月';
-			} else {
-				let arr = value.substr(2).split('-');
-				this.date = arr[0] + '年' + Number(arr[1]) + '月';
-			}
+			let arr = value.split('-');
+			let data = {
+				year: arr[0],
+				month: Number(arr[1])
+			};
+			this.$store.commit('setSelectedDateInfo', data);
+			this.trendDownCB();
 		},
 		setShowUserPage() {
 			this.$store.commit('setShowUserPage');
@@ -115,7 +113,27 @@ export default {
 			});
 		},
 		trendDownCB(mescroll) {
-			mescroll.endSuccess();
+			if (this.TabCur == 0) {
+				BILL_GET_MY_SUM({
+					params: {
+						userId: uni.getStorageSync('userId'),
+						year: this.selectedDateInfo.year,
+						month: this.selectedDateInfo.month
+					}
+				})
+					.then(result => {
+						if (result.data.code == '000001') {
+							this.$store.commit('setSumData', result.data.data);
+							if (mescroll) mescroll.endSuccess();
+						} else {
+							if (mescroll) mescroll.endErr();
+						}
+					})
+					.catch(e => {
+						if (mescroll) mescroll.endErr();
+					});
+			} else {
+			}
 		},
 		initData() {
 			if (!this.$store.state.userInfo.id) {

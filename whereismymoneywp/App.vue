@@ -33,6 +33,7 @@ export default {
 	},
 	onShow: function() {
 		console.log('App Show');
+		this.$store.commit('refreshDateInfo');
 	},
 	onHide: function() {
 		console.log('App Hide');
