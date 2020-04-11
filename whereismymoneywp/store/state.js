@@ -11,28 +11,36 @@ const state = {
 	},
 
 	system: {
-		types: null,
-		myTypes: null,
+		types: {
+			outTypeList: [],
+			inTypeList: []
+		},
+		myTypes: {
+			outTypeList: [],
+			inTypeList: []
+		},
 		showUserPage: false,
 	},
-	
+
 	dateInfo: {
 		year: null,
 		month: null,
 		day: null
 	},
-	
+
 	selectedDateInfo: {
 		year: null,
 		month: null,
 		day: null
 	},
-	
-	billData:{
+
+	billData: {
 		incomeSum: null,
-		outcomeSum: null
+		outcomeSum: null,
+		monthList: [],
+		typeList: []
 	},
-	
+
 }
 
 export default state

@@ -4,35 +4,58 @@
 		<div class="items-container">
 			<div class="item-container">
 				<div class="item-title">收入</div>
-				<div class="item-smount">{{ sumData.income || '1222.00' }}</div>
+				<div class="item-smount">{{ sumData.incomeSum }}</div>
 			</div>
 			<div class="item-container">
 				<div class="item-title">支出</div>
-				<div class="item-smount">{{ sumData.income || '1222.00' }}</div>
+				<div class="item-smount">{{ sumData.outcomeSum }}</div>
 			</div>
 			<div class="item-container">
 				<div class="item-title">结余</div>
-				<div class="item-smount">{{ sumData.income || '1222.00' }}</div>
+				<div class="item-smount">{{ sumLeft }}</div>
 			</div>
 			<div class="item-container">
 				<div class="item-title">每天平均支出</div>
-				<div class="item-smount">{{ sumData.income || '1222.00' }}</div>
+				<div class="item-smount">{{ dayOut }}</div>
 			</div>
 		</div>
 	</view>
 </template>
 
 <script>
+import {getHowManyDays} from '@/assets/js/help.js'
+
+
 export default {
 	data() {
 		return {
 
 		};
 	},
-	props: {
-		sumData: {
-			type: Object,
-			default: {}
+	computed:{
+		sumData() {
+			return this.$store.state.billData;
+		},
+		sumLeft() {
+			return (this.sumData.incomeSum - this.sumData.outcomeSum).toFixed(2);
+		},
+		dateInfo() {
+			return this.$store.state.dateInfo;
+		},
+		selectedDateInfo() {
+			return this.$store.state.selectedDateInfo;
+		},
+		days() {
+			if( this.dateInfo.year == this.selectedDateInfo.year &&  this.dateInfo.month == this.selectedDateInfo.month ){
+				return this.dateInfo.day
+			}
+			else{
+				return getHowManyDays(this.selectedDateInfo.year, this.selectedDateInfo.month) || 30
+			}
+
+		},
+		dayOut() {
+			return Number(this.sumData.outcomeSum / this.days).toFixed(2);
 		}
 	}
 }
@@ -64,7 +87,7 @@ export default {
 		flex-wrap: wrap;
 		padding-bottom: 10px;
 		align-items: flex-start;
-		
+
 		.item-container {
 			height: 50px;
 			width: 40%;

@@ -4,10 +4,10 @@
 
 		<div class="circle-container"></div>
 		<div class="items-container">
-			<div class="item-container" v-for="item in 6">
+			<div class="item-container" v-for="item in 6"  :key="item" >
 				<icon :name="'type_food'" color="#07bbff" size="26"></icon>
 				<div class="type-container">
-					<div class="item-type">收入</div>
+					<div class="item-type">支出</div>
 					<div class="type-line"></div>
 					<div class="type-line-color-cover" :style=""></div>
 				</div>

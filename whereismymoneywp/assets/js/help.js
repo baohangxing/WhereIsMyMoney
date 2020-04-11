@@ -4,7 +4,7 @@ import {
 
 
 /**
- * 裁剪字符串
+ * @description 裁剪字符串
  * 
  * @param  {string} content       字符串
  * @param  {number}   len         长度
@@ -22,7 +22,7 @@ export const shortifyContent = (content, len) => {
 }
 
 /**
- * 防抖函数，返回函数连续调用时，空闲时间必须大于或等于 wait，func 才会执行
+ * @description 防抖函数，返回函数连续调用时，空闲时间必须大于或等于 wait，func 才会执行
  *
  * @param  {function} func        回调函数
  * @param  {number}   wait        表示时间窗口的间隔
@@ -57,7 +57,7 @@ export function debounce(func, wait = 500, immediate = true) {
 }
 
 /**
- * 获取token
+ * @description获取token
  */
 export function genAuth() {
 	const token = uni.getStorageSync('accessToken')
@@ -80,7 +80,7 @@ export function setHeader() {
 }
 
 /**
- * 节流函数
+ * @description 节流函数
  *
  * @param  {function} fn      回调函数
  * @param  {number}   delay   延时时间
@@ -96,4 +96,44 @@ export function throtting(fn, delay) {
 			canRun = true
 		}, delay)
 	}
+}
+
+/**
+ * @description 获取某年月的日数
+ *
+ * @param  {number}   year    年
+ * @param  {number}   month   月
+ * @return {number}           日数
+ */
+export function getHowManyDays(year, month) {
+	let d = new Date(year, month, 0);
+	return d.getDate()
+}
+
+/**
+ * @description 获取本地的国际化时间
+ *
+ * @param  {number}   year    年
+ * @param  {number}   month   月
+ * @param  {number}   month   月
+ * @param  {number}   hour    时
+ * @param  {number}   minute  分
+ * @param  {number}   second  秒
+ * @return {string}           国际化时间
+ */
+export function dateFormat(year, month, day, hour, minute, second) {
+	let y = year || new Date().getFullYear(); //年
+	if (y < 1900) y = y + 1900;
+	let m = month || new Date().getMonth() + 1; //月
+	if (m < 10) m = '0' + m;
+	let d = day || new Date().getDate(); //日
+	if (d < 10) d = '0' + d;
+	let h = hour || '0'; //小时
+	if (h < 10) h = '0' + h;
+	let min = minute || '0'; //分钟
+	if (min < 10) min = '0' + min;
+	let s = second || '0'; //秒
+	if (s < 10) s = '0' + s;
+	let str = y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s;
+	return str
 }

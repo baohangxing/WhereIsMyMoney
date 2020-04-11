@@ -2,10 +2,10 @@
 	<view class="add-bill-container">
 		<cu-custom><view slot="content">收入</view></cu-custom>
 		<view class="types-container">
-			<div v-for="item in types">
+			<div v-for="item in types"  :key="item.id" >
 				<type-select-item :item="item" :isSelected="isSelectedId == item.id && defaultType == 1" @tap="selectItem(item.id, true)"></type-select-item>
 			</div>
-			<div v-for="item in myTypes">
+			<div v-for="item in myTypes"  :key="item.id" >
 				<type-select-item :item="item" :isSelected="isSelectedId == item.id && defaultType == 0" @tap="selectItem(item.id, false)"></type-select-item>
 			</div>
 		</view>
@@ -32,10 +32,10 @@ export default {
 	},
 	computed: {
 		types() {
-			return this.$store.state.system.types;
+			return this.$store.state.system.types.outTypeList;
 		},
 		myTypes() {
-			return this.$store.state.system.myTypes;
+			return this.$store.state.system.myTypes.outTypeList;
 		},
 		userId() {
 			return this.$store.state.userInfo.id;

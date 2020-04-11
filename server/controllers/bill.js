@@ -1,5 +1,6 @@
 const BillModel = require('../lib/sequelize.js').BillModel;
 const sequelize = require('sequelize');
+const dateFormat = require("./../middlewares/help").dateFormat;
 
 class BillController {
 
@@ -162,8 +163,8 @@ class BillController {
      * @apiGroup Bill
      * @apiParam {string} userId 用户userId
      * @apiParam {string} size 分页大小 （不填为10）
-     * @apiParam {string} startTime 开始时间 （可选，但需和endTime一起使用）
-     * @apiParam {string} endTime 结束时间 （可选, 但需和startTime一起使用）
+     * @apiParam {string} startTime 开始时间 （可选，但需和endTime一起使用 >=）
+     * @apiParam {string} endTime 结束时间 （可选, 但需和startTime一起使用 <）
      * @apiParam {string} current 分页页码 （不填为1）
      * @apiParam {string} type 账单类型 （不填为全部）
      * @apiSuccess {json} result
@@ -234,7 +235,7 @@ class BillController {
         if (data.startTime && data.endTime) {
             where.createdTime = {
                 [Op.gte]: data.startTime,
-                [Op.lte]: data.endTime
+                [Op.lt]: data.endTime
             }
         }
         const bills = await BillModel.findAndCountAll({
@@ -289,8 +290,8 @@ class BillController {
             type: 0
         };
 
-        let startTime = new Date(data.year, data.month ? data.month - 1 : 0, 0).toISOString();
-        let endTime = new Date(data.month ? data.year : data.year + 1, data.month ? data.month : 0, 0).toISOString();
+        let startTime = dateFormat(new Date(data.year, data.month ? data.month - 1 : 0));
+        let endTime = dateFormat(new Date(data.month ? data.year : data.year + 1, data.month ? data.month : 0));
 
         inWhere.time = {
             [Op.gte]: startTime,
@@ -334,6 +335,7 @@ class BillController {
      *   "data": [
      *     {
      *      "day": 9,
+     *      "time" : "2020-05-09 00:00:00",
      *      "incomeSum": 0,
      *      "outcomeSum": 36
      *      "billList": [
@@ -344,7 +346,7 @@ class BillController {
      *        "amount": "36.00",
      *       "defaultType": 1,
      *       "typeId": 7,
-     *      "time": "2020-05-09 00:00:00",
+     *       "time": "2020-05-09 00:00:00",
      *       "createdTime": "2020-04-09 19:34:09",
      *       "description": ""
      *      }
@@ -369,8 +371,8 @@ class BillController {
             deleteFlag: 0
         };
 
-        let startTime = new Date(data.year, data.month - 1, 0).toISOString();
-        let endTime = new Date(data.year, data.month, 0).toISOString();
+        let startTime = dateFormat(new Date(data.year, data.month - 1));
+        let endTime = dateFormat(new Date(data.year, data.month));
 
         where.time = {
             [Op.gte]: startTime,
@@ -393,6 +395,7 @@ class BillController {
                     day: day,
                     incomeSum: item.type == 1 ? Number(item.amount) : 0,
                     outcomeSum: item.type == 0 ? Number(item.amount) : 0,
+                    time: data.year + '-' + data.month + '-' + day,
                     billList: [item],
                 };
                 days.push(day)
@@ -461,8 +464,8 @@ class BillController {
             type: data.type
         };
 
-        let startTime = new Date(data.year, data.month ? data.month - 1 : 0, 0).toISOString();
-        let endTime = new Date(data.month ? data.year : data.year + 1, data.month ? data.month : 0, 0).toISOString();
+        let startTime = dateFormat(new Date(data.year, data.month ? data.month - 1 : 0));
+        let endTime = dateFormat(new Date(data.month ? data.year : data.year + 1, data.month ? data.month : 0));
 
         where.time = {
             [Op.gte]: startTime,

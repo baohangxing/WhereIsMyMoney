@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { getHowManyDays } from '@/assets/js/help.js';
+
 export default {
 	data() {
 		return {};

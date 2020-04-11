@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地
-Source Server Version : 50716
-Source Host           : localhost:3306
+Source Server         : 阿里云
+Source Server Version : 50727
+Source Host           : 39.105.33.31:3306
 Source Database       : mymoney
 
 Target Server Type    : MYSQL
-Target Server Version : 50716
+Target Server Version : 50727
 File Encoding         : 65001
 
-Date: 2020-03-20 17:55:12
+Date: 2020-04-11 14:06:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,94 +31,51 @@ CREATE TABLE `bills` (
   `deleteFlag` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除',
   `amount` decimal(8,2) NOT NULL COMMENT '金额',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bills
 -- ----------------------------
-INSERT INTO `bills` VALUES ('1', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'foe test', '0', '22.00');
-INSERT INTO `bills` VALUES ('2', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test', '0', '22.00');
-INSERT INTO `bills` VALUES ('3', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test', '0', '22.00');
-INSERT INTO `bills` VALUES ('4', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test', '0', '22.00');
-INSERT INTO `bills` VALUES ('5', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test', '0', '22.00');
-INSERT INTO `bills` VALUES ('6', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test', '0', '22.00');
-INSERT INTO `bills` VALUES ('7', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test', '0', '22.00');
-INSERT INTO `bills` VALUES ('8', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test', '0', '22.00');
-INSERT INTO `bills` VALUES ('9', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test', '0', '22.00');
-INSERT INTO `bills` VALUES ('10', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test', '0', '22.00');
-INSERT INTO `bills` VALUES ('11', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test', '0', '22.00');
-INSERT INTO `bills` VALUES ('12', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test', '0', '22.00');
-INSERT INTO `bills` VALUES ('13', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test', '0', '22.00');
-INSERT INTO `bills` VALUES ('14', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test 2222222222', '0', '22.00');
-INSERT INTO `bills` VALUES ('15', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test 2222222222', '0', '22.00');
-INSERT INTO `bills` VALUES ('16', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test 2222222222', '0', '22.00');
-INSERT INTO `bills` VALUES ('17', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test 2222222222', '0', '22.00');
-INSERT INTO `bills` VALUES ('18', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test 2222222222', '0', '22.00');
-INSERT INTO `bills` VALUES ('19', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test 2222222222', '0', '22.00');
-INSERT INTO `bills` VALUES ('20', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test 2222222222', '0', '22.00');
-INSERT INTO `bills` VALUES ('21', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test 2222222222', '0', '22.00');
-INSERT INTO `bills` VALUES ('22', '11111', '1', '1', '1', '2020-03-19 22:14:02', '2020-03-19 22:14:02', 'for test 2222222222', '0', '22.00');
-INSERT INTO `bills` VALUES ('23', '11111', '1', '1', '1', '2020-03-19 22:13:56', '2020-03-19 22:13:56', 'for test 2222222222', '0', '10.00');
-INSERT INTO `bills` VALUES ('24', '11111', '0', '1', '1', '2020-03-19 22:27:03', '2020-03-19 22:27:03', 'for test 2222222222', '0', '10.22');
-INSERT INTO `bills` VALUES ('25', '11111', '0', '1', '1', '2020-03-19 22:13:56', '2020-03-19 22:13:56', 'for test 2222222222', '0', '10.00');
-INSERT INTO `bills` VALUES ('26', '11111', '0', '1', '1', '2020-03-19 22:13:56', '2020-03-19 22:13:56', 'for test 2222222222', '0', '10.00');
-INSERT INTO `bills` VALUES ('27', '11111', '0', '1', '1', '2020-03-19 22:13:56', '2020-03-19 22:13:56', 'for test 2222222222', '0', '10.00');
-INSERT INTO `bills` VALUES ('28', '11111', '0', '1', '1', '2020-03-19 22:13:56', '2020-03-19 22:13:56', 'for test 2222222222', '0', '10.00');
-INSERT INTO `bills` VALUES ('29', '11111', '0', '1', '1', '2020-03-19 22:13:56', '2020-03-19 22:13:56', 'for test 2222222222', '0', '10.00');
-INSERT INTO `bills` VALUES ('30', '11111', '0', '1', '1', '2020-03-19 22:13:56', '2020-03-19 22:13:56', 'for test 2222222222', '0', '10.00');
-INSERT INTO `bills` VALUES ('31', '11111', '0', '1', '1', '2020-03-19 22:13:56', '2020-03-19 22:13:56', 'for test 2222222222', '0', '10.00');
-INSERT INTO `bills` VALUES ('32', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('33', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('34', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('35', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('36', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('37', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('38', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('39', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('40', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('41', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('42', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('43', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('44', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('45', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('46', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('47', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('48', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('49', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('50', '11111', '0', '1', '1', '2020-03-19 22:28:14', '2020-03-19 22:28:14', 'for test 2222222222', '0', '11.50');
-INSERT INTO `bills` VALUES ('51', '11111', '0', '1', '1', '2020-03-19 22:14:10', '2020-03-19 22:14:10', 'for test 2222222222', '0', '35.00');
-INSERT INTO `bills` VALUES ('52', '11111', '0', '1', '1', '2020-03-19 22:14:10', '2020-03-19 22:14:10', 'for test 2222222222', '0', '35.00');
-INSERT INTO `bills` VALUES ('53', '11111', '0', '1', '1', '2020-03-19 22:14:10', '2020-03-19 22:14:10', 'for test 2222222222', '0', '35.00');
-INSERT INTO `bills` VALUES ('54', '11111', '0', '1', '1', '2020-03-19 22:14:10', '2020-03-19 22:14:10', 'for test 2222222222', '0', '35.00');
-INSERT INTO `bills` VALUES ('55', '11111', '0', '1', '1', '2020-03-19 22:14:10', '2020-03-19 22:14:10', 'for test 2222222222', '0', '35.00');
-INSERT INTO `bills` VALUES ('56', '11111', '0', '1', '1', '2020-03-19 22:06:41', '2020-03-19 22:18:27', 'for test 2222222222', '0', '12.00');
-INSERT INTO `bills` VALUES ('57', '11111', '0', '1', '1', '2020-03-19 22:06:41', '2020-03-19 22:18:38', 'for test 2222222222', '0', '12.00');
-INSERT INTO `bills` VALUES ('58', '11111', '0', '1', '1', '2020-03-19 22:06:41', '2020-03-19 22:18:39', 'for test 2222222222', '0', '12.00');
-INSERT INTO `bills` VALUES ('59', '11111', '0', '1', '1', '2020-03-19 22:06:41', '2020-03-19 22:18:40', 'for test 2222222222', '0', '12.00');
-INSERT INTO `bills` VALUES ('60', '11111', '0', '1', '1', '2020-03-19 23:02:12', '2020-03-19 23:02:12', 'for test 2222222222', '1', '12.00');
-INSERT INTO `bills` VALUES ('61', '11111', '0', '1', '1', '2020-03-19 22:32:10', '2020-03-19 22:32:10', 'update', '0', '12.44');
-INSERT INTO `bills` VALUES ('62', '11111', '0', '1', '1', '2020-03-19 22:06:41', '2020-03-19 22:27:54', 'for test 3333333', '0', '12.44');
-INSERT INTO `bills` VALUES ('63', '11111', '0', '1', '1', '2020-03-19 22:06:41', '2020-03-19 22:27:55', 'for test 3333333', '0', '12.44');
 
 -- ----------------------------
--- Table structure for defaulttypes
+-- Table structure for defaultTypes
 -- ----------------------------
-DROP TABLE IF EXISTS `defaulttypes`;
-CREATE TABLE `defaulttypes` (
+DROP TABLE IF EXISTS `defaultTypes`;
+CREATE TABLE `defaultTypes` (
   `id` int(8) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `name` varchar(16) NOT NULL COMMENT '类型名称',
   `type` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '类型 默认0 0支出 1收入',
-  `icon` varchar(16) CHARACTER SET ascii NOT NULL COMMENT '类型的图片',
+  `icon` varchar(32) CHARACTER SET ascii NOT NULL COMMENT '类型的图片',
   `deleteFlag` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of defaulttypes
+-- Records of defaultTypes
 -- ----------------------------
-INSERT INTO `defaulttypes` VALUES ('1', '衣服', '0', 'e771', '1');
-INSERT INTO `defaulttypes` VALUES ('2', '加油 修改后', '0', 'e77d', '0');
-INSERT INTO `defaulttypes` VALUES ('3', '加油', '0', 'e777', '0');
+INSERT INTO `defaultTypes` VALUES ('1', '三餐', '0', 'type_food', '0');
+INSERT INTO `defaultTypes` VALUES ('2', '衣服', '0', 'type_clothes', '0');
+INSERT INTO `defaultTypes` VALUES ('3', '交通', '0', 'type_ditie', '0');
+INSERT INTO `defaultTypes` VALUES ('4', '旅行', '0', 'type_tour', '0');
+INSERT INTO `defaultTypes` VALUES ('5', '网费话费', '0', 'type_online', '0');
+INSERT INTO `defaultTypes` VALUES ('6', '学习', '0', 'type_study', '0');
+INSERT INTO `defaultTypes` VALUES ('7', '日用品', '0', 'type_dayuse', '0');
+INSERT INTO `defaultTypes` VALUES ('8', '住房', '0', 'type_house', '0');
+INSERT INTO `defaultTypes` VALUES ('9', '医疗', '0', 'type_hospitol', '0');
+INSERT INTO `defaultTypes` VALUES ('10', '发红包', '0', 'type_hongbao', '0');
+INSERT INTO `defaultTypes` VALUES ('11', '娱乐游戏', '0', 'type_funny', '0');
+INSERT INTO `defaultTypes` VALUES ('12', '请客送礼', '0', 'type_dinner', '0');
+INSERT INTO `defaultTypes` VALUES ('13', '电器数码', '0', 'type_electric', '0');
+INSERT INTO `defaultTypes` VALUES ('14', '运动', '0', 'type_sports', '0');
+INSERT INTO `defaultTypes` VALUES ('15', '零食', '0', 'type_eat', '0');
+INSERT INTO `defaultTypes` VALUES ('16', '水果', '0', 'type_fruit', '0');
+INSERT INTO `defaultTypes` VALUES ('17', '其他', '0', 'type_others', '0');
+INSERT INTO `defaultTypes` VALUES ('18', '工资', '1', 'type_CombinedShape', '0');
+INSERT INTO `defaultTypes` VALUES ('19', '生活费', '1', 'type_life', '0');
+INSERT INTO `defaultTypes` VALUES ('20', '收红包', '1', 'type_hongbao', '0');
+INSERT INTO `defaultTypes` VALUES ('21', '外快', '1', 'type_WaiKuai', '0');
+INSERT INTO `defaultTypes` VALUES ('22', '股票基金', '1', 'type_gupiao', '0');
+INSERT INTO `defaultTypes` VALUES ('23', '其他', '1', 'type_others', '0');
 
 -- ----------------------------
 -- Table structure for users
@@ -141,14 +98,13 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('11111', 'himple', 'e10adc3949ba59abbe56e057f20f883e', '2292398086@qq.com', '1', '1111111111111111.img', '2020-03-18 14:39:18', '0', null, null);
-INSERT INTO `users` VALUES ('11112', '何足道1', 'e10adc3949ba59abbe56e057f20f883e', '1111111111@12.com', '1', null, '2020-03-18 13:39:39', '0', null, null);
+INSERT INTO `users` VALUES ('11111', '何足道', 'e10adc3949ba59abbe56e057f20f883e', '2292398086@qq.com', '28', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586355963649&di=e0f367c162e9a003457886460c0705a8&imgtype=0&src=http%3A%2F%2Fa4.att.hudong.com%2F21%2F09%2F01200000026352136359091694357.jpg', '2020-04-08 19:38:53', '0', null, null);
 
 -- ----------------------------
--- Table structure for usertypes
+-- Table structure for userTypes
 -- ----------------------------
-DROP TABLE IF EXISTS `usertypes`;
-CREATE TABLE `usertypes` (
+DROP TABLE IF EXISTS `userTypes`;
+CREATE TABLE `userTypes` (
   `id` int(8) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `userId` int(8) NOT NULL COMMENT '用户id',
   `name` varchar(16) NOT NULL COMMENT '类型名称',
@@ -159,8 +115,5 @@ CREATE TABLE `usertypes` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of usertypes
+-- Records of userTypes
 -- ----------------------------
-INSERT INTO `usertypes` VALUES ('1', '11111', '衣服', '0', 'e771', '1');
-INSERT INTO `usertypes` VALUES ('2', '11111', '加油 修改后', '0', 'e771', '0');
-INSERT INTO `usertypes` VALUES ('3', '11111', '出行', '0', 'e77d', '0');

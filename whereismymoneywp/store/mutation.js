@@ -14,11 +14,32 @@ const mutations = {
 		}
 	},
 	setTypes(state, data) {
-		state.system.types = data
+		let inTypeList = []
+		let outTypeList = []
+		data.forEach(item => {
+			if (item.type == 1) {
+				inTypeList.push(item)
+			} else {
+				outTypeList.push(item)
+			}
+		})
+		state.system.types.inTypeList = inTypeList
+		state.system.types.outTypeList = outTypeList
 	},
 
 	setMyTypes(state, data) {
-		state.system.myTypes = data
+
+		let inTypeList = []
+		let outTypeList = []
+		data.forEach(item => {
+			if (item.type == 1) {
+				inTypeList.push(item)
+			} else {
+				outTypeList.push(item)
+			}
+		})
+		state.system.myTypes.inTypeList = inTypeList
+		state.system.myTypes.outTypeList = outTypeList
 	},
 
 	setShowUserPage(state, data) {
@@ -58,8 +79,27 @@ const mutations = {
 	setSumData(state, data) {
 		if (data.incomeSum != null) state.billData.incomeSum = data.incomeSum
 		if (data.outcomeSum != null) state.billData.outcomeSum = data.outcomeSum
-	}
+	},
 
+	setMonthList(state, data) {
+		if (data.length) {
+			if (state.dateInfo.year == state.selectedDateInfo.year && state.dateInfo.month == state.selectedDateInfo.month) {
+				state.billData.monthList = data.reverse()
+			} else {
+				state.billData.monthList = data
+			}
+		} else {
+			state.billData.monthList = []
+		}
+	},
+
+	setTypeList(state, data) {
+		if (data.length) {
+			state.billData.typeList = data
+		} else {
+			state.billData.typeList = []
+		}
+	},
 }
 
 export default mutations

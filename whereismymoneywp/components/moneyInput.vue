@@ -8,10 +8,10 @@
 			</div>
 			<div class="container">
 				<div class="left-container">
-					<div v-for="item in leftItems" class="left-item" @tap="tapNumber(item)">{{ item }}</div>
+					<div v-for="(item, index) in leftItems" class="left-item" :key="index" @tap="tapNumber(item)">{{ item }}</div>
 				</div>
 				<div class="right-container">
-					<div v-for="item in rightItems" class="right-item" @tap="tapOption(item)">{{ item }}</div>
+					<div v-for="(item, index) in rightItems" class="right-item" :key="index" @tap="tapOption(item)">{{ item }}</div>
 				</div>
 			</div>
 		</view>
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import { dateFormat } from '@/assets/js/help.js';
+
 export default {
 	data() {
 		return {
@@ -146,7 +148,8 @@ export default {
 			} else {
 				dateArr[0] = '20' + dateArr[0];
 			}
-			data.date = new Date(dateArr[0], dateArr[1], dateArr[2]).toISOString();
+
+			data.date = dateFormat(dateArr[0], dateArr[1], dateArr[2]);
 			return data;
 		}
 	}

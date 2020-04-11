@@ -13,8 +13,7 @@
 			<swiper-item>
 				<mescroll-uni :up="upOption" :down="downOption" @down="trendDownCB">
 					<income-month-sum></income-month-sum>
-					<day-bills-list></day-bills-list>
-					<day-bills-list></day-bills-list>
+					<day-bills-list v-for="(item, index) in monthList" :key="item.day" :billData="item"></day-bills-list>
 				</mescroll-uni>
 			</swiper-item>
 			<swiper-item>
@@ -49,7 +48,8 @@ export default {
 			upOption: {
 				use: false
 			},
-			TabCur: 0
+			TabCur: 0,
+			typeSelected: 1
 		};
 	},
 	computed: {
@@ -70,6 +70,9 @@ export default {
 		},
 		showYear() {
 			return this.selectedDateInfo.year.toString().substr(2, 2);
+		},
+		monthList() {
+			return this.$store.state.billData.monthList;
 		}
 	},
 	components: {
@@ -132,7 +135,45 @@ export default {
 					.catch(e => {
 						if (mescroll) mescroll.endErr();
 					});
+
+				BILL_GET_GROUP0BY_MONTH({
+					params: {
+						userId: uni.getStorageSync('userId'),
+						year: this.selectedDateInfo.year,
+						month: this.selectedDateInfo.month
+					}
+				})
+					.then(result => {
+						if (result.data.code == '000001') {
+							this.$store.commit('setMonthList', result.data.data);
+							if (mescroll) mescroll.endSuccess();
+						} else {
+							if (mescroll) mescroll.endErr();
+						}
+					})
+					.catch(e => {
+						if (mescroll) mescroll.endErr();
+					});
 			} else {
+				BILL_GET_GROUP0BY_TYPE({
+					params: {
+						userId: uni.getStorageSync('userId'),
+						year: this.selectedDateInfo.year,
+						month: this.selectedDateInfo.month,
+						type: this.typeSelected
+					}
+				})
+					.then(result => {
+						if (result.data.code == '000001') {
+							this.$store.commit('setTypeList', result.data.data);
+							if (mescroll) mescroll.endSuccess();
+						} else {
+							if (mescroll) mescroll.endErr();
+						}
+					})
+					.catch(e => {
+						if (mescroll) mescroll.endErr();
+					});
 			}
 		},
 		initData() {
@@ -143,15 +184,18 @@ export default {
 					}
 				});
 			}
-			if (!this.$store.state.system.types) {
+			if (this.$store.state.system.types.outTypeList.length == 0 || this.$store.state.system.types.inTypeList.length == 0) {
 				DT_GETALL().then(result => {
 					if (result.data.code == '000001') {
 						this.$store.commit('setTypes', result.data.data);
 					}
 				});
-			}
-			if (!this.$store.state.system.myTypes) {
-				UT_GETALL().then(result => {
+
+				UT_GETALL({
+					params: {
+						userId: uni.getStorageSync('userId')
+					}
+				}).then(result => {
 					if (result.data.code == '000001') {
 						this.$store.commit('setMyTypes', result.data.data);
 					}

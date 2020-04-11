@@ -1,24 +1,24 @@
 <template>
 	<view class="container">
 		<div class="title">
-			<div class="date">{{ '12.06' }}</div>
+			<div class="date">{{ formatDate(billData.time) }}</div>
 			<div class="amount">
 				<span>支：</span>
-				<span class="outcome-color">{{ '25.50' }}</span>
+				<span class="outcome-color">{{ billData.outcomeSum }}</span>
 				<span class="margin-line">收：</span>
-				<span class="income-color">{{ '150.00' }}</span>
+				<span class="income-color">{{ billData.incomeSum }}</span>
 			</div>
 		</div>
 
-		<div v-for="(item, index) in 5" :key="index" class="bill-item">
+		<div v-for="item in billData.billList" :key="item.id" class="bill-item">
 			<div class="type-contianer">
-				<div class="point-tip" :class="index == 1 || index == 2 ? 'income-point' : 'outcome-point'"></div>
+				<div class="point-tip" :class="item.type == 1 ? 'income-point' : 'outcome-point'"></div>
 				<div class="info-container">
-					<div class="type">{{ '收红包' }}</div>
-					<div class="tip" v-if="index == 1">{{ '111111111111111' }}</div>
+					<div class="type">{{ getTypeName(item.typeId, item.type, item.defaultType) }}</div>
+					<div class="tip" v-if="item.description">{{ item.description }}</div>
 				</div>
 			</div>
-			<div class="amount" :class="index == 1 || index == 2 ? 'income-color' : 'outcome-color'">{{ '17.00' }}</div>
+			<div class="amount" :class="item.type == 1 ? 'income-color' : 'outcome-color'">{{ item.amount }}</div>
 		</div>
 	</view>
 </template>
@@ -27,6 +27,69 @@
 export default {
 	data() {
 		return {};
+	},
+	props: {
+		billData: {
+			type: Object,
+			default: {}
+		}
+	},
+	computed: {
+		dateInfo() {
+			return this.$store.state.dateInfo;
+		},
+		types() {
+			return this.$store.state.system.types;
+		},
+		myTypes() {
+			return this.$store.state.system.myTypes;
+		}
+	},
+	methods: {
+		getTypeName(id, type, defaultType) {
+			if (type == 1 && defaultType == 1) {
+				for (let i = 0; i < this.types.inTypeList.length; i++) {
+					if (this.types.inTypeList[i] && this.types.inTypeList[i].id == id) return this.types.inTypeList[i].name;
+				}
+				return '支出';
+			}
+
+			if (type == 0 && defaultType == 1) {
+				for (let i = 0; i < this.types.outTypeList.length; i++) {
+					if (this.types.outTypeList[i] && this.types.outTypeList[i].id == id) return this.types.outTypeList[i].name;
+				}
+				return '收入';
+			}
+			if (type == 1 && defaultType == 0) {
+				for (let i = 0; i < this.myTypes.inTypeList.length; i++) {
+					if (this.myTypes.inTypeList[i] && this.myTypes.inTypeList[i].id == id) return this.myTypes.inTypeList[i].name;
+				}
+				return '支出';
+			}
+
+			if (type == 0 && defaultType == 0) {
+				for (let i = 0; i < this.myTypes.outTypeList.length; i++) {
+					if (this.myTypes.outTypeList[i] && this.myTypes.outTypeList[i].id == id) return this.myTypes.outTypeList[i].name;
+				}
+				return '收入';
+			}
+		},
+		formatDate(time) {
+			let timeArr = time.split('-');
+			if (timeArr[0] == this.dateInfo.year && timeArr[1] == this.dateInfo.month && timeArr[2] == this.dateInfo.day) {
+				return timeArr[1] + '.' + timeArr[2] + '  今天';
+			}
+			let timepnow = new Date(this.dateInfo.year, this.dateInfo.month, this.dateInfo.day).getTime();
+			let timep = new Date(timeArr[0], timeArr[1], timeArr[2]).getTime();
+			let timeMinus = timepnow - timep;
+			if (timeMinus > 0 && timeMinus <= 60 * 60 * 24 * 1000) {
+				return timeArr[1] + '.' + timeArr[2] + '  昨天';
+			} else if (timeMinus > 0 && timeMinus <= 60 * 60 * 24 * 1000 * 2) {
+				return timeArr[1] + '.' + timeArr[2] + '  前天';
+			}
+
+			return timeArr[1] + '.' + timeArr[2] + '  星期' + '日一二三四五六'.charAt(new Date(timeArr[0], timeArr[1], timeArr[2]).getDay());
+		}
 	}
 };
 </script>
