@@ -137,3 +137,43 @@ export function dateFormat(year, month, day, hour, minute, second) {
 	let str = y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s;
 	return str
 }
+
+/**
+ * @description 获取类型的名字
+ * @param {Object} id
+ * @param {Object} type
+ * @param {Object} defaultType
+ * @return {Object} name
+ */
+export function getTypeName(id, type, defaultType) {
+
+	let types = this.$store.state.system.types;
+	let myTypes = this.$store.state.system.myTypes;
+
+	if (type == 1 && defaultType == 1) {
+		for (let i = 0; i < types.inTypeList.length; i++) {
+			if (types.inTypeList[i] && types.inTypeList[i].id == id) return types.inTypeList[i].name;
+		}
+		return '支出';
+	}
+
+	if (type == 0 && defaultType == 1) {
+		for (let i = 0; i < types.outTypeList.length; i++) {
+			if (types.outTypeList[i] && types.outTypeList[i].id == id) return types.outTypeList[i].name;
+		}
+		return '收入';
+	}
+	if (type == 1 && defaultType == 0) {
+		for (let i = 0; i < myTypes.inTypeList.length; i++) {
+			if (myTypes.inTypeList[i] && myTypes.inTypeList[i].id == id) return myTypes.inTypeList[i].name;
+		}
+		return '支出';
+	}
+
+	if (type == 0 && defaultType == 0) {
+		for (let i = 0; i < myTypes.outTypeList.length; i++) {
+			if (myTypes.outTypeList[i] && myTypes.outTypeList[i].id == id) return myTypes.outTypeList[i].name;
+		}
+		return '收入';
+	}
+}

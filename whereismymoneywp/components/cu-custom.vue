@@ -76,7 +76,7 @@ export default {
 	}
 
 	.content {
-		width: calc(100% - 440upx);
+		width: 40vw;
 		min-height: 0px;
 		box-shadow: 0upx 0upx 0upx;
 		z-index: 9999;

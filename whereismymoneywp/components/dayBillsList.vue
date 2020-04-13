@@ -10,7 +10,7 @@
 			</div>
 		</div>
 
-		<div v-for="item in billData.billList" :key="item.id" class="bill-item">
+		<div v-for="item in billData.billList" :key="item.id" class="bill-item" @tap="setShowUserPage(item)">
 			<div class="type-contianer">
 				<div class="point-tip" :class="item.type == 1 ? 'income-point' : 'outcome-point'"></div>
 				<div class="info-container">
@@ -37,42 +37,11 @@ export default {
 	computed: {
 		dateInfo() {
 			return this.$store.state.dateInfo;
-		},
-		types() {
-			return this.$store.state.system.types;
-		},
-		myTypes() {
-			return this.$store.state.system.myTypes;
 		}
 	},
 	methods: {
-		getTypeName(id, type, defaultType) {
-			if (type == 1 && defaultType == 1) {
-				for (let i = 0; i < this.types.inTypeList.length; i++) {
-					if (this.types.inTypeList[i] && this.types.inTypeList[i].id == id) return this.types.inTypeList[i].name;
-				}
-				return '支出';
-			}
-
-			if (type == 0 && defaultType == 1) {
-				for (let i = 0; i < this.types.outTypeList.length; i++) {
-					if (this.types.outTypeList[i] && this.types.outTypeList[i].id == id) return this.types.outTypeList[i].name;
-				}
-				return '收入';
-			}
-			if (type == 1 && defaultType == 0) {
-				for (let i = 0; i < this.myTypes.inTypeList.length; i++) {
-					if (this.myTypes.inTypeList[i] && this.myTypes.inTypeList[i].id == id) return this.myTypes.inTypeList[i].name;
-				}
-				return '支出';
-			}
-
-			if (type == 0 && defaultType == 0) {
-				for (let i = 0; i < this.myTypes.outTypeList.length; i++) {
-					if (this.myTypes.outTypeList[i] && this.myTypes.outTypeList[i].id == id) return this.myTypes.outTypeList[i].name;
-				}
-				return '收入';
-			}
+		setShowUserPage(item) {
+			this.$store.commit('selectedBillItem', item);
 		},
 		formatDate(time) {
 			let timeArr = time.split('-');

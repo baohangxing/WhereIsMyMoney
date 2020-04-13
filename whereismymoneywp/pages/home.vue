@@ -13,7 +13,7 @@
 			<swiper-item>
 				<mescroll-uni :up="upOption" :down="downOption" @down="trendDownCB">
 					<income-month-sum></income-month-sum>
-					<day-bills-list v-for="(item, index) in monthList" :key="item.day" :billData="item"></day-bills-list>
+					<day-bills-list v-for="(item, index) in monthList" :billData="item"></day-bills-list>
 				</mescroll-uni>
 			</swiper-item>
 			<swiper-item>
@@ -26,6 +26,7 @@
 		<view class="fixed-btn" @tap="goToAddBill"><icon name="icon_add" color="#FFF"></icon></view>
 
 		<user-page @setShowUserPage="setShowUserPage"></user-page>
+		<pop-up-selected-bill></pop-up-selected-bill>
 	</view>
 </template>
 
@@ -37,6 +38,7 @@ import incomeSum from '@/components/incomeSum.vue';
 import incomeParts from '@/components/incomeParts.vue';
 import incomeMonthSum from '@/components/incomeMonthSum.vue';
 import dayBillsList from '@/components/dayBillsList.vue';
+import popUpSelectedBill from '@/components/popUpSelctedBill.vue'
 
 export default {
 	data() {
@@ -81,7 +83,8 @@ export default {
 		incomeSum,
 		incomeParts,
 		incomeMonthSum,
-		dayBillsList
+		dayBillsList,
+		popUpSelectedBill
 	},
 	onLoad() {
 		if (!uni.getStorageSync('accessToken')) {

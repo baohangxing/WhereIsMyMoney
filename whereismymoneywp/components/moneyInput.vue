@@ -62,9 +62,21 @@ export default {
 		}
 	},
 	methods: {
-		DateChange(e) {
-			let value = e.detail.value;
-			let date = '';
+		resetData() {
+			this.tip = '';
+			this.number = '0';
+			this.tipSave = '';
+			this.showTipInput = false;
+		},
+		setData(data) {
+			this.tip = data.description || '';
+			this.number = Number(data.amount).toString() || '0';
+			this.tipSave = data.description || '';
+			this.showTipInput = false;
+
+			this.setDateValue(data.time.substr(0, 10));
+		},
+		setDateValue(value) {
 			if (value.substr(0, 4) == new Date().getFullYear()) {
 				let arr = value.substr(5).split('-');
 				this.date = Number(arr[0]) + '-' + Number(arr[1]);
@@ -72,6 +84,9 @@ export default {
 				let arr = value.substr(2).split('-');
 				this.date = arr[0] + '-' + Number(arr[1]) + '-' + Number(arr[2]);
 			}
+		},
+		DateChange(e) {
+			this.setDateValue(e.detail.value);
 		},
 		initDate() {
 			let time = new Date();
@@ -170,7 +185,7 @@ export default {
 
 	.top {
 		height: 44px;
-		width: calc(100% - 36px);
+		width: 100%;
 		padding: 0 13px;
 		display: flex;
 		align-items: center;
@@ -186,11 +201,12 @@ export default {
 			display: inline-block;
 			font-size: $font-size-ssm;
 			color: $text-color;
+			flex-shrink: 0;
 		}
 
 		.input-number {
 			height: 30px;
-			width: 150px;
+			width: 180px;
 			margin-left: auto;
 			margin-right: 10px;
 			overflow: hidden;

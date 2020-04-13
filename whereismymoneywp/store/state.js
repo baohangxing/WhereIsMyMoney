@@ -35,12 +35,16 @@ const state = {
 	},
 
 	billData: {
-		incomeSum: null,
-		outcomeSum: null,
+		incomeSum: 0,
+		outcomeSum: 0,
 		monthList: [],
 		typeList: []
 	},
 
+	temporary: {
+		isSelected: false,
+		selectedBillItem: {}
+	}
 }
 
 export default state

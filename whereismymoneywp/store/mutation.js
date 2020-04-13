@@ -93,6 +93,58 @@ const mutations = {
 		}
 	},
 
+	addMonthListItem(state, data) {
+		if (data) {
+			let day = Number(data.time.slice(8, 10)).toString()
+			let year = Number(data.time.slice(0, 4))
+			let month = data.time.slice(5, 7)
+
+			for (let i = 0; i < state.billData.monthList.length; i++) {
+				if (state.billData.monthList[i].day == day) {
+					if (data.type == 1) {
+						state.billData.monthList[i].incomeSum += Number(data.amount)
+					} else {
+						state.billData.monthList[i].outcomeSum += Number(data.amount)
+					}
+					state.billData.monthList[i].billList.unshift(data)
+					return
+				}
+			}
+
+			if (year == state.dateInfo.year && month == state.dateInfo.month) {
+				state.billData.monthList.push({
+					day: day,
+					incomeSum: data.type == 1 ? data.amount : 0,
+					outcomeSum: data.type == 0 ? data.amount : 0,
+					time: year + '-' + month + '-' + day,
+					billList: [data]
+				})
+			}
+		}
+	},
+
+	deleteMonthListItem(state, data) {
+		if (data) {
+			let day = Number(data.time.slice(8, 10)).toString()
+			for (let i = 0; i < state.billData.monthList.length; i++) {
+				if (state.billData.monthList[i].day == day) {
+					if (data.type == 1) {
+						state.billData.monthList[i].incomeSum -= Number(data.amount)
+					} else {
+						state.billData.monthList[i].outcomeSum -= Number(data.amount)
+					}
+					state.billData.monthList[i].billList = state.billData.monthList[i].billList.filter(item => item.id != data.id)
+
+					console.log(state.billData.monthList[i])
+					if (state.billData.monthList[i].billList.length == 0) {
+						state.billData.monthList = state.billData.monthList.filter(item => item.day != day)
+					}
+					return
+				}
+			}
+		}
+	},
+
 	setTypeList(state, data) {
 		if (data.length) {
 			state.billData.typeList = data
@@ -100,6 +152,17 @@ const mutations = {
 			state.billData.typeList = []
 		}
 	},
+
+	selectedBillItem(state, data) {
+		if (data && data.id) {
+			state.temporary.selectedBillItem = data
+			state.temporary.isSelected = true
+		} else {
+			state.temporary.isSelected = false
+			state.temporary.selectedBillItem = {}
+		}
+	}
+
 }
 
 export default mutations

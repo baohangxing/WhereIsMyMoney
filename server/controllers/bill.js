@@ -118,7 +118,7 @@ class BillController {
      * @apiSampleRequest http://localhost:3000/api/bill/update
      * @apiVersion 1.0.0
      */
-    static async update(ctx) {
+    static async updateBill(ctx) {
         const data = ctx.request.body;
         if (!data.id) {
             return ctx.sendError('000002', '参数不合法');
@@ -143,12 +143,12 @@ class BillController {
             update.description = data.description
         }
         const result = await BillModel.update(update, {
-            attributes: {exclude: ['deleteFlag']},
             where: {
                 id: data.id,
             }
         });
         const afterUpdate = await BillModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 id: data.id,
             }

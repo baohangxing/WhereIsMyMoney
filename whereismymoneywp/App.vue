@@ -1,12 +1,13 @@
 <script>
 import Vue from 'vue';
-import { shortifyContent } from '@/assets/js/help.js';
+import { shortifyContent, getTypeName } from '@/assets/js/help.js';
 
 export default {
 	onLaunch: function() {
 		console.log('App Launch');
 
 		Vue.prototype.shortifyContent = shortifyContent;
+		Vue.prototype.getTypeName = getTypeName;
 
 		uni.getSystemInfo({
 			success: function(e) {
