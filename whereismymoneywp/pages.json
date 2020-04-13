@@ -1,16 +1,31 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index",
+			"path": "pages/home",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"disableScroll": false,
+				"app-plus": {
+					"bounce": "none" // 取消iOS回弹,避免和下拉刷新冲突 (小程序无法取消, 点此查看H5端的取消方法... )
+				}
 			}
+		},
+		{
+			"path": "pages/login",
+			"style": {}
+		}, {
+			"path": "pages/setting",
+			"style": {}
+		}, {
+			"path": "pages/addBill",
+			"style": {}
+		}, {
+			"path": "pages/billDetaill",
+			"style": {}
 		}
+
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationStyle": "custom",
+		"navigationBarTextStyle": "black"
 	}
 }

@@ -16,7 +16,6 @@ class UserTypeController {
      * {
      *   "code": "000001",
      *   "data": {
-     *     "deleteFlag": 0,
      *     "userId": 11111,
      *     "id": 1,
      *     "name": "加气油",
@@ -30,7 +29,7 @@ class UserTypeController {
      */
     static async add(ctx) {
         const data = ctx.request.body;
-        if (!data.name || !data.type || !data.icon || !data.userId) {
+        if (data.name == null || data.type == null || !data.icon || !data.userId) {
             return ctx.sendError('000002', '参数不合法');
         }
         const result = await UserTypeModel.create({
@@ -96,8 +95,7 @@ class UserTypeController {
      *     "userId": 11111,
      *     "name": "加油 修改后",
      *     "type": 0,
-     *     "icon": "e77d",
-     *     "deleteFlag": 0
+     *     "icon": "e77d"
      *   },
      *   "msg": "修改成功"
      * }
@@ -111,7 +109,7 @@ class UserTypeController {
         }
         let update = {};
         if (data.name) update.name = data.name;
-        if (data.type) update.type = data.type;
+        if (data.type != null) update.type = data.type;
         if (data.icon) update.icon = data.icon;
         const result = await UserTypeModel.update(update, {
             where: {
@@ -120,6 +118,7 @@ class UserTypeController {
             }
         });
         const afterUpdate = await UserTypeModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 id: data.id,
                 userId: data.userId
@@ -144,16 +143,14 @@ class UserTypeController {
      *       "userId": 11111,
      *       "name": "网购",
      *       "type": 0,
-     *       "icon": "e77d",
-     *       "deleteFlag": 0
+     *       "icon": "e77d"
      *     },
      *     {
      *       "id": 3,
      *       "userId": 11111,
      *       "name": "加油",
      *       "type": 0,
-     *       "icon": "e777",
-     *       "deleteFlag": 0
+     *       "icon": "e777"
      *     }
      *   ],
      *   "msg": "请求成功"
@@ -167,6 +164,7 @@ class UserTypeController {
             return ctx.sendError('000002', '参数不合法');
         }
         const types = await UserTypeModel.findAll({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 deleteFlag: 0,
                 userId: data.userId
@@ -190,8 +188,7 @@ class UserTypeController {
      *     "userId": 11111,
      *     "name": "网购",
      *     "type": 0,
-     *     "icon": "e77d",
-     *     "deleteFlag": 0
+     *     "icon": "e77d"
      *   },
      *   "msg": "请求成功"
      * }
@@ -205,6 +202,7 @@ class UserTypeController {
             return ctx.sendError('000002', '参数不合法');
         }
         const type = await UserTypeModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 id: data.id,
                 deleteFlag: 0

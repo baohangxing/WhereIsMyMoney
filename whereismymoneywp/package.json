@@ -1,0 +1,22 @@
+{
+  "name": "whereismymoneywp",
+  "version": "1.0.0",
+  "description": "none",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baohangxing/WhereIsMyMoney.git"
+  },
+  "author": "何足道",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/baohangxing/WhereIsMyMoney/issues"
+  },
+  "homepage": "https://github.com/baohangxing/WhereIsMyMoney#readme",
+  "dependencies": {
+    "vuex": "^3.1.3"
+  }
+}

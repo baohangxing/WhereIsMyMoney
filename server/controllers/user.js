@@ -29,6 +29,7 @@ class UserController {
             return ctx.sendError('000002', '参数不合法');
         }
         const checkUser = await userModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 name: data.name,
             }
@@ -46,7 +47,7 @@ class UserController {
 
     /**
      * @api {post} /api/user/login 用户登录
-     * @apiDescription 用户注册
+     * @apiDescription 用户登录
      * @apiName login
      * @apiGroup User
      * @apiParam {string} name 用户名
@@ -79,6 +80,7 @@ class UserController {
             where.email = data.email
         }
         const result = await userModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
             where: where
         });
         if (result !== null) {
@@ -87,7 +89,8 @@ class UserController {
                 id: result.id
             }, CONFIG.jwt_secret, {expiresIn: '30d'});
             let data = {
-                token: token
+                token: token,
+                userInfo: result,
             };
             return ctx.send(data, '登录成功');
         } else {
@@ -96,7 +99,7 @@ class UserController {
     }
 
     /**
-     * @api {PUT} /api/user/userInfo 修改用户信息
+     * @api {PUT} /api/user/updateInfo 修改用户信息
      * @apiDescription 修改用户信息
      * @apiName updateInfo
      * @apiGroup User
@@ -125,6 +128,7 @@ class UserController {
         let update = {};
         if (data.name) {
             let nameUser = await userModel.findOne({
+                attributes: {exclude: ['deleteFlag']},
                 where: {
                     name: data.name,
                 }
@@ -134,6 +138,7 @@ class UserController {
         }
         if (data.email) {
             let nameUser = await userModel.findOne({
+                attributes: {exclude: ['deleteFlag']},
                 where: {
                     email: data.email,
                 }
@@ -159,9 +164,9 @@ class UserController {
     }
 
     /**
-     * @api {post} /api/user/userInfo 获取用户信息
+     * @api {get} /api/user/info 获取用户信息
      * @apiDescription 获取用户信息
-     * @apiName userInfo
+     * @apiName info
      * @apiGroup User
      * @apiParam {string} id 用户id
      * @apiSuccess {json} result
@@ -189,6 +194,7 @@ class UserController {
             return ctx.sendError('000002', '参数不合法');
         }
         const user = await userModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 id: data.id,
             }

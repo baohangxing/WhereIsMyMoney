@@ -15,7 +15,6 @@ class TypeController {
      * {
      *   "code": "000001",
      *   "data": {
-     *    "deleteFlag": 0,
      *     "id": 3,
      *     "name": "加油",
      *     "type": "0",
@@ -28,7 +27,7 @@ class TypeController {
      */
     static async add(ctx) {
         const data = ctx.request.body;
-        if (!data.name || !data.type || !data.icon) {
+        if (!data.name || data.type == null || !data.icon) {
             return ctx.sendError('000002', '参数不合法');
         }
         const result = await DefaultTypeModel.create({
@@ -89,8 +88,7 @@ class TypeController {
      *     "id": 2,
      *     "name": "加油 修改后",
      *     "type": 0,
-     *     "icon": "e77d",
-     *     "deleteFlag": 0
+     *     "icon": "e77d"
      *   },
      *   "msg": "修改成功"
      * }
@@ -106,7 +104,7 @@ class TypeController {
         if (data.name) {
             update.name = data.name
         }
-        if (data.type) {
+        if (data.type != null) {
             update.type = data.type
         }
         if (data.icon) {
@@ -118,6 +116,7 @@ class TypeController {
             }
         });
         const afterUpdate = await DefaultTypeModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 id: data.id,
             }
@@ -140,14 +139,12 @@ class TypeController {
      *       "name": "网购",
      *       "type": 0,
      *       "icon": "e77d",
-     *       "deleteFlag": 0
      *     },
      *     {
      *       "id": 3,
      *       "name": "加油",
      *       "type": 0,
-     *       "icon": "e777",
-     *       "deleteFlag": 0
+     *       "icon": "e777"
      *     }
      *   ],
      *   "msg": "请求成功"
@@ -159,6 +156,7 @@ class TypeController {
         const data = ctx.query;
 
         const types = await DefaultTypeModel.findAll({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 deleteFlag: 0
             },
@@ -180,8 +178,7 @@ class TypeController {
      *     "id": 2,
      *     "name": "网购",
      *     "type": 0,
-     *     "icon": "e77d",
-     *     "deleteFlag": 0
+     *     "icon": "e77d"
      *   },
      *   "msg": "请求成功"
      * }
@@ -195,6 +192,7 @@ class TypeController {
             return ctx.sendError('000002', '参数不合法');
         }
         const type = await DefaultTypeModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
             where: {
                 id: data.id,
                 deleteFlag: 0
