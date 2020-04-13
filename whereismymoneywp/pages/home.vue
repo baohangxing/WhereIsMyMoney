@@ -20,6 +20,7 @@
 				<mescroll-uni :up="upOption" :down="downOption" @down="trendDownCB">
 					<income-sum></income-sum>
 					<income-parts></income-parts>
+					<month-bill-list></month-bill-list>
 				</mescroll-uni>
 			</swiper-item>
 		</swiper>
@@ -38,20 +39,20 @@ import incomeSum from '@/components/incomeSum.vue';
 import incomeParts from '@/components/incomeParts.vue';
 import incomeMonthSum from '@/components/incomeMonthSum.vue';
 import dayBillsList from '@/components/dayBillsList.vue';
-import popUpSelectedBill from '@/components/popUpSelctedBill.vue'
+import popUpSelectedBill from '@/components/popUpSelctedBill.vue';
+import monthBillList from '@/components/monthBillsList.vue';
 
 export default {
 	data() {
 		return {
 			downOption: {
 				fps: 90,
-				auto: true
+				auto: false
 			},
 			upOption: {
 				use: false
 			},
-			TabCur: 0,
-			typeSelected: 1
+			TabCur: 0
 		};
 	},
 	computed: {
@@ -84,7 +85,8 @@ export default {
 		incomeParts,
 		incomeMonthSum,
 		dayBillsList,
-		popUpSelectedBill
+		popUpSelectedBill,
+		monthBillList
 	},
 	onLoad() {
 		if (!uni.getStorageSync('accessToken')) {
@@ -95,9 +97,10 @@ export default {
 	},
 	created() {
 		this.initData();
+		this.trendDownCB(null, true);
 	},
 	methods: {
-		swiperTab: function(e) {
+		swiperTab(e) {
 			this.TabCur = e.detail.current;
 		},
 		DateChange(e) {
@@ -108,7 +111,7 @@ export default {
 				month: Number(arr[1])
 			};
 			this.$store.commit('setSelectedDateInfo', data);
-			this.trendDownCB();
+			this.trendDownCB(null, true);
 		},
 		setShowUserPage() {
 			this.$store.commit('setShowUserPage');
@@ -118,8 +121,8 @@ export default {
 				url: '/pages/addBill'
 			});
 		},
-		trendDownCB(mescroll) {
-			if (this.TabCur == 0) {
+		trendDownCB(mescroll, queryAll = false) {
+			if (this.TabCur == 0 || queryAll) {
 				BILL_GET_MY_SUM({
 					params: {
 						userId: uni.getStorageSync('userId'),
@@ -157,18 +160,46 @@ export default {
 					.catch(e => {
 						if (mescroll) mescroll.endErr();
 					});
-			} else {
+			}
+			if (this.TabCur == 1 || queryAll) {
 				BILL_GET_GROUP0BY_TYPE({
 					params: {
 						userId: uni.getStorageSync('userId'),
 						year: this.selectedDateInfo.year,
 						month: this.selectedDateInfo.month,
-						type: this.typeSelected
+						type: 0
 					}
 				})
 					.then(result => {
 						if (result.data.code == '000001') {
-							this.$store.commit('setTypeList', result.data.data);
+							let data = {
+								data: result.data.data,
+								type: 0
+							};
+							this.$store.commit('setTypeList', data);
+							if (mescroll) mescroll.endSuccess();
+						} else {
+							if (mescroll) mescroll.endErr();
+						}
+					})
+					.catch(e => {
+						if (mescroll) mescroll.endErr();
+					});
+				BILL_GET_GROUP0BY_TYPE({
+					params: {
+						userId: uni.getStorageSync('userId'),
+						year: this.selectedDateInfo.year,
+						month: this.selectedDateInfo.month,
+						type: 1
+					}
+				})
+					.then(result => {
+						if (result.data.code == '000001') {
+							let data = {
+								data: result.data.data,
+								type: 1
+							};
+							this.$store.commit('setTypeList', data);
 							if (mescroll) mescroll.endSuccess();
 						} else {
 							if (mescroll) mescroll.endErr();

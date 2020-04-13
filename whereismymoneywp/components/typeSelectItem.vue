@@ -24,7 +24,7 @@ export default {
 	},
 	watch: {
 		isSelected() {
-			this.animationDisplay = !this.animationDisplay;
+			this.animationDisplay = this.isSelected;
 		}
 	}
 };

@@ -38,7 +38,10 @@ const state = {
 		incomeSum: 0,
 		outcomeSum: 0,
 		monthList: [],
-		typeList: []
+		typeList: {
+			inList: [],
+			outList: []
+		}
 	},
 
 	temporary: {

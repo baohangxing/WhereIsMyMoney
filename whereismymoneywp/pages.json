@@ -23,7 +23,11 @@
 			"style": {}
 		}
 
-	],
+	    ,{
+            "path" : "pages/moreCharts",
+            "style" : {}
+        }
+    ],
 	"globalStyle": {
 		"navigationStyle": "custom",
 		"navigationBarTextStyle": "black"

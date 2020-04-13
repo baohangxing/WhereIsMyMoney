@@ -146,7 +146,6 @@ export function dateFormat(year, month, day, hour, minute, second) {
  * @return {Object} name
  */
 export function getTypeName(id, type, defaultType) {
-
 	let types = this.$store.state.system.types;
 	let myTypes = this.$store.state.system.myTypes;
 
@@ -175,5 +174,41 @@ export function getTypeName(id, type, defaultType) {
 			if (myTypes.outTypeList[i] && myTypes.outTypeList[i].id == id) return myTypes.outTypeList[i].name;
 		}
 		return '收入';
+	}
+}
+
+
+/**
+ * @description 获取类型的图表
+ * @param {Object} id
+ * @param {Object} type
+ * @param {Object} defaultType
+ * @return {Object} name
+ */
+export function getTypeIcon(id, type, defaultType) {
+	let types = this.$store.state.system.types;
+	let myTypes = this.$store.state.system.myTypes;
+
+	if (type == 1 && defaultType == 1) {
+		for (let i = 0; i < types.inTypeList.length; i++) {
+			if (types.inTypeList[i] && types.inTypeList[i].id == id) return types.inTypeList[i].icon;
+		}
+	}
+
+	if (type == 0 && defaultType == 1) {
+		for (let i = 0; i < types.outTypeList.length; i++) {
+			if (types.outTypeList[i] && types.outTypeList[i].id == id) return types.outTypeList[i].icon;
+		}
+	}
+	if (type == 1 && defaultType == 0) {
+		for (let i = 0; i < myTypes.inTypeList.length; i++) {
+			if (myTypes.inTypeList[i] && myTypes.inTypeList[i].id == id) return myTypes.inTypeList[i].icon;
+		}
+	}
+
+	if (type == 0 && defaultType == 0) {
+		for (let i = 0; i < myTypes.outTypeList.length; i++) {
+			if (myTypes.outTypeList[i] && myTypes.outTypeList[i].id == id) return myTypes.outTypeList[i].icon;
+		}
 	}
 }

@@ -146,10 +146,19 @@ const mutations = {
 	},
 
 	setTypeList(state, data) {
-		if (data.length) {
-			state.billData.typeList = data
+		if (data.data.length) {
+			if (data.type == 0) {
+				state.billData.typeList.outList = data.data
+			} else {
+				state.billData.typeList.inList = data.data
+			}
 		} else {
-			state.billData.typeList = []
+			if (data.type == 0) {
+				state.billData.typeList.outList = []
+			} else {
+				state.billData.typeList.inList = []
+			}
+
 		}
 	},
 

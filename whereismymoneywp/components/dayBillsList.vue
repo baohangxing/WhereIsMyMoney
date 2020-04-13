@@ -10,7 +10,7 @@
 			</div>
 		</div>
 
-		<div v-for="item in billData.billList" :key="item.id" class="bill-item" @tap="setShowUserPage(item)">
+		<div v-for="item in billData.billList" :key="item.id" class="bill-item" :style="{height:item.description? '50px':'40px'}" @tap="setShowUserPage(item)">
 			<div class="type-contianer">
 				<div class="point-tip" :class="item.type == 1 ? 'income-point' : 'outcome-point'"></div>
 				<div class="info-container">
@@ -97,7 +97,7 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		border-bottom: 1px solid $bg-color-grey;
+		border-top: 1px solid $bg-color-grey;
 
 		.type-contianer {
 			height: 100%;
@@ -147,9 +147,6 @@ export default {
 		}
 	}
 
-	.bill-item:last-child {
-		border-bottom: none;
-	}
 	.income-color {
 		color: $system-color-green;
 	}
