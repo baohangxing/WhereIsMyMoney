@@ -1,19 +1,23 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="app" class="app-container">
+        <router-view/>
     </div>
-    <router-view />
-  </div>
 </template>
 
 <style lang="stylus">
-#app
-  font-family Avenir, Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-  margin-top 60px
+    html
+        height 100%
+        width 100%
+        margin 0
+        padding 0
+
+    body
+        height 100%
+        width 100%
+        margin 0
+        padding 0
+
+    .app-container
+        height 100%
+        width 100%
 </style>
