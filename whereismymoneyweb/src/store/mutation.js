@@ -40,10 +40,6 @@ const mutations = {
         state.system.myTypes.outTypeList = outTypeList;
     },
 
-    setShowUserPage(state) {
-        state.system.showUserPage = !state.system.showUserPage;
-    },
-
     refreshDateInfo(state) {
         let time = new Date();
         state.dateInfo.year = time.getFullYear();

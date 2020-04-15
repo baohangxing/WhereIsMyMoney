@@ -176,7 +176,9 @@ export default {
 				}
 			});
 
-			UT_GETALL().then(result => {
+			UT_GETALL({params:{
+				userId: uni.getStorageSync('userId'),
+			}}).then(result => {
 				if (result.data.code == '000001') {
 					this.$store.commit('setMyTypes', result.data.data);
 				}

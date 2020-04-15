@@ -140,29 +140,29 @@ export function getTypeName(id, type, defaultType) {
     let types = this.$store.state.system.types;
     let myTypes = this.$store.state.system.myTypes;
 
-    if (type == 1 && defaultType == 1) {
+    if (type === 1 && defaultType === 1) {
         for (let i = 0; i < types.inTypeList.length; i++) {
-            if (types.inTypeList[i] && types.inTypeList[i].id == id) return types.inTypeList[i].name;
+            if (types.inTypeList[i] && types.inTypeList[i].id === id) return types.inTypeList[i].name;
         }
         return '支出';
     }
 
-    if (type == 0 && defaultType == 1) {
+    if (type === 0 && defaultType === 1) {
         for (let i = 0; i < types.outTypeList.length; i++) {
-            if (types.outTypeList[i] && types.outTypeList[i].id == id) return types.outTypeList[i].name;
+            if (types.outTypeList[i] && types.outTypeList[i].id === id) return types.outTypeList[i].name;
         }
         return '收入';
     }
-    if (type == 1 && defaultType == 0) {
+    if (type === 1 && defaultType === 0) {
         for (let i = 0; i < myTypes.inTypeList.length; i++) {
-            if (myTypes.inTypeList[i] && myTypes.inTypeList[i].id == id) return myTypes.inTypeList[i].name;
+            if (myTypes.inTypeList[i] && myTypes.inTypeList[i].id === id) return myTypes.inTypeList[i].name;
         }
         return '支出';
     }
 
-    if (type == 0 && defaultType == 0) {
+    if (type === 0 && defaultType === 0) {
         for (let i = 0; i < myTypes.outTypeList.length; i++) {
-            if (myTypes.outTypeList[i] && myTypes.outTypeList[i].id == id) return myTypes.outTypeList[i].name;
+            if (myTypes.outTypeList[i] && myTypes.outTypeList[i].id === id) return myTypes.outTypeList[i].name;
         }
         return '收入';
     }
@@ -180,26 +180,26 @@ export function getTypeIcon(id, type, defaultType) {
     let types = this.$store.state.system.types;
     let myTypes = this.$store.state.system.myTypes;
 
-    if (type == 1 && defaultType == 1) {
+    if (type === 1 && defaultType === 1) {
         for (let i = 0; i < types.inTypeList.length; i++) {
-            if (types.inTypeList[i] && types.inTypeList[i].id == id) return types.inTypeList[i].icon;
+            if (types.inTypeList[i] && types.inTypeList[i].id === id) return types.inTypeList[i].icon;
         }
     }
 
-    if (type == 0 && defaultType == 1) {
+    if (type === 0 && defaultType === 1) {
         for (let i = 0; i < types.outTypeList.length; i++) {
-            if (types.outTypeList[i] && types.outTypeList[i].id == id) return types.outTypeList[i].icon;
+            if (types.outTypeList[i] && types.outTypeList[i].id === id) return types.outTypeList[i].icon;
         }
     }
-    if (type == 1 && defaultType == 0) {
+    if (type === 1 && defaultType === 0) {
         for (let i = 0; i < myTypes.inTypeList.length; i++) {
-            if (myTypes.inTypeList[i] && myTypes.inTypeList[i].id == id) return myTypes.inTypeList[i].icon;
+            if (myTypes.inTypeList[i] && myTypes.inTypeList[i].id === id) return myTypes.inTypeList[i].icon;
         }
     }
 
-    if (type == 0 && defaultType == 0) {
+    if (type === 0 && defaultType === 0) {
         for (let i = 0; i < myTypes.outTypeList.length; i++) {
-            if (myTypes.outTypeList[i] && myTypes.outTypeList[i].id == id) return myTypes.outTypeList[i].icon;
+            if (myTypes.outTypeList[i] && myTypes.outTypeList[i].id === id) return myTypes.outTypeList[i].icon;
         }
     }
 }

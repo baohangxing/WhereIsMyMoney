@@ -18,8 +18,7 @@ const state = {
         myTypes: {
             outTypeList: [],
             inTypeList: []
-        },
-        showUserPage: false,
+        }
     },
 
     dateInfo: {

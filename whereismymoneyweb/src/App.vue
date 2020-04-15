@@ -3,7 +3,13 @@
         <router-view/>
     </div>
 </template>
-
+<script>
+    export default {
+        created() {
+            this.$store.commit('refreshDateInfo');
+        }
+    }
+</script>
 
 <style lang="stylus">
     @import './assets/css/font.css'
