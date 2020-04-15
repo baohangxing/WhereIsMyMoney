@@ -4,7 +4,10 @@
     </div>
 </template>
 
+
 <style lang="stylus">
+    @import './assets/css/font.css'
+    @import './assets/css/normalize.css'
     html
         height 100%
         width 100%
