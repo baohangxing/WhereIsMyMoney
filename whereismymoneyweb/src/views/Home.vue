@@ -1,18 +1,39 @@
 <template>
     <div class="home-container">
         <Header @initData="initData"/>
+        <div class="content-container">
+            <div class="left-content-container">
+                <day-bills-list></day-bills-list>
+            </div>
+            <div class="right-content-container">
+                <income-sum></income-sum>
+            </div>
+        </div>
 
+        <div class="btn-container">
+            <div class="fixed-btn" @click="addBill(true)" :class="{'click-animation':addBillBOverShow}">
+                <my-icon name="icon_add" color="#FFF" size="44"></my-icon>
+            </div>
+        </div>
+
+        <add-bill-over v-if="addBillBOverShow" @closeAddBill="addBill"></add-bill-over>
     </div>
 </template>
 
 <script>
-    import Header from './../components/header'
+    import Header from './../components/header';
+    import incomeSum from "../components/incomeSum";
+    import dayBillsList from "../components/dayBillsList";
+    import addBillOver from "../components/addBillOver";
     import {BILL_GET_GROUP0BY_MONTH, BILL_GET_GROUP0BY_TYPE, BILL_GET_MY_SUM, USER_GET_INFO} from './../api/api';
 
     export default {
         name: 'Home',
         components: {
-            Header
+            Header,
+            incomeSum,
+            dayBillsList,
+            addBillOver
         },
         data() {
             return {
@@ -20,6 +41,9 @@
             }
         },
         computed: {
+            addBillBOverShow() {
+                return this.$store.state.system.addBillBOverShow
+            },
             dateInfo() {
                 return this.$store.state.dateInfo;
             },
@@ -111,13 +135,62 @@
                         this.$message.error(e);
                     });
 
+            },
+            addBill(val) {
+                if (val) {
+                    let mo = function (e) {
+                        e.preventDefault();
+                    };
+                    document.body.style.overflow = 'hidden';
+                    document.addEventListener("touchmove", mo, false)
+                } else {
+                    let mo = function (e) {
+                        e.preventDefault();
+                    };
+                    document.body.style.overflow = '';
+                    document.removeEventListener("touchmove", mo, false);
+                }
+                this.$store.commit('changeAddBillBOverShow', val);
             }
         }
     }
 </script>
 <style scoped lang="stylus">
     .home-container
-        min-height 100%
+        height 100vh
+        overflow-y scroll
+        overflow-x hidden
+        background-color $bg-color-grey
         width 100%
-        margin 0 auto
+        .content-container
+            width 1000px
+            padding-top 15px
+            margin 100px auto 0 auto
+            .left-content-container
+                display inline-block
+                width 680px
+            .right-content-container
+                vertical-align top
+                margin-left 15px
+                display inline-block
+                width 300px
+
+        .btn-container
+            position fixed;
+            left 50%;
+            transform translateX(-50%);
+            bottom 100px;
+            width 60px;
+            height 60px;
+            .fixed-btn
+                width 60px;
+                height 60px;
+                background $system-color-blue
+                box-shadow $box-shadow-btn
+                display flex
+                justify-content: center
+                align-items center
+                border-radius $border-radius-circle
+                z-index 98
+
 </style>

@@ -11,6 +11,10 @@ const mutations = {
             state.userInfo.qqId = info.qqId;
         }
     },
+    changeAddBillBOverShow(state, data) {
+        state.system.addBillBOverShow = data || !state.system.addBillBOverShow
+    },
+
     setTypes(state, data) {
         let inTypeList = [];
         let outTypeList = [];

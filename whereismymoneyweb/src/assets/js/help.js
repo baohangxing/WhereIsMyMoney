@@ -1,5 +1,5 @@
 import instance from './../../api/http';
-
+import store from "./../../store/store";
 
 /**
  * @description 裁剪字符串
@@ -130,6 +130,22 @@ export function dateFormat(year, month, day, hour, minute, second) {
 }
 
 /**
+ * @description 获取localStorage到state
+ */
+export function setTypesFromLocalStorage() {
+    let types = JSON.parse(window.localStorage.getItem("default_types"));
+    let myTypes = JSON.parse(window.localStorage.getItem("user_types"));
+
+    if (types.length >= 1) {
+        store.commit('setTypes', types);
+        store.commit('setMyTypes', myTypes);
+    } else {
+        window.location.pathname = '/login';
+    }
+}
+
+
+/**
  * @description 获取类型的名字
  * @param {Object} id
  * @param {Object} type
@@ -139,6 +155,10 @@ export function dateFormat(year, month, day, hour, minute, second) {
 export function getTypeName(id, type, defaultType) {
     let types = this.$store.state.system.types;
     let myTypes = this.$store.state.system.myTypes;
+
+    if (types.outTypeList.length === 0 || types.inTypeList.length === 0) {
+        setTypesFromLocalStorage();
+    }
 
     if (type === 1 && defaultType === 1) {
         for (let i = 0; i < types.inTypeList.length; i++) {

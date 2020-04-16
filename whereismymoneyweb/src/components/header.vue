@@ -1,7 +1,7 @@
 <template>
     <div class="head-container">
         <div class="avatar">
-            <el-avatar :size="80" :src="userInfo.avatar"></el-avatar>
+            <el-avatar :size="70" :src="userInfo.avatar"></el-avatar>
         </div>
         <div class="info-container">
             <div class="name">{{ userInfo.name }}</div>
@@ -50,16 +50,16 @@
         watch: {
             dateSelected() {
                 let arr = this.dateSelected.split('-');
-                if(Number(arr[1])!== this.selectedDateInfo.month || Number(arr[0])!== this.selectedDateInfo.year){
-                    this.$emit("initData");
-                }
+                let isChange = Number(arr[1]) !== Number(this.selectedDateInfo.month) || Number(arr[0]) !== Number(this.selectedDateInfo.year);
                 let data = {
                     year: arr[0],
                     month: Number(arr[1]),
                     day: Number(arr[2]),
                 };
                 this.$store.commit('setSelectedDateInfo', data);
-
+                if (isChange) {
+                    this.$emit("initData");
+                }
             }
         }
     }
@@ -69,14 +69,18 @@
     .head-container
         height 100px
         width 100%
-        padding 0 calc( 50% - 500px)
+        position fixed
+        top 0
+        left 0
+        background-color #ffffff
+        padding 0 calc(50% - 500px)
         margin 0 auto
         display flex
         align-items center
         box-shadow $box-shadow-box
     .avatar
-        height 80px
-        width 80px
+        height 70px
+        width 70px
     .info-container
         height 50px
         display flex
@@ -106,6 +110,7 @@
         .time-select
             width 150px
             overflow hidden
+            z-index 2
             opacity 0
         .time-show
             transform translateX(-70px)
@@ -117,7 +122,12 @@
             display flex
             align-items center
             justify-content space-around
-            z-index -1
-
+            z-index 1
+            -webkit-touch-callout none /* iOS Safari */
+            -webkit-user-select none /* Chrome/Safari/Opera */
+            -khtml-user-select none /* Konqueror */
+            -moz-user-select none /* Firefox */
+            -ms-user-select none /* Internet Explorer/Edge */
+            user-select none
 
 </style>

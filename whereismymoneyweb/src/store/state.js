@@ -11,6 +11,7 @@ const state = {
     },
 
     system: {
+        addBillBOverShow: false,
         types: {
             outTypeList: [],
             inTypeList: []

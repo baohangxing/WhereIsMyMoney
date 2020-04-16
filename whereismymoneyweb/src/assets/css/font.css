@@ -1,26 +1,26 @@
 @font-face {
     font-family: Barlow-SemiBoldItalic;
     font-style: Italic;
-    src: url('./../font/Barlow-SemiBoldItalic.ttf') format('truetype');
+    src: url('../../../static/font/Barlow-SemiBoldItalic.ttf') format('truetype');
 }
 
 @font-face {
     font-family: Barlow-Bold;
     font-weight: Bold;
-    src: url('./../font/Barlow-Bold.ttf') format('truetype');
+    src: url('../../../static/font/Barlow-Bold.ttf') format('truetype');
 }
 
 @font-face {
     font-family: Barlow-SemiBold;
-    src: url('./../font/Barlow-SemiBold.ttf') format('truetype');
+    src: url('../../../static/font/Barlow-SemiBold.ttf') format('truetype');
 }
 
 @font-face {
     font-family: Barlow-Regular;
-    src: url('./../font/Barlow-Regular.ttf') format('truetype');
+    src: url('../../../static/font/Barlow-Regular.ttf') format('truetype');
 }
 
 @font-face {
     font-family: Barlow-MediumItalic;
-    src: url('./../font/Barlow-MediumItalic.ttf') format('truetype');
+    src: url('../../../static/font/Barlow-MediumItalic.ttf') format('truetype');
 }
