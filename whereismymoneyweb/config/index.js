@@ -1,7 +1,6 @@
 'use strict'
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
-import CONFIG from './../config/index';
 const path = require('path');
 
 module.exports = {

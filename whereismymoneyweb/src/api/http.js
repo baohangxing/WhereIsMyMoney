@@ -6,7 +6,9 @@ let instance = axios.create({
     timeout: CONFIG.requestTimeout
 });
 
-// instance.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+let token = window.localStorage.getItem("token");
+if (token)
+    instance.defaults.headers.common['Authorization'] = 'Bearer' + ' ' + token;
 
 // http response 拦截器
 instance.interceptors.response.use(

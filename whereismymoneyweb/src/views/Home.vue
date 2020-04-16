@@ -1,11 +1,12 @@
 <template>
     <div class="home-container">
-        <Header/>
+        <Header @initData="initData"/>
+
     </div>
 </template>
 
 <script>
-    import Header from '@/components/header.vue'
+    import Header from './../components/header'
     import {BILL_GET_GROUP0BY_MONTH, BILL_GET_GROUP0BY_TYPE, BILL_GET_MY_SUM, USER_GET_INFO} from './../api/api';
 
     export default {
@@ -30,12 +31,12 @@
             }
         },
         created() {
-            this.userId = window.localStorage.getItem("userId")
+            this.userId = window.localStorage.getItem("userId");
             if (!this.$store.state.userInfo.id) {
                 USER_GET_INFO({id: this.userId}).then(result => {
-                    if (result.data.code === '000001') {
-                        this.$store.commit('setUserInfo', result.data.data);
-                    }
+                    this.$store.commit('setUserInfo', result);
+                }).catch(e => {
+                    this.$message.error(e);
                 });
             }
             this.initData()
@@ -117,6 +118,6 @@
 <style scoped lang="stylus">
     .home-container
         min-height 100%
-        width 1000px
+        width 100%
         margin 0 auto
 </style>

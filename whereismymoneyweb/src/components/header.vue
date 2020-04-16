@@ -12,13 +12,17 @@
                 <el-date-picker
                     v-model="dateSelected"
                     align="right"
+                    value-format="yyyy-MM-dd"
                     type="date"
                     placeholder="选择日期">
                 </el-date-picker>
             </div>
-            <div class="time-show">2020年 4月</div>
+            <div class="time-show">{{dateShow}}
+                <my-icon name="arrow-down" color="#333333" size="28"></my-icon>
+            </div>
+            <div>设置</div>
+        </div>
 
-        </div><icon name="icon-return" color="#333333" size="28" @tap="BackPage" v-if="isBack"></icon>
     </div>
 </template>
 
@@ -32,12 +36,30 @@
         computed: {
             userInfo() {
                 return this.$store.state.userInfo;
+            },
+            dateInfo() {
+                return this.$store.state.dateInfo;
+            },
+            selectedDateInfo() {
+                return this.$store.state.selectedDateInfo;
+            },
+            dateShow() {
+                return this.selectedDateInfo.year + '年' + this.selectedDateInfo.month + '月' + this.selectedDateInfo.day + '日'
             }
         },
-        watch:{
-            dateSelected(){
+        watch: {
+            dateSelected() {
+                let arr = this.dateSelected.split('-');
+                if(Number(arr[1])!== this.selectedDateInfo.month || Number(arr[0])!== this.selectedDateInfo.year){
+                    this.$emit("initData");
+                }
+                let data = {
+                    year: arr[0],
+                    month: Number(arr[1]),
+                    day: Number(arr[2]),
+                };
+                this.$store.commit('setSelectedDateInfo', data);
 
-                console.log(this.dateSelected)
             }
         }
     }
@@ -47,8 +69,11 @@
     .head-container
         height 100px
         width 100%
+        padding 0 calc( 50% - 500px)
+        margin 0 auto
         display flex
         align-items center
+        box-shadow $box-shadow-box
     .avatar
         height 80px
         width 80px
@@ -71,27 +96,27 @@
         margin-left auto
         width 250px
         position relative
+        display flex
+        justify-content space-between
+        align-items center
+        color $text-color
+        font-size $font-size-lg
+        font-weight bold
+
         .time-select
             width 150px
             overflow hidden
             opacity 0
         .time-show
-            font-size $font-size-lg
-            color $text-color
-            font-weight bold
-            width 150px
+            transform translateX(-70px)
+            width 220px
             position absolute
             top 0
             left 0
             height 60px
-            line-height 60px
-            text-align center
-            -webkit-touch-callout none /* iOS Safari */
-            -webkit-user-select none /* Chrome/Safari/Opera */
-            -khtml-user-select none /* Konqueror */
-            -moz-user-select none /* Firefox */
-            -ms-user-select none /* Internet Explorer/Edge */
-            user-select none
+            display flex
+            align-items center
+            justify-content space-around
             z-index -1
 
 
