@@ -21,6 +21,10 @@
             defaultType: {
                 type: Boolean,
                 default: true
+            },
+            isSetting: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
@@ -30,6 +34,10 @@
         },
         methods: {
             selectItem() {
+                if(this.isSetting){
+                    this.$emit("setting");
+                    return
+                }
                 let data = {
                     id : this.item.id,
                     defaultType : this.defaultType

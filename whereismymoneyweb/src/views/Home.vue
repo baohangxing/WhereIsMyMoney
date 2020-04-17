@@ -185,6 +185,7 @@
             bottom 100px;
             width 60px;
             height 60px;
+            cursor:pointer;
             .fixed-btn
                 width 60px;
                 height 60px;

@@ -1,17 +1,17 @@
 <template>
     <div class="container">
         <div class="title">分类统计</div>
-        <div class="type-select-container">
+        <div class="type-select-container" v-if="typeList.length >= 1">
             <div class="box" @click="changeTypeSelected(0)" :class="{ 'outcome-container': typeSelected == 0 }">支出</div>
             <div class="box" @click="changeTypeSelected(1)" :class="{ 'income-contaienr': typeSelected == 1 }">收入</div>
         </div>
 
-        <div class="circle-container">
+        <div class="circle-container" v-show="typeList.length >= 1">
             <div id="typeListCharts">
             </div>
         </div>
 
-        <div class="items-container">
+        <div class="items-container" v-if="typeList.length >= 1">
             <div class="item-container" v-for="item in typeList" :key="item.typeId">
                 <my-icon :name="getTypeIcon(item.typeId, typeSelected, item.defaultType)" size="26"></my-icon>
                 <div class="type-container">
@@ -22,6 +22,9 @@
                 </div>
                 <div class="item-amount">{{ item.Sum | amount}}</div>
             </div>
+        </div>
+        <div class="no-data" v-else>
+            本月暂无数据
         </div>
     </div>
 
@@ -52,7 +55,7 @@
                         return item2.Sum - item1.Sum;
                     });
                 } else {
-                    return list.typeList.inList.sort(function (item1, item2) {
+                    return list.inList.sort(function (item1, item2) {
                         return item2.Sum - item1.Sum;
                     });
                 }
@@ -81,6 +84,15 @@
                 this.typeSelected = value;
             },
             showRing() {
+                let dataArr = this.typeList.map(item=>{
+                    return {
+                        value: Number(item.Sum),
+                        name: this.getTypeName(item.typeId, this.typeSelected, item.defaultType)
+                    }
+                });
+                let legend = this.typeList.map(item=>{
+                    return this.getTypeName(item.typeId, this.typeSelected, item.defaultType)
+                });
                 this.myChart.setOption({
                     tooltip: {
                         trigger: 'item',
@@ -89,11 +101,11 @@
                     legend: {
                         orient: 'vertical',
                         left: 10,
-                        data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+                        data: legend
                     },
                     series: [
                         {
-                            name: '访问来源',
+                            name: '金额',
                             type: 'pie',
                             radius: ['50%', '70%'],
                             avoidLabelOverlap: false,
@@ -111,13 +123,7 @@
                             labelLine: {
                                 show: false
                             },
-                            data: [
-                                {value: 335, name: '直接访问'},
-                                {value: 310, name: '邮件营销'},
-                                {value: 234, name: '联盟广告'},
-                                {value: 135, name: '视频广告'},
-                                {value: 1548, name: '搜索引擎'}
-                            ]
+                            data: dataArr
                         }
                     ]
                 });
@@ -137,7 +143,7 @@
         background #ffffff
         border-radius $border-radius-sm
         box-shadow $box-shadow-box
-        margin-top 25px
+        margin-bottom 15px
 
         .title
             color $text-color-balck
@@ -166,8 +172,13 @@
                 color $text-color
                 font-size $font-size-sm
                 margin 0 10px
-
-
+                -webkit-touch-callout none /* iOS Safari */
+                -webkit-user-select none /* Chrome/Safari/Opera */
+                -khtml-user-select none /* Konqueror */
+                -moz-user-select none /* Firefox */
+                -ms-user-select none /* Internet Explorer/Edge */
+                user-select none
+                cursor:pointer;
 
             .income-contaienr
                 background-color $system-color-blue
@@ -180,7 +191,7 @@
 
         .circle-container
             width 100%
-            height 450px
+            height 400px
             display flex
             justify-content center
             align-items center
@@ -189,7 +200,13 @@
                 width 550px
                 height 400px
 
-
+        .no-data
+            height 170px
+            width 100%
+            text-align center
+            line-height 140px
+            font-size $font-size-sm
+            color $text-color
         .items-container
             width 100%
             padding 0 20px 16px 20px

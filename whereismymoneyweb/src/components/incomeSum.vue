@@ -61,7 +61,7 @@
 <style lang="stylus" scoped>
     .sum-container
         width 100%
-        margin 0 15px
+        margin-bottom 15px
         height 170px
         background #ffffff
         border-radius $border-radius-sm

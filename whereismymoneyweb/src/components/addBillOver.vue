@@ -16,7 +16,9 @@
                                       :isSelected="isSelectedId === item.id && defaultType === 0"
                                       @selectItem="selectItem"></type-select-item>
                 </div>
-
+                <div class="type-item">
+                    <type-select-item :item="settingIcon" :isSetting="true"></type-select-item>
+                </div>
             </div>
 
             <div class="types-container" v-show="TabCur === 1">
@@ -31,6 +33,9 @@
                                       :isSelected="isSelectedId === item.id && defaultType === 0"
                                       @selectItem="selectItem"
                     ></type-select-item>
+                </div>
+                <div class="type-item">
+                    <type-select-item :item="settingIcon"  :isSetting="true"></type-select-item>
                 </div>
             </div>
 
@@ -49,7 +54,7 @@
                     <el-input v-model="tip" placeholder="请输入备注"></el-input>
                 </div>
                 <div class="money-input">
-                    <el-input v-model="money" placeholder="请输入金额"></el-input>
+                    <el-input type="number" v-model="money" placeholder="请输入金额"></el-input>
                 </div>
             </div>
             <div class="add-btn-container">
@@ -78,6 +83,11 @@
                 defaultType: 1, //账单的类型是否是官方的类型 0不是 1是
                 isUpdata: false,
                 updataBillId: null,
+
+                settingIcon: {
+                    icon: 'icon_setting',
+                    name: '类型管理'
+                },
 
                 money: '',
                 dateSelected: '',
@@ -109,10 +119,12 @@
                 handler(newVal) {
                     if (newVal.id) {
                         this.isUpdata = true;
+                        this.updataBillId = this.selectedBillItem.id;
                         this.tip = this.selectedBillItem.description;
                         this.money = this.selectedBillItem.amount;
                     } else {
                         this.isUpdata = false;
+                        this.updataBillId =null;
                         this.tip = "";
                         this.money = "";
                     }
@@ -144,12 +156,18 @@
                         id: this.selectedBillItem.id
                     }
                 }).then(() => {
-                    console.log(this.selectedBillItem);
                     this.$store.commit('deleteMonthListItem', this.selectedBillItem);
                     this.closeAddBill();
                 });
             },
             saveBill() {
+                if (!this.money) {
+                    this.$message({
+                        message: "请输入金额",
+                        type: "warning"
+                    });
+                    return
+                }
                 if (this.isUpdata) {
                     this.updataBill().then(result => {
                         if (result) {
@@ -161,13 +179,6 @@
                         }
                     });
                 } else {
-                    if (!this.money) {
-                        this.$message({
-                            message: "请输入金额",
-                            type: "warning"
-                        });
-                        return
-                    }
                     this.postBill().then(result => {
                         if (result) {
                             this.$store.commit('addMonthListItem', result);
@@ -179,6 +190,13 @@
                 }
             },
             saveAndWrite() {
+                if (!this.money) {
+                    this.$message({
+                        message: "请输入金额",
+                        type: "warning"
+                    });
+                    return
+                }
                 if (this.isUpdata) {
                     this.updataBill().then(result => {
                         if (result) {
@@ -190,13 +208,6 @@
                         }
                     });
                 } else {
-                    if (!this.money) {
-                        this.$message({
-                            message: "请输入金额",
-                            type: "warning"
-                        });
-                        return
-                    }
                     this.postBill().then(result => {
                         if (result) {
                             this.money = "";
@@ -216,13 +227,13 @@
                     typeId: this.isSelectedId,
                     type: this.type,
                     time: dateFormat(dateArr[0], dateArr[1], dateArr[2]),
-                    amount: this.money,
+                    amount: Number( this.money),
                     description: this.tip
                 }).then(result => {
                     return result;
                 });
             },
-            updataBill: async function (data) {
+            updataBill: async function () {
                 let dateArr = this.dateSelected.split('-');
                 return await BILL_UPDATE({
                     id: this.updataBillId,
@@ -231,8 +242,8 @@
                     typeId: this.isSelectedId,
                     type: this.type,
                     time: dateFormat(dateArr[0], dateArr[1], dateArr[2]),
-                    amount: data.money,
-                    description: data.tip
+                    amount: Number(this.money),
+                    description: this.tip
                 }).then(result => {
                     return result;
                 });

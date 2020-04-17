@@ -102,6 +102,12 @@ const mutations = {
             let year = Number(data.time.slice(0, 4));
             let month = Number(data.time.slice(5, 7));
 
+            if (data.type === 1) {
+                state.billData.incomeSum += Number(data.amount);
+            } else {
+                state.billData.outcomeSum += Number(data.amount);
+            }
+
             for (let i = 0; i < state.billData.monthList.length; i++) {
                 if (Number(state.billData.monthList[i].day) === day) {
                     if (data.type === 1) {
@@ -128,6 +134,12 @@ const mutations = {
 
     deleteMonthListItem(state, data) {
         if (data) {
+            if (data.type === 1) {
+                state.billData.incomeSum -= Number(data.amount);
+            } else {
+                state.billData.outcomeSum -= Number(data.amount);
+            }
+
             let day = Number(data.time.slice(8, 10));
             for (let i = 0; i < state.billData.monthList.length; i++) {
                 if (Number(state.billData.monthList[i].day) === day) {

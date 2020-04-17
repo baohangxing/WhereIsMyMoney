@@ -52,7 +52,9 @@
             },
             formatDate(time) {
                 let timeArr = time.split('-');
-                if (timeArr[0] === this.dateInfo.year && timeArr[1] === this.dateInfo.month && timeArr[2] === this.dateInfo.day) {
+                if (Number(timeArr[0]) === Number(this.dateInfo.year)
+                    && Number(timeArr[1]) === Number(this.dateInfo.month)
+                    && Number(timeArr[2]) === Number(this.dateInfo.day)) {
                     return timeArr[1] + '.' + timeArr[2] + '  今天';
                 }
                 let timepnow = new Date(this.dateInfo.year, this.dateInfo.month, this.dateInfo.day).getTime();
@@ -63,8 +65,7 @@
                 } else if (timeMinus > 0 && timeMinus <= 60 * 60 * 24 * 1000 * 2) {
                     return timeArr[1] + '.' + timeArr[2] + '  前天';
                 }
-
-                return timeArr[1] + '.' + timeArr[2] + '  星期' + '日一二三四五六'.charAt(new Date(timeArr[0], timeArr[1], timeArr[2]).getDay());
+                return timeArr[1] + '.' + timeArr[2] + '  星期' + '日一二三四五六'.charAt(new Date(timeArr[0], timeArr[1]-1, timeArr[2]).getDay());
             }
         }
     };
@@ -76,7 +77,7 @@
         background #ffffff
         border-radius $border-radius-sm
         box-shadow $box-shadow-box
-        margin 0 15px
+        margin-bottom 15px
 
     .item-container
         width 100%
@@ -110,6 +111,7 @@
             align-items center
             justify-content space-between
             border-top 1px solid $bg-color-grey
+            cursor: pointer;
 
             .type-container
                 height 100%

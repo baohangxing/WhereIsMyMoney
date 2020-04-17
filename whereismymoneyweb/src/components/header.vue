@@ -106,10 +106,9 @@
         color $text-color
         font-size $font-size-lg
         font-weight bold
-
+        cursor:pointer;
         .time-select
             width 150px
-            overflow hidden
             z-index 2
             opacity 0
         .time-show
@@ -129,5 +128,4 @@
             -moz-user-select none /* Firefox */
             -ms-user-select none /* Internet Explorer/Edge */
             user-select none
-
 </style>

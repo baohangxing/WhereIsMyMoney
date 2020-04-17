@@ -57,7 +57,7 @@ export default {
 				return timeArr[1] + '.' + timeArr[2] + '  前天';
 			}
 
-			return timeArr[1] + '.' + timeArr[2] + '  星期' + '日一二三四五六'.charAt(new Date(timeArr[0], timeArr[1], timeArr[2]).getDay());
+			return timeArr[1] + '.' + timeArr[2] + '  星期' + '日一二三四五六'.charAt(new Date(timeArr[0], timeArr[1]-1, timeArr[2]).getDay());
 		}
 	}
 };
