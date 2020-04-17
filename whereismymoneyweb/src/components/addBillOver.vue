@@ -55,6 +55,7 @@
             <div class="add-btn-container">
                 <el-button type="primary" round @click="saveBill">保存</el-button>
                 <el-button type="primary" round @click="saveAndWrite">再记</el-button>
+                <el-button v-if="isUpdata" type="danger" round @click="deleteBill">删除</el-button>
             </div>
 
         </div>
@@ -64,7 +65,7 @@
 <script>
     import slidingMenu from "./slidingMenu";
     import typeSelectItem from "./typeSelectItem";
-    import {BILL_ADD, BILL_UPDATE} from './../api/api';
+    import {BILL_ADD, BILL_DELETE, BILL_UPDATE} from './../api/api';
     import {dateFormat} from './../assets/js/help'
 
     export default {
@@ -98,6 +99,26 @@
             },
             userId() {
                 return this.$store.state.userInfo.id;
+            },
+            selectedBillItem() {
+                return this.$store.state.temporary.selectedBillItem
+            }
+        },
+        watch: {
+            'selectedBillItem': {
+                handler(newVal) {
+                    if (newVal.id) {
+                        this.isUpdata = true;
+                        this.tip = this.selectedBillItem.description;
+                        this.money = this.selectedBillItem.amount;
+                    } else {
+                        this.isUpdata = false;
+                        this.tip = "";
+                        this.money = "";
+                    }
+                },
+                deep: true,
+                immediate: true,
             }
         },
         components: {
@@ -114,7 +135,19 @@
                 this.type = this.TabCur === 0 ? 0 : 1;
             },
             closeAddBill() {
-                this.$emit("closeAddBill", false)
+                this.$emit("closeAddBill", false);
+                this.$store.commit('selectedBillItem', {});
+            },
+            deleteBill() {
+                BILL_DELETE({
+                    data: {
+                        id: this.selectedBillItem.id
+                    }
+                }).then(() => {
+                    console.log(this.selectedBillItem);
+                    this.$store.commit('deleteMonthListItem', this.selectedBillItem);
+                    this.closeAddBill();
+                });
             },
             saveBill() {
                 if (this.isUpdata) {

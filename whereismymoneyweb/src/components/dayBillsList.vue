@@ -12,7 +12,7 @@
             </div>
 
             <div v-for="item in billData.billList" :key="item.id" class="bill-item"
-                 :style="{height:item.description? '60px':'50px'}" @tap="setShowUserPage(item)">
+                 :style="{height:item.description? '60px':'50px'}" @click="selectedBillItem(item)">
                 <div class="type-container">
                     <div class="point-tip" :class="item.type === 1 ? 'income-point' : 'outcome-point'"></div>
                     <div class="info-container">
@@ -46,8 +46,9 @@
             }
         },
         methods: {
-            setShowUserPage(item) {
+            selectedBillItem(item) {
                 this.$store.commit('selectedBillItem', item);
+                this.$emit("updateBill", true)
             },
             formatDate(time) {
                 let timeArr = time.split('-');

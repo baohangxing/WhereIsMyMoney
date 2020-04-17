@@ -98,12 +98,12 @@ const mutations = {
 
     addMonthListItem(state, data) {
         if (data) {
-            let day = Number(data.time.slice(8, 10)).toString();
+            let day = Number(data.time.slice(8, 10));
             let year = Number(data.time.slice(0, 4));
-            let month = data.time.slice(5, 7);
+            let month = Number(data.time.slice(5, 7));
 
             for (let i = 0; i < state.billData.monthList.length; i++) {
-                if (state.billData.monthList[i].day === day) {
+                if (Number(state.billData.monthList[i].day) === day) {
                     if (data.type === 1) {
                         state.billData.monthList[i].incomeSum += Number(data.amount);
                     } else {
@@ -114,12 +114,12 @@ const mutations = {
                 }
             }
 
-            if (year === state.dateInfo.year && month === state.dateInfo.month) {
+            if (year === Number(state.dateInfo.year) && month === Number(state.dateInfo.month)) {
                 state.billData.monthList.push({
                     day: day,
                     incomeSum: data.type === 1 ? data.amount : 0,
                     outcomeSum: data.type === 0 ? data.amount : 0,
-                    time: year + "-" + month + "-" + day,
+                    time: year.toString() + "-" + month.toString() + "-" + day.toString(),
                     billList: [data]
                 });
             }
@@ -128,19 +128,18 @@ const mutations = {
 
     deleteMonthListItem(state, data) {
         if (data) {
-            let day = Number(data.time.slice(8, 10)).toString();
+            let day = Number(data.time.slice(8, 10));
             for (let i = 0; i < state.billData.monthList.length; i++) {
-                if (state.billData.monthList[i].day === day) {
+                if (Number(state.billData.monthList[i].day) === day) {
                     if (data.type === 1) {
                         state.billData.monthList[i].incomeSum -= Number(data.amount);
                     } else {
                         state.billData.monthList[i].outcomeSum -= Number(data.amount);
                     }
-                    state.billData.monthList[i].billList = state.billData.monthList[i].billList.filter(item => item.id != data.id);
+                    state.billData.monthList[i].billList = state.billData.monthList[i].billList.filter(item => item.id !== data.id);
 
-                    console.log(state.billData.monthList[i]);
                     if (state.billData.monthList[i].billList.length === 0) {
-                        state.billData.monthList = state.billData.monthList.filter(item => item.day != day);
+                        state.billData.monthList = state.billData.monthList.filter(item => item.day !== day);
                     }
                     return;
                 }

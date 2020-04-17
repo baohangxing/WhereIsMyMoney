@@ -3,7 +3,7 @@
         <Header @initData="initData"/>
         <div class="content-container">
             <div class="left-content-container">
-                <day-bills-list></day-bills-list>
+                <day-bills-list @updateBill="addBill"></day-bills-list>
             </div>
             <div class="right-content-container">
                 <income-sum></income-sum>
