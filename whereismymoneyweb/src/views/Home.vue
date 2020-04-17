@@ -4,6 +4,7 @@
         <div class="content-container">
             <div class="left-content-container">
                 <day-bills-list @updateBill="addBill"></day-bills-list>
+                <type-list-charts></type-list-charts>
             </div>
             <div class="right-content-container">
                 <income-sum></income-sum>
@@ -25,6 +26,7 @@
     import incomeSum from "../components/incomeSum";
     import dayBillsList from "../components/dayBillsList";
     import addBillOver from "../components/addBillOver";
+    import typeListCharts from "../components/typeListCharts";
     import {BILL_GET_GROUP0BY_MONTH, BILL_GET_GROUP0BY_TYPE, BILL_GET_MY_SUM, USER_GET_INFO} from './../api/api';
 
     export default {
@@ -33,7 +35,8 @@
             Header,
             incomeSum,
             dayBillsList,
-            addBillOver
+            addBillOver,
+            typeListCharts
         },
         data() {
             return {
