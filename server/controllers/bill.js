@@ -523,6 +523,57 @@ class BillController {
     }
 
     /**
+     * @api {get} /api/bill/getUserActive 获取用户最近半年的活跃情况
+     * @apiDescription 获取用户最近半年的活跃情况
+     * @apiName getUserActive
+     * @apiGroup Bill
+     * @apiParam {string} userId 用户userId
+     * @apiSuccess {json} result
+     * @apiSuccessExample {json} Success-Response:
+     *  {
+     *   "code": "000001",
+     *  "data": [
+     *   ],
+     *   "msg": "请求成功"
+     *  }
+     * @apiSampleRequest http://localhost:3000/api/bill/getUserActive
+     * @apiVersion 1.0.0
+     */
+    static async getUserActive(ctx) {
+        const data = ctx.query;
+        const Op = sequelize.Op;
+
+        if (!data.userId) {
+            return ctx.sendError('000002', '参数不合法');
+        }
+
+        let where = {
+            userId: data.userId,
+        };
+
+        let endTime = dateFormat(new Date());
+        let startTime = dateFormat(new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 183));
+
+        where.time = {
+            [Op.gte]: startTime,
+            [Op.lt]: endTime,
+        };
+
+
+        let list = await BillModel.findAll({
+            attributes: [
+                [sequelize.fn('substr', sequelize.col('time'), 1, 10), 'time'],
+                [sequelize.fn('count', sequelize.col('*')), 'value'],
+            ],
+            group: sequelize.fn('substr', sequelize.col('time'), 1, 10),
+            where: where
+        });
+
+        return ctx.send(list);
+    }
+
+
+    /**
      * @api {get} /api/bill/get 获取单个账单信息
      * @apiDescription 获取单个账单信息
      * @apiName get

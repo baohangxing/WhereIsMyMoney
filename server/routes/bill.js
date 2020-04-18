@@ -8,6 +8,7 @@ router.get('/api/bill/get', bill.get);
 router.get('/api/bill/getSumInfo', bill.getSumInfo);
 router.get('/api/bill/getMonthDetailList', bill.getMonthDetailList);
 router.get('/api/bill/getMonthTypeList', bill.getMonthTypeList);
+router.get('/api/bill/getUserActive', bill.getUserActive);
 router.put('/api/bill/update', bill.updateBill);
 
 module.exports = router;

@@ -1,9 +1,15 @@
 module.exports = {
+    localhost : "localhost",
+    onlineHost : "http://39.105.33.31/",//阿里云
+
+    host: "localhost",
+
     mysql: {
-        'host': 'localhost',
-        'user': 'root',
-        'password': 'Bao522124.',
-        'database': 'segment',
-        'port': '3306'
-    }
+        user: 'root',
+        password: 'Bao522124.',
+        database: 'mymoney',
+        port: '3306'
+    },
+
+    jwt_secret: "bhx"
 };

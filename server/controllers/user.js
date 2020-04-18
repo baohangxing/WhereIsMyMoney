@@ -58,7 +58,7 @@ class UserController {
      *  {
      *      "code": "000001",
      *      "data": {
-     *          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoi5L2V6Laz6YGTIiwiaWQiOjExMTExLCJpYXQiOjE1ODQ1MTIwMDQsImV4cCI6MTU4NzEwNDAwNH0.On8_1DnNMX5id6f6Z7vG_UfPjGvY159nLWNQGS-5Jq4"
+     *          "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
      *      },
      *      "msg": "登录成功"
      *  }

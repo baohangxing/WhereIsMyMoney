@@ -45,7 +45,7 @@
         },
         mounted() {
             this.myChart = echarts.init(document.getElementById('typeListCharts'));
-            this.showRing()
+            this.showCharts()
         },
         computed: {
             typeList() {
@@ -83,7 +83,7 @@
                 if (value === this.typeSelected) return;
                 this.typeSelected = value;
             },
-            showRing() {
+            showCharts() {
                 let dataArr = this.typeList.map(item=>{
                     return {
                         value: Number(item.Sum),
@@ -131,7 +131,7 @@
         },
         watch: {
             typeList() {
-                this.showRing();
+                this.showCharts();
             }
         }
     };

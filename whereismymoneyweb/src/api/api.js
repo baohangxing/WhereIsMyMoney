@@ -88,6 +88,7 @@ export const UT_GETALL = params => {
     return http.get('/userType/getAll', params)
 };
 
+
 /* ------------------------BILL------------------------ */
 
 
@@ -126,6 +127,13 @@ export const BILL_GET_BY_ID = params => {
  */
 export const BILL_GET_GROUP0BY_TYPE = params => {
     return http.get('/bill/getMonthTypeList', params)
+};
+
+/**
+ * @description 获取年月的账单分类信息
+ */
+export const BILL_GET_USER_ACTIVE = params => {
+    return http.get('/bill/getUserActive', params)
 };
 
 /**

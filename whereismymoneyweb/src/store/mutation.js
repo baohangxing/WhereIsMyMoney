@@ -176,6 +176,15 @@ const mutations = {
         }
     },
 
+
+    setUserActive(state, data) {
+        if (data.length) {
+            state.billData.activeData = data
+        }else {
+            state.billData.activeData = []
+        }
+    },
+
     selectedBillItem(state, data) {
         if (data && data.id) {
             state.temporary.selectedBillItem = data;

@@ -41,7 +41,8 @@ const state = {
         typeList: {
             inList: [],
             outList: []
-        }
+        },
+        activeData: []
     },
 
     temporary: {
