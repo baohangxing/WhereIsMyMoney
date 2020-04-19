@@ -38,10 +38,11 @@ class BillController {
      */
     static async add(ctx) {
         const data = ctx.request.body;
+        console.log(data);
         if (data.userId == null || data.type == null || data.defaultType == null || data.typeId == null || data.time == null || data.amount == null) {
             return ctx.sendError('000002', '参数不合法');
         }
-        const result = await BillModel.create({
+        let addData = await BillModel.create({
             userId: data.userId,
             type: data.type,
             defaultType: data.defaultType,
@@ -49,6 +50,12 @@ class BillController {
             time: data.time,
             amount: data.amount,
             description: data.description || ''
+        });
+        const result = await BillModel.findOne({
+            attributes: {exclude: ['deleteFlag']},
+            where: {
+                id: addData.id,
+            }
         });
         return result !== null ? ctx.send(result, '新增成功') : ctx.sendError('000002', '新增失败');
     }
