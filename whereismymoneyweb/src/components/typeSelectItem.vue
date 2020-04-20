@@ -35,7 +35,7 @@
         methods: {
             selectItem() {
                 if(this.isSetting){
-                    this.$emit("setting");
+                    this.$emit("settingType");
                     return
                 }
                 let data = {

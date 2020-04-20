@@ -98,7 +98,6 @@
                     this.$store.commit('setMyTypes', result);
                     let user_types = JSON.stringify(result);
                     window.localStorage.setItem("user_types", user_types);
-
                 });
             }
             ,

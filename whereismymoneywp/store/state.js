@@ -30,7 +30,6 @@ const state = {
 			"type_dayuse",
 			"type_house",
 			"type_hospitol",
-			"type_hongbao",
 			"type_funny",
 			"type_dinner",
 			"type_electric",

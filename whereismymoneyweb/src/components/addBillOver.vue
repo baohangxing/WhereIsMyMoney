@@ -11,13 +11,14 @@
                                       :isSelected="isSelectedId === item.id && defaultType === 1"
                                       @selectItem="selectItem"></type-select-item>
                 </div>
-                <div v-for="item in myTypes.outTypeList" :key="item.id" class="type-item">
+                <div v-for="item in myTypes.outTypeList" :key="'my'+item.id" class="type-item">
                     <type-select-item :defaultType="false" :item="item"
                                       :isSelected="isSelectedId === item.id && defaultType === 0"
                                       @selectItem="selectItem"></type-select-item>
                 </div>
                 <div class="type-item">
-                    <type-select-item :item="settingIcon" :isSetting="true"></type-select-item>
+                    <type-select-item :item="settingIcon" :isSetting="true"
+                                      @settingType="settingType"></type-select-item>
                 </div>
             </div>
 
@@ -28,14 +29,15 @@
                                       @selectItem="selectItem"
                     ></type-select-item>
                 </div>
-                <div v-for="item in myTypes.inTypeList" :key="item.id" class="type-item">
+                <div v-for="item in myTypes.inTypeList" :key="'my'+item.id" class="type-item">
                     <type-select-item :defaultType="false" :item="item"
                                       :isSelected="isSelectedId === item.id && defaultType === 0"
                                       @selectItem="selectItem"
                     ></type-select-item>
                 </div>
                 <div class="type-item">
-                    <type-select-item :item="settingIcon"  :isSetting="true"></type-select-item>
+                    <type-select-item :item="settingIcon" :isSetting="true"
+                                      @settingType="settingType"></type-select-item>
                 </div>
             </div>
 
@@ -64,12 +66,14 @@
             </div>
 
         </div>
+        <add-type-over v-if="isSettingType" @closeMask="settingType"></add-type-over>
     </div>
 </template>
 
 <script>
     import slidingMenu from "./slidingMenu";
     import typeSelectItem from "./typeSelectItem";
+    import addTypeOver from "./addTypeOver";
     import {BILL_ADD, BILL_DELETE, BILL_UPDATE} from './../api/api';
     import {dateFormat} from './../assets/js/help'
 
@@ -91,7 +95,9 @@
 
                 money: '',
                 dateSelected: '',
-                tip: ''
+                tip: '',
+
+                isSettingType:false
             }
         },
         created() {
@@ -124,7 +130,7 @@
                         this.money = this.selectedBillItem.amount;
                     } else {
                         this.isUpdata = false;
-                        this.updataBillId =null;
+                        this.updataBillId = null;
                         this.tip = "";
                         this.money = "";
                     }
@@ -135,9 +141,13 @@
         },
         components: {
             slidingMenu,
-            typeSelectItem
+            typeSelectItem,
+            addTypeOver
         },
         methods: {
+            settingType() {
+                this.isSettingType = !this.isSettingType
+            },
             selectItem(data) {
                 this.isSelectedId = data.id;
                 this.defaultType = data.defaultType ? 1 : 0;
@@ -227,7 +237,7 @@
                     typeId: this.isSelectedId,
                     type: this.type,
                     time: dateFormat(dateArr[0], dateArr[1], dateArr[2]),
-                    amount: Number( this.money),
+                    amount: Number(this.money),
                     description: this.tip
                 }).then(result => {
                     return result;
