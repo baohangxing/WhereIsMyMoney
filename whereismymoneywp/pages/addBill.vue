@@ -13,6 +13,9 @@
 					<div v-for="item in myTypes.outTypeList" :key="item.id" class="type-item">
 						<type-select-item :item="item" :isSelected="isSelectedId == item.id && defaultType == 0" @tap="selectItem(item.id, false)"></type-select-item>
 					</div>
+					<div class="type-item">
+						<type-select-item :item="settingItem" @tap="editTypes(0)"></type-select-item>
+					</div>
 				</view>
 			</swiper-item>
 			<swiper-item>
@@ -22,6 +25,9 @@
 					</div>
 					<div v-for="item in myTypes.inTypeList" :key="item.id" class="type-item">
 						<type-select-item :item="item" :isSelected="isSelectedId == item.id && defaultType == 0" @tap="selectItem(item.id, false)"></type-select-item>
+					</div>
+					<div class="type-item">
+						<type-select-item :item="settingItem" @tap="editTypes(1)"></type-select-item>
 					</div>
 				</view>
 			</swiper-item>
@@ -45,7 +51,12 @@ export default {
 			type: 0, //账单的类型 0支出 1收入
 			defaultType: 1, //账单的类型是否是官方的类型 0不是 1是
 			isUpdata: false,
-			updataBillId: null
+			updataBillId: null,
+			
+			settingItem: {
+				name: '编辑类型',
+				icon: "icon_setting"
+			}
 		};
 	},
 	components: {
@@ -77,6 +88,12 @@ export default {
 		}
 	},
 	methods: {
+		editTypes(type) {
+			uni.navigateTo({
+				url: './billTypeEdit?type=' + type
+			})
+			this.isEditing = true
+		},
 		selectItem(id, defaultType) {
 			this.isSelectedId = id;
 			this.defaultType = defaultType ? 1 : 0;

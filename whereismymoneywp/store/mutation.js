@@ -28,7 +28,6 @@ const mutations = {
 	},
 
 	setMyTypes(state, data) {
-
 		let inTypeList = []
 		let outTypeList = []
 		data.forEach(item => {
@@ -40,6 +39,33 @@ const mutations = {
 		})
 		state.system.myTypes.inTypeList = inTypeList
 		state.system.myTypes.outTypeList = outTypeList
+	},
+
+	appendMyTypes(state, data) {
+		if (!data) return
+		if (data.type == 1) {
+			state.system.myTypes.inTypeList.push(data)
+		} else {
+			state.system.myTypes.outTypeList.push(data)
+		}
+	},
+	deleteMyTypes(state, data) {
+		if (data.type == 1) {
+			state.system.myTypes.inTypeList = state.system.myTypes.inTypeList.filter(item => item.id != data.id)
+		} else {
+			state.system.myTypes.outTypeList = state.system.myTypes.outTypeList.filter(item => item.id != data.id)
+		}
+	},
+
+	updataMyTypes(state, data) {
+		if (!data.oldId || !data.data) return
+		if (data.type == 1) {
+			state.system.myTypes.inTypeList = state.system.myTypes.inTypeList.filter(item => item.id != data.oldId)
+			state.system.myTypes.inTypeList.push(data.data)
+		} else {
+			state.system.myTypes.outTypeList = state.system.myTypes.outTypeList.filter(item => item.id != data.oldId)
+			state.system.myTypes.outTypeList.push(data.data)
+		}
 	},
 
 	setShowUserPage(state, data) {

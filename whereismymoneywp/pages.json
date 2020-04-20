@@ -12,22 +12,28 @@
 		{
 			"path": "pages/login",
 			"style": {}
-		}, {
+		},
+		{
 			"path": "pages/setting",
 			"style": {}
-		}, {
+		},
+		{
 			"path": "pages/addBill",
 			"style": {}
-		}, {
-			"path": "pages/billDetaill",
+		},
+		{
+			"path": "pages/billTypeEdit",
+			"style": {}
+		},
+		{
+			"path": "pages/moreCharts",
+			"style": {}
+		},
+		{
+			"path": "pages/billTypeIconSelect",
 			"style": {}
 		}
-
-	    ,{
-            "path" : "pages/moreCharts",
-            "style" : {}
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationStyle": "custom",
 		"navigationBarTextStyle": "black"

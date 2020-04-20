@@ -20,6 +20,30 @@ const state = {
 			inTypeList: []
 		},
 		showUserPage: false,
+		iconList: [
+			"type_food",
+			"type_clothes",
+			"type_ditie",
+			"type_tour",
+			"type_online",
+			"type_study",
+			"type_dayuse",
+			"type_house",
+			"type_hospitol",
+			"type_hongbao",
+			"type_funny",
+			"type_dinner",
+			"type_electric",
+			"type_sports",
+			"type_eat",
+			"type_fruit",
+			"type_CombinedShape",
+			"type_life",
+			"type_hongbao",
+			"type_WaiKuai",
+			"type_gupiao",
+			"type_others"
+		]
 	},
 
 	dateInfo: {
