@@ -26,8 +26,7 @@ instance.interceptors.response.use(
             return response.data.data
         }
     },
-    error => {
-        console.log(error);
+    () => {
         window.location.pathname = '/login';
     }
 );

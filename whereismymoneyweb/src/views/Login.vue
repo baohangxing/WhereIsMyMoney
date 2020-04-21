@@ -105,7 +105,7 @@
     }
     ;
 </script>
-<style lang="stylus">
+<style lang="stylus" scoped>
     .container
         height 100%
         width 100%

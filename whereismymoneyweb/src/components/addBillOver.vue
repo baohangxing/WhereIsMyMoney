@@ -222,9 +222,7 @@
                         if (result) {
                             this.money = "";
                             this.tip = "";
-                            console.log(this.$store.state.billData.monthList)
                             this.$store.commit('addMonthListItem', result);
-                            console.log(this.$store.state.billData.monthList)
                         }
                     });
                 }

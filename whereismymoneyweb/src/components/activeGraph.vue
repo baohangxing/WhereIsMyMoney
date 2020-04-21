@@ -37,7 +37,6 @@
         watch: {
             activeDataArr() {
                 this.showCharts();
-                console.log(this.activeDataArr, this.activeData)
             }
         },
         methods: {
