@@ -1,0 +1,11 @@
+python_speech_features
+TensorFlow>=1.13
+Keras>=2.2
+Numpy
+wave
+matplotlib
+math
+Scipy
+h5py
+http
+urllib
