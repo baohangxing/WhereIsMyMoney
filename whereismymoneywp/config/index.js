@@ -1,4 +1,5 @@
-var production = 'http://39.105.33.31:3000/api'
+var productionIp = 'http://39.105.33.31:3000/api'
+var production = 'https://www.whereismymoney.icu:3000/api'
 var localhost = 'http://localhost:3000/api'
 
 const config={

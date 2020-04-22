@@ -13,11 +13,11 @@ const index = require('./routes/index');
 const users = require('./routes/users');
 const bills = require('./routes/bill');
 const types = require('./routes/type');
-const usertypes = require('./routes/userType');
+const email = require('./routes/email');
+const userTypes = require('./routes/userType');
 
 const errorHandle = require('./middlewares/errorHandle.js');
 const sendHandle = require('./middlewares/sendHandle.js');
-
 
 // error handler
 onerror(app);
@@ -51,7 +51,7 @@ app.use(async (ctx, next) => {
 app.use(koajwt({
     secret: CONFIG.jwt_secret
 }).unless({
-    path: [/\/api\/user\/register/, /\/api\/user\/login/]
+    path: [/\/api\/user\/register/, /\/api\/user\/login/, /\/api\/email\/sendCaptcha/]
 }));
 
 // routes
@@ -59,7 +59,8 @@ app.use(index.routes(), index.allowedMethods());
 app.use(users.routes(), users.allowedMethods());
 app.use(bills.routes(), bills.allowedMethods());
 app.use(types.routes(), types.allowedMethods());
-app.use(usertypes.routes(), usertypes.allowedMethods());
+app.use(email.routes(), email.allowedMethods());
+app.use(userTypes.routes(), userTypes.allowedMethods());
 
 
 module.exports = app;

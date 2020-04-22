@@ -38,7 +38,6 @@ class BillController {
      */
     static async add(ctx) {
         const data = ctx.request.body;
-        console.log(data);
         if (data.userId == null || data.type == null || data.defaultType == null || data.typeId == null || data.time == null || data.amount == null) {
             return ctx.sendError('000002', '参数不合法');
         }

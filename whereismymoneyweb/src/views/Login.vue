@@ -6,16 +6,16 @@
             <el-image class="logo-image" src="./../../static/image/name_logo.png"></el-image>
         </div>
 
-        <div class="login-container">
+        <div class="login-container" v-if="mode === 'login'">
             <div class="title">账户登录</div>
-            <div class="input-container">
+            <div class="input-container height-margin">
                 <el-input
-                    placeholder="请输入用户名"
+                    placeholder="请输入邮箱"
                     v-model="nameInput"
                     clearable>
                 </el-input>
             </div>
-            <div class="input-container">
+            <div class="input-container height-margin">
                 <el-input
                     show-password
                     placeholder="请输入密码"
@@ -23,8 +23,95 @@
                 >
                 </el-input>
             </div>
-
             <div class="bottom" @click="login">登录</div>
+            <div class="other-option">
+                <span @click="goTo('register')">新用户注册</span>
+                <span @click="goTo('forgotPw')">忘记密码</span>
+            </div>
+        </div>
+        <div class="login-container" style="height:400px" v-if="mode === 'register'">
+            <div class="title">新用户注册</div>
+            <div class="input-container">
+                <el-input
+                    placeholder="请输入邮箱"
+                    v-model="newUserEmail"
+                    clearable>
+                </el-input>
+            </div>
+            <div class="input-container">
+                <el-input
+                    placeholder="请输入您的昵称"
+                    v-model="newUserName"
+                    clearable
+                >
+                </el-input>
+            </div>
+            <div class="input-container">
+                <el-input
+                    show-password
+                    placeholder="请输入密码"
+                    v-model="newUserPw"
+                >
+                </el-input>
+            </div>
+            <div class="input-container">
+                <el-input
+                    show-password
+                    placeholder="请确认您的密码"
+                    v-model="newUserPwAgain"
+                >
+                </el-input>
+            </div>
+            <div class="input-container height-margin">
+                <el-input
+                    placeholder="请输入验证码"
+                    v-model="newUserCode"
+                    clearable
+                >
+                </el-input>
+            </div>
+            <div class="bottom" @click="register">{{registerTip}}</div>
+            <div class="other-option">
+                <span @click="goTo('login')">已有账户</span>
+            </div>
+        </div>
+        <div class="login-container" style="height:370px" v-if="mode === 'forgotPw'">
+            <div class="title">重置密码</div>
+            <div class="input-container">
+                <el-input
+                    placeholder="请输入邮箱"
+                    v-model="oldUserEmail"
+                    clearable>
+                </el-input>
+            </div>
+            <div class="input-container">
+                <el-input
+                    show-password
+                    placeholder="请输入密码"
+                    v-model="oldUserPw"
+                >
+                </el-input>
+            </div>
+            <div class="input-container">
+                <el-input
+                    show-password
+                    placeholder="请确认您的密码"
+                    v-model="oldUserPwAgain"
+                >
+                </el-input>
+            </div>
+            <div class="input-container height-margin">
+                <el-input
+                    placeholder="请输入验证码"
+                    v-model="oldUserCode"
+                    clearable
+                >
+                </el-input>
+            </div>
+            <div class="bottom" @click="login">{{resetPwTip}}</div>
+            <div class="other-option">
+                <span @click="goTo('login')">已有账户</span>
+            </div>
         </div>
         <div class="copy-right"> {{copyRight}}</div>
     </div>
@@ -36,8 +123,24 @@
     export default {
         data() {
             return {
-                nameInput: "何足道",
+                nameInput: "123456@qq.com",
                 password: "123456",
+
+                newUserEmail: '',
+                newUserName: '',
+                newUserPw: '',
+                newUserPwAgain: '',
+                newUserCode: '',
+
+                oldUserEmail: '',
+                oldUserPw: '',
+                oldUserPwAgain: '',
+                oldUserCode: '',
+
+                registerTip: '获取验证码',
+
+                resetPwTip: '获取验证码',
+                mode: 'login',
                 copyRight: "Copyright © 2020 Bao HangXing All Rights Reserved       版权所有  包航行  联系方式：2292398086@qq.com"
             };
         },
@@ -47,10 +150,14 @@
             }
         },
         methods: {
+            goTo(value) {
+                this.mode = value
+            },
+
             login() {
                 if (!this.nameInput) {
                     this.$message({
-                        message: "请输入用户名",
+                        message: "请输入邮箱",
                         type: "warning"
                     });
                     return;
@@ -63,7 +170,7 @@
                     return;
                 }
                 USER_LOGIN({
-                    name: this.nameInput,
+                    email: this.nameInput,
                     password: this.password
                 }).then(res => {
                     this.$message({
@@ -111,7 +218,7 @@
         width 100%
         padding-bottom 300px
         box-sizing border-box
-        background-image url("../../static/image/ynu-bg.jpg")
+        background-image url("./../../static/image/ynu-bg.jpg")
         background-size cover;
         background-position center;
         background-repeat no-repeat;
@@ -142,21 +249,34 @@
             .title
                 color $text-color
                 font-size $font-size-lg
-                margin-bottom 20px
+                margin-bottom 15px
             .input-container
                 width 250px
-                margin-bottom 20px
-
+                margin-bottom 7px
+            .height-margin
+                margin-bottom 15px
             .bottom
                 width 250px
                 height 40px
                 background-color $system-color-blue
                 color #FFF
+                margin-bottom 15px
                 border-radius 4px
                 line-height 40px
                 text-align center
                 font-size 16px
-
+            .other-option
+                height 20px
+                width 250px
+                text-align left
+                color $text-color-grey
+                display flex
+                justify-content space-between
+                font-size $font-size-ssm
+                span
+                    cursor pointer
+                span:hover
+                    color $text-color
         .copy-right
             position fixed
             bottom 20px

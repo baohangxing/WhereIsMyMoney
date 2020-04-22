@@ -106,7 +106,7 @@
         color $text-color
         font-size $font-size-lg
         font-weight bold
-        cursor:pointer;
+        cursor pointer
         .time-select
             width 150px
             z-index 2
