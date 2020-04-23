@@ -2,7 +2,7 @@ const crypto = require('crypto'),
 	jwt = require('jsonwebtoken'),
 	userModel = require('../lib/sequelize.js').UserModel;
 const CONFIG = require('../config/config');
-const redis = require("./../middlewares/redis");
+const redis = require("../lib/redis");
 
 class UserController {
 
@@ -20,7 +20,7 @@ class UserController {
 	 * {
 	 *   "code": "000001",
 	 *   "data": {
-	 *     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoi5L2V6Laz6YGTIiwiaWQiOjExMTE2LCJpYXQiOjE1ODc1NjA5NTIsImV4cCI6MTU5MDE1Mjk1Mn0.Q5SG0IiFB-D1P4XH1vIGWAhu6MBjsSpwLxybwbKva-0",
+	 *     "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
 	 *     "userInfo": {
 	 *       "useDays": 1,
 	 *       "createdTime": "2020-04-22T13:09:12.669Z",
@@ -44,6 +44,8 @@ class UserController {
 		});
 		if (emailCode !== data.code) {
 			return ctx.sendError('000002', '验证码错误');
+		}else {
+			redis.del(data.email)
 		}
 		const checkUser = await userModel.findOne({
 			attributes: {exclude: ['deleteFlag']},
@@ -57,7 +59,8 @@ class UserController {
 		const result = await userModel.create({
 			name: data.name,
 			password: crypto.createHash('md5').update(data.password).digest('hex'),     // 密码加密存储
-			email: data.email
+			email: data.email,
+			avatar: 'https://b-ssl.duitang.com/uploads/item/201704/10/20170410095843_SEvMy.thumb.700_0.jpeg'
 		});
 		if (result !== null) {
 			let userInfo = {
@@ -82,6 +85,91 @@ class UserController {
 	}
 
 	/**
+	 * @api {post} /api/user/resetPassword 用户重设密码
+	 * @apiDescription 用户重设密码
+	 * @apiName resetPassword
+	 * @apiGroup User
+	 * @apiParam {string} password 密码
+	 * @apiParam {string} email 邮箱
+	 * @apiParam {string} code 验证码
+	 * @apiSuccess {json} result
+	 * @apiSuccessExample {json} Success-Response:
+	 * {
+	 *   "code": "000001",
+	 *   "data": {
+	 *     "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+	 *     "userInfo": {
+	 *       "useDays": 1,
+	 *       "createdTime": "2020-04-22T13:09:12.669Z",
+	 *       "id": 11116,
+	 *       "name": "何足道",
+	 *       "email": "123456@qq.com"
+	 *     }
+	 *   },
+	 *   "msg": "重设密码成功"
+	 * }
+	 * @apiSampleRequest http://localhost:3000/api/user/resetPassword
+	 * @apiVersion 1.0.0
+	 */
+	static async resetPassword(ctx) {
+		const data = ctx.request.body;
+		if (!data.password || !data.email || !data.code) {
+			return ctx.sendError('000002', '参数不合法');
+		}
+		const emailCode = await redis.get(data.email).then(function (result) {
+			return result
+		});
+		if (emailCode !== data.code) {
+			return ctx.sendError('000002', '验证码错误');
+		}else {
+			redis.del(data.email)
+		}
+		const checkUser = await userModel.findOne({
+			attributes: {exclude: ['deleteFlag']},
+			where: {
+				email: data.email,
+			}
+		});
+		if (checkUser === null) {
+			return ctx.sendError('000002', '该邮箱未注册，请前往注册');
+		}
+		let update = {
+			password: crypto.createHash('md5').update(data.password).digest('hex')
+		};
+		await userModel.update(update, {
+			where: {
+				email: data.email,
+			}
+		});
+		const result = await userModel.findOne({
+			attributes: {exclude: ['deleteFlag']},
+			where: {
+				email: data.email,
+			}
+		});
+		if (result !== null) {
+			let userInfo = {
+				useDays: result.useDays,
+				createdTime: result.createdTime,
+				id: result.id,
+				name: result.name,
+				email: result.email
+			};
+			const token = jwt.sign({
+				name: result.name,
+				id: result.id
+			}, CONFIG.jwt_secret, {expiresIn: '30d'});
+			let data = {
+				token: token,
+				userInfo: userInfo,
+			};
+			return ctx.send(data, '重设密码成功');
+		} else {
+			ctx.sendError('000002', '重设密码失败');
+		}
+	}
+
+	/**
 	 * @api {post} /api/user/login 用户登录
 	 * @apiDescription 用户登录
 	 * @apiName login
@@ -93,7 +181,7 @@ class UserController {
 	 * {
 	 *   "code": "000001",
 	 *   "data": {
-	 *     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoi5L2V6Laz6YGTIiwiaWQiOjExMTE2LCJpYXQiOjE1ODc1NjA5NTIsImV4cCI6MTU5MDE1Mjk1Mn0.Q5SG0IiFB-D1P4XH1vIGWAhu6MBjsSpwLxybwbKva-0",
+	 *     "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
 	 *     "userInfo": {
 	 *       "useDays": 1,
 	 *       "createdTime": "2020-04-22T13:09:12.669Z",

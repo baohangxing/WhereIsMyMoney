@@ -18,6 +18,13 @@ export const USER_CHANGE_INFO = params => {
 };
 
 /**
+ * @description 用户忘记密码
+ */
+export const USER_FORGET_PASSWORD = params => {
+    return http.post('/user/resetPassword', params)
+};
+
+/**
  * @description  用户注册
  */
 export const USER_REGISTER = params => {
@@ -30,6 +37,16 @@ export const USER_REGISTER = params => {
 export const USER_GET_INFO = params => {
     return http.get('/user/info', params)
 };
+/* ------------------------   EMAIL    ------------------------ */
+
+
+/**
+ * @description 获取验证码
+ */
+export const EMAIL_GET_CAPTCHA = params => {
+    return http.post('/email/sendCaptcha', params)
+};
+
 
 /* ------------------------DEFAULT TYPE------------------------ */
 

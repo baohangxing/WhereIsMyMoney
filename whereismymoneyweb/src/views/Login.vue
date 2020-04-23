@@ -108,7 +108,7 @@
                 >
                 </el-input>
             </div>
-            <div class="bottom" @click="login">{{resetPwTip}}</div>
+            <div class="bottom" @click="resetPw">{{resetPwTip}}</div>
             <div class="other-option">
                 <span @click="goTo('login')">已有账户</span>
             </div>
@@ -117,14 +117,21 @@
     </div>
 </template>
 <script>
-    import {DT_GETALL, USER_LOGIN, UT_GETALL} from "./../api/api";
+    import {
+        DT_GETALL,
+        EMAIL_GET_CAPTCHA,
+        USER_FORGET_PASSWORD,
+        USER_LOGIN,
+        USER_REGISTER,
+        UT_GETALL
+    } from "./../api/api";
     import {setHeader} from "./../assets/js/help";
 
     export default {
         data() {
             return {
-                nameInput: "123456@qq.com",
-                password: "123456",
+                nameInput: "",
+                password: "",
 
                 newUserEmail: '',
                 newUserName: '',
@@ -141,7 +148,7 @@
 
                 resetPwTip: '获取验证码',
                 mode: 'login',
-                copyRight: "Copyright © 2020 Bao HangXing All Rights Reserved       版权所有  包航行  联系方式：2292398086@qq.com"
+                copyRight: "Copyright © 2020 Bao HangXing All Rights Reserved       版权所有  包航行  联系方式：483053800@qq.com"
             };
         },
         computed: {
@@ -151,9 +158,32 @@
         },
         methods: {
             goTo(value) {
-                this.mode = value
+                this.mode = value;
+                this.resetForm();
             },
-
+            resetForm() {
+                switch (this.mode) {
+                    case "login":
+                        this.nameInput = "";
+                        this.password = "";
+                        break;
+                    case "register":
+                        this.newUserEmail = '';
+                        this.newUserName = '';
+                        this.newUserPw = '';
+                        this.newUserPwAgain = '';
+                        this.newUserCode = '';
+                        this.registerTip = "获取验证码";
+                        break;
+                    case "forgotPw":
+                        this.oldUserEmail = '';
+                        this.oldUserPw = '';
+                        this.oldUserPwAgain = '';
+                        this.oldUserCode = '';
+                        this.resetPwTip = "获取验证码";
+                        break;
+                }
+            },
             login() {
                 if (!this.nameInput) {
                     this.$message({
@@ -183,11 +213,150 @@
                     this.$store.commit("setUserInfo", res.userInfo);
                     this.getTypesInfo();
                     this.$router.push('/');
-
                 })
                     .catch(e => {
                         this.$message.error("登录失败，" + e);
                     })
+            },
+            register() {
+                if (this.registerTip === "获取验证码") {
+                    // eslint-disable-next-line
+                    if (!this.newUserEmail || this.newUserEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) === -1) {
+                        this.$message({
+                            message: "请输入正确的邮箱",
+                            type: "warning"
+                        });
+                        return;
+                    }
+                    this.sendCaptcha(this.newUserEmail)
+                    this.registerTip = "注册";
+                } else {
+                    // eslint-disable-next-line
+                    if (!this.newUserEmail || this.newUserEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) === -1) {
+                        this.$message({
+                            message: "请输入正确的邮箱",
+                            type: "warning"
+                        });
+                        return;
+                    }
+                    if (!this.newUserName || this.newUserName.length >= 13) {
+                        this.$message({
+                            message: "请输入1到12个字的昵称",
+                            type: "warning"
+                        });
+                        return;
+                    }
+                    if (this.newUserPw !== this.newUserPwAgain) {
+                        this.$message({
+                            message: "两次密码输入不一致",
+                            type: "warning"
+                        });
+                        return;
+                    }
+                    if (!this.newUserPw || this.newUserPw.length <= 5 || this.newUserPw.length >= 13) {
+                        this.$message({
+                            message: "请输入6到12位的密码",
+                            type: "warning"
+                        });
+                        return;
+                    }
+                    if (!this.newUserCode) {
+                        this.$message({
+                            message: "请输入验证码",
+                            type: "warning"
+                        });
+                        return;
+                    }
+                    USER_REGISTER({
+                        name: this.newUserName,
+                        email: this.newUserEmail,
+                        password: this.newUserPw,
+                        code: this.newUserCode
+                    }).then(res => {
+                        this.$message({
+                            message: "注册成功",
+                            type: "success"
+                        });
+                        window.localStorage.setItem("token", res.token);
+                        window.localStorage.setItem("userId", res.userInfo.id);
+                        setHeader();
+                        this.$store.commit("setUserInfo", res.userInfo);
+                        this.getTypesInfo();
+                        this.$router.push('/');
+                    })
+                }
+            },
+            resetPw() {
+                if (this.resetPwTip === "获取验证码") {
+                    // eslint-disable-next-line
+                    if (!this.oldUserEmail || this.oldUserEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) === -1) {
+                        this.$message({
+                            message: "请输入正确的邮箱",
+                            type: "warning"
+                        });
+                        return;
+                    }
+                    this.sendCaptcha(this.oldUserEmail);
+                    this.resetPwTip = "登录";
+                } else {
+                    // eslint-disable-next-line
+                    if (!this.oldUserEmail || this.oldUserEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) === -1) {
+                        this.$message({
+                            message: "请输入正确的邮箱",
+                            type: "warning"
+                        });
+                        return;
+                    }
+                    if (this.oldUserPw !== this.oldUserPwAgain) {
+                        this.$message({
+                            message: "两次密码输入不一致",
+                            type: "warning"
+                        });
+                        return;
+                    }
+                    if (!this.oldUserPw || this.oldUserPw.length <= 5 || this.oldUserPw.length >= 13) {
+                        this.$message({
+                            message: "请输入6到12位的密码",
+                            type: "warning"
+                        });
+                        return;
+                    }
+                    if (!this.oldUserCode) {
+                        this.$message({
+                            message: "请输入验证码",
+                            type: "warning"
+                        });
+                        return;
+                    }
+
+                    USER_FORGET_PASSWORD({
+                        email: this.oldUserEmail,
+                        password: this.oldUserPw,
+                        code: this.oldUserCode
+                    }).then(res => {
+                        this.$message({
+                            message: "重设密码成功",
+                            type: "success"
+                        });
+                        window.localStorage.setItem("token", res.token);
+                        window.localStorage.setItem("userId", res.userInfo.id);
+                        setHeader();
+                        this.$store.commit("setUserInfo", res.userInfo);
+                        this.getTypesInfo();
+                        this.$router.push('/');
+                    })
+                }
+            },
+            sendCaptcha(email) {
+                EMAIL_GET_CAPTCHA({
+                    email: email
+                }).then(result => {
+                    console.log(result);
+                    this.$message({
+                        message: "验证码发送成功，请注意查收",
+                        type: "success"
+                    });
+                });
             },
             getTypesInfo() {
                 DT_GETALL().then(result => {

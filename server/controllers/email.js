@@ -1,6 +1,6 @@
-const mailTransport = require("../middlewares/mailTransport");
+const mailTransport = require("../lib/mailTransport");
 const CONFIG = require('./../config/config');
-const redis = require("./../middlewares/redis");
+const redis = require("../lib/redis");
 const getCaptchaCode = require("./../middlewares/help").getCaptchaCode;
 
 class EmailController {
@@ -23,7 +23,7 @@ class EmailController {
 	 */
 	static async sendCaptcha(ctx) {
 		const data = ctx.request.body;
-		console.log(data.email)
+		console.log(data.email);
 		if (!data.email || data.email.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) === -1) {
 			return ctx.sendError('000002', '参数不合法');
 		}

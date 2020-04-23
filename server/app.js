@@ -51,7 +51,7 @@ app.use(async (ctx, next) => {
 app.use(koajwt({
     secret: CONFIG.jwt_secret
 }).unless({
-    path: [/\/api\/user\/register/, /\/api\/user\/login/, /\/api\/email\/sendCaptcha/]
+    path: [/\/api\/user\/register/, /\/api\/user\/login/, /\/api\/email\/sendCaptcha/, /\/api\/user\/resetPassword/]
 }));
 
 // routes
