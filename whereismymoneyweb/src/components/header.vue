@@ -20,7 +20,12 @@
             <div class="time-show">{{dateShow}}
                 <my-icon name="arrow-down" color="#333333" size="28"></my-icon>
             </div>
-            <div>设置</div>
+            <div class="setting" @mouseover=" showSettingOption = true" @mouseleave='showSettingOption = false'>
+                设置
+                <div v-show="showSettingOption" class="setting-option-container">
+                    <div class="option-item" @click="logout">退出登录</div>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -31,7 +36,9 @@
         data() {
             return {
                 dateSelected: '',
-            }
+                showSettingOption: false,
+                darkMode: null,
+            };
         },
         computed: {
             userInfo() {
@@ -44,7 +51,14 @@
                 return this.$store.state.selectedDateInfo;
             },
             dateShow() {
-                return this.selectedDateInfo.year + '年' + this.selectedDateInfo.month + '月' + this.selectedDateInfo.day + '日'
+                return this.selectedDateInfo.year + '年' + this.selectedDateInfo.month + '月' + this.selectedDateInfo.day + '日';
+            }
+        },
+        methods: {
+            logout() {
+                this.$store.dispatch("clearStateData");
+                window.localStorage.clear();
+                window.location.pathname = '/login';
             }
         },
         watch: {
@@ -62,7 +76,7 @@
                 }
             }
         }
-    }
+    };
 </script>
 
 <style scoped lang="stylus">
@@ -72,12 +86,13 @@
         position fixed
         top 0
         left 0
-        background-color #ffffff
+        background-color white
         padding 0 calc(50% - 500px)
         margin 0 auto
         display flex
         align-items center
         box-shadow $box-shadow-box
+        z-index 98
     .avatar
         height 70px
         width 70px
@@ -128,4 +143,28 @@
             -moz-user-select none /* Firefox */
             -ms-user-select none /* Internet Explorer/Edge */
             user-select none
+        .setting
+            position relative
+
+            .setting-option-container
+                font-size $font-size-sm
+                color $text-color
+                width 120px
+                box-sizing border-box
+                border 1px solid $border-color
+                border-radius 5px
+                box-shadow $box-shadow-box
+                background #fff
+                position absolute
+                right -40px
+                top 30px
+
+                .option-item
+                    height 40px
+                    line-height 40px
+                    text-align center
+                .option-item:hover
+                    background-color: #eee;
+
+
 </style>

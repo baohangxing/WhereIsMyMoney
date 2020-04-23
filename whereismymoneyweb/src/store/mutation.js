@@ -12,7 +12,7 @@ const mutations = {
         }
     },
     changeAddBillBOverShow(state, data) {
-        state.system.addBillBOverShow = data || !state.system.addBillBOverShow
+        state.system.addBillBOverShow = data || !state.system.addBillBOverShow;
     },
 
     setTypes(state, data) {
@@ -96,7 +96,7 @@ const mutations = {
     },
 
     addMonthListItem(state, data) {
-        if (data) {
+        if (data && data.time) {
             let day = Number(data.time.slice(8, 10));
             let year = Number(data.time.slice(0, 4));
             let month = Number(data.time.slice(5, 7));
@@ -159,7 +159,7 @@ const mutations = {
     },
 
     setTypeList(state, data) {
-        if (data.data.length) {
+        if (data.data && data.data.length) {
             if (data.type === 0) {
                 state.billData.typeList.outList = data.data;
             } else {
@@ -171,41 +171,40 @@ const mutations = {
             } else {
                 state.billData.typeList.inList = [];
             }
-
         }
     },
     appendMyTypes(state, data) {
-        if (!data) return
+        if (!data) return;
         if (data.type === 1) {
-            state.system.myTypes.inTypeList.push(data)
+            state.system.myTypes.inTypeList.push(data);
         } else {
-            state.system.myTypes.outTypeList.push(data)
+            state.system.myTypes.outTypeList.push(data);
         }
     },
     deleteMyTypes(state, data) {
         if (data.type === 1) {
-            state.system.myTypes.inTypeList = state.system.myTypes.inTypeList.filter(item => item.id !== data.id)
+            state.system.myTypes.inTypeList = state.system.myTypes.inTypeList.filter(item => item.id !== data.id);
         } else {
-            state.system.myTypes.outTypeList = state.system.myTypes.outTypeList.filter(item => item.id != data.id)
+            state.system.myTypes.outTypeList = state.system.myTypes.outTypeList.filter(item => item.id != data.id);
         }
     },
 
     updataMyTypes(state, data) {
-        if (!data.oldId || !data.data) return
+        if (!data.oldId || !data.data) return;
         if (data.type === 1) {
             state.system.myTypes.inTypeList = state.system.myTypes.inTypeList.filter(item => item.id !== data.oldId);
-            state.system.myTypes.inTypeList.push(data.data)
+            state.system.myTypes.inTypeList.push(data.data);
         } else {
             state.system.myTypes.outTypeList = state.system.myTypes.outTypeList.filter(item => item.id !== data.oldId);
-            state.system.myTypes.outTypeList.push(data.data)
+            state.system.myTypes.outTypeList.push(data.data);
         }
     },
 
     setUserActive(state, data) {
         if (data.length) {
-            state.billData.activeData = data
+            state.billData.activeData = data;
         } else {
-            state.billData.activeData = []
+            state.billData.activeData = [];
         }
     },
 

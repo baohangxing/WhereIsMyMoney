@@ -10,14 +10,13 @@ import store from "./../../store/store";
  */
 export const shortifyContent = (content, len) => {
     if (!content) {
-        return ''
+        return '';
     }
     if (content.length < len) {
-        return content
+        return content;
     }
-    const result = content.substr(0, len) + '...'
-    return result
-}
+    return content.substr(0, len) + '...';
+};
 
 /**
  * @description 防抖函数，返回函数连续调用时，空闲时间必须大于或等于 wait，func 才会执行
@@ -28,30 +27,30 @@ export const shortifyContent = (content, len) => {
  * @return {function}             返回客户调用函数
  */
 export function debounce(func, wait = 500, immediate = true) {
-    let timer, context, args
+    let timer, context, args;
 
     const later = () => setTimeout(() => {
-        timer = null
+        timer = null;
         if (!immediate) {
-            func.apply(context, args)
-            context = args = null
+            func.apply(context, args);
+            context = args = null;
         }
-    }, wait)
+    }, wait);
 
     return function (...params) {
         if (!timer) {
-            timer = later()
+            timer = later();
             if (immediate) {
-                func.apply(this, params)
+                func.apply(this, params);
             } else {
-                context = this
-                args = params
+                context = this;
+                args = params;
             }
         } else {
-            clearTimeout(timer)
-            timer = later()
+            clearTimeout(timer);
+            timer = later();
         }
-    }
+    };
 }
 
 /**
@@ -60,10 +59,9 @@ export function debounce(func, wait = 500, immediate = true) {
 export function genAuth() {
     const token = window.localStorage.getItem('token');
     if (token) {
-        const auth = 'Bearer' + ' ' + token;
-        return auth
+        return 'Bearer' + ' ' + token;
     } else {
-        return ''
+        return '';
     }
 }
 
@@ -79,15 +77,15 @@ export function setHeader() {
  * @return {function}         返回客户调用函数
  */
 export function throtting(fn, delay) {
-    let canRun = true
+    let canRun = true;
     return function () {
-        if (!canRun) return
-        canRun = false
+        if (!canRun) return;
+        canRun = false;
         setTimeout(() => {
-            fn.apply(this, arguments)
-            canRun = true
-        }, delay)
-    }
+            fn.apply(this, arguments);
+            canRun = true;
+        }, delay);
+    };
 }
 
 /**
@@ -99,7 +97,7 @@ export function throtting(fn, delay) {
  */
 export function getHowManyDays(year, month) {
     let d = new Date(year, month, 0);
-    return d.getDate()
+    return d.getDate();
 }
 
 /**
@@ -107,7 +105,7 @@ export function getHowManyDays(year, month) {
  *
  * @param  {number}   year    年
  * @param  {number}   month   月
- * @param  {number}   month   月
+ * @param  {number}   day     月
  * @param  {number}   hour    时
  * @param  {number}   minute  分
  * @param  {number}   second  秒
@@ -126,7 +124,7 @@ export function dateFormat(year, month, day, hour, minute, second) {
     if (min < 10) min = '0' + min;
     let s = second || '0'; //秒
     if (s < 10) s = '0' + s;
-    return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s
+    return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s;
 }
 
 /**
@@ -143,7 +141,6 @@ export function setTypesFromLocalStorage() {
         window.location.pathname = '/login';
     }
 }
-
 
 /**
  * @description 获取类型的名字

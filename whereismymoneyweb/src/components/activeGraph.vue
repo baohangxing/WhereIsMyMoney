@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    var echarts = require('echarts');
+    const echarts = require('echarts');
     export default {
         data() {
             return {
@@ -18,20 +18,20 @@
             let halfYearBefore = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 183);
             this.timeBetween = [halfYearBefore.getFullYear() + '-' + (halfYearBefore.getMonth() + 1) + '-' + halfYearBefore.getDate(),
                 dataNow.getFullYear() + '-' + (dataNow.getMonth() + 1) + '-' + dataNow.getDate()
-            ]
+            ];
         },
         mounted() {
             this.myChart = echarts.init(document.getElementById('activeGraph'));
-            this.showCharts()
+            this.showCharts();
         },
         computed: {
             activeData() {
                 return this.activeDataArr.map(item => {
-                    return [item.time, item.value > 18 ? 18 : item.value]
+                    return [item.time, item.value > 18 ? 18 : item.value];
                 });
             },
             activeDataArr() {
-                return this.$store.state.billData.activeData
+                return this.$store.state.billData.activeData;
             }
         },
         watch: {
@@ -94,7 +94,7 @@
                 });
             }
         }
-    }
+    };
 </script>
 
 <style lang="stylus" scoped>
