@@ -10,7 +10,9 @@ export default {
 	props: {
 		item: {
 			type: Object,
-			default: {}
+			default () {
+				return null;
+			},
 		},
 		isSelected: {
 			type: Boolean,

@@ -31,7 +31,9 @@ export default {
 	props: {
 		billData: {
 			type: Object,
-			default: {}
+			default () {
+				return null;
+			},
 		}
 	},
 	computed: {

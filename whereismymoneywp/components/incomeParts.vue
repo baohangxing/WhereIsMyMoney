@@ -75,7 +75,9 @@ export default {
 	props: {
 		sumParts: {
 			type: Object,
-			default: {}
+			default () {
+				return null;
+			},
 		}
 	},
 	methods: {
