@@ -1,5 +1,5 @@
 <template>
-	<view class="icon-class" :class="'icon-'+name" :style="{ color: color, fontSize: size + 'px', fontWeight: bold ? 'bold' : 'normal' }"></view>
+	<view class="icon-class" :class="'icon-' + name" :style="{ color: color, fontSize: size + 'px', fontWeight: bold ? 'bold' : 'normal' }"></view>
 </template>
 
 <script>
@@ -28,10 +28,10 @@ export default {
 <style scoped>
 @font-face {
 	font-family: 'iconfont'; /* project id 1700862 */
-	src: url('//at.alicdn.com/t/font_1700862_5kkhjak2mmt.eot');
-	src: url('//at.alicdn.com/t/font_1700862_5kkhjak2mmt.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1700862_5kkhjak2mmt.woff2') format('woff2'),
-		url('//at.alicdn.com/t/font_1700862_5kkhjak2mmt.woff') format('woff'), url('//at.alicdn.com/t/font_1700862_5kkhjak2mmt.ttf') format('truetype'),
-		url('//at.alicdn.com/t/font_1700862_5kkhjak2mmt.svg#iconfont') format('svg');
+	src: url('//at.alicdn.com/t/font_1700862_ig2vxy9tpgj.eot');
+	src: url('//at.alicdn.com/t/font_1700862_ig2vxy9tpgj.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1700862_ig2vxy9tpgj.woff2') format('woff2'),
+		url('//at.alicdn.com/t/font_1700862_ig2vxy9tpgj.woff') format('woff'), url('//at.alicdn.com/t/font_1700862_ig2vxy9tpgj.ttf') format('truetype'),
+		url('//at.alicdn.com/t/font_1700862_ig2vxy9tpgj.svg#iconfont') format('svg');
 }
 .icon-class {
 	font-family: 'iconfont' !important;
@@ -117,6 +117,10 @@ export default {
 
 .icon-jingdian:before {
 	content: '\e63d';
+}
+
+.icon-icon-arrow:before {
+	content: '\e8a1';
 }
 
 .icon-canshi:before {

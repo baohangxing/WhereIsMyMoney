@@ -25,6 +25,7 @@ class UserController {
 	 *       "useDays": 1,
 	 *       "createdTime": "2020-04-22T13:09:12.669Z",
 	 *       "id": 11116,
+	 *       "avatar": "https://b-ssl.duitang.com/uploads/item/201704/10/20170410095843_SEvMy.thumb.700_0.jpeg",
 	 *       "name": "何足道",
 	 *       "email": "123456@qq.com"
 	 *     }
@@ -67,6 +68,7 @@ class UserController {
 				useDays: result.useDays,
 				createdTime: result.createdTime,
 				id: result.id,
+				avatar: result.avatar,
 				name: result.name,
 				email: result.email
 			};
@@ -102,6 +104,7 @@ class UserController {
 	 *       "useDays": 1,
 	 *       "createdTime": "2020-04-22T13:09:12.669Z",
 	 *       "id": 11116,
+	 *       "avatar": "https://b-ssl.duitang.com/uploads/item/201704/10/20170410095843_SEvMy.thumb.700_0.jpeg",
 	 *       "name": "何足道",
 	 *       "email": "123456@qq.com"
 	 *     }
@@ -152,6 +155,7 @@ class UserController {
 				useDays: result.useDays,
 				createdTime: result.createdTime,
 				id: result.id,
+				avatar: result.avatar,
 				name: result.name,
 				email: result.email
 			};

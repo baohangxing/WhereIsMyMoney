@@ -10,7 +10,7 @@ const config={
     runLocal:false,//本地模式，不发送ajax请求服务器
 
     // API: localhost,
-	API: production,
+	API: productionIp,
 }
 
 export default config
