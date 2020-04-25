@@ -69,7 +69,7 @@ const mutations = {
 	},
 
 	setShowUserPage(state, data) {
-		state.system.showUserPage = !state.system.showUserPage
+		state.system.showUserPage = data
 	},
 
 	refreshDateInfo(state, data) {
@@ -171,23 +171,22 @@ const mutations = {
 		}
 	},
 
-	setTypeList(state, data) {
-		if (data.data.length) {
-			if (data.type == 0) {
-				state.billData.typeList.outList = data.data
-			} else {
-				state.billData.typeList.inList = data.data
-			}
-		} else {
-			if (data.type == 0) {
-				state.billData.typeList.outList = []
-			} else {
-				state.billData.typeList.inList = []
-			}
-
-		}
-	},
-
+    setTypeList(state, data) {
+        if (data.data && data.data.length) {
+            if (data.type === 0) {
+                state.billData.typeList.outList = data.data;
+            } else {
+                state.billData.typeList.inList = data.data;
+            }
+        } else {
+            if (data.type === 0) {
+                state.billData.typeList.outList = [];
+            } else {
+                state.billData.typeList.inList = [];
+            }
+        }
+    },
+	
 	selectedBillItem(state, data) {
 		if (data && data.id) {
 			state.temporary.selectedBillItem = data

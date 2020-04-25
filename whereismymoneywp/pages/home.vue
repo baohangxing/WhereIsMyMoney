@@ -1,6 +1,6 @@
 <template>
 	<view class="home-container">
-		<cu-custom @setShowUserPage="setShowUserPage" :isBack="false">
+		<cu-custom @setShowUserPage="setShowUserPage(true)" :isBack="false">
 			<div slot="content">
 				<picker mode="date" fields="month" class="data-container" start="2000-01-01" end="2040-12-30" @change="DateChange">
 					{{ selectedDateInfo.year != dateInfo.year ? showYear + '-' : '' }}{{ selectedDateInfo.month }}月
@@ -26,7 +26,7 @@
 		</swiper>
 		<view class="fixed-btn" @tap="goToAddBill"><icon name="icon_add" color="#FFF"></icon></view>
 
-		<user-page @setShowUserPage="setShowUserPage"></user-page>
+		<user-page @setShowUserPage="setShowUserPage(false)"></user-page>
 		<pop-up-selected-bill></pop-up-selected-bill>
 	</view>
 </template>
@@ -95,6 +95,9 @@ export default {
 			});
 		}
 	},
+	onUnload() {
+		this.setShowUserPage(false);
+	},
 	created() {
 		this.initData();
 		this.trendDownCB(null, true);
@@ -113,8 +116,8 @@ export default {
 			this.$store.commit('setSelectedDateInfo', data);
 			this.trendDownCB(null, true);
 		},
-		setShowUserPage() {
-			this.$store.commit('setShowUserPage');
+		setShowUserPage(value) {
+			this.$store.commit('setShowUserPage', value);
 		},
 		goToAddBill() {
 			uni.navigateTo({

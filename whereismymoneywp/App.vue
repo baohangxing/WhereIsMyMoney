@@ -1,6 +1,6 @@
 <script>
 import Vue from 'vue';
-import { shortifyContent, getTypeName, getTypeIcon } from '@/assets/js/help.js';
+import { shortifyContent, getTypeName, getTypeIcon, goTo } from '@/assets/js/help.js';
 
 export default {
 	onLaunch: function() {
@@ -8,7 +8,8 @@ export default {
 
 		Vue.prototype.shortifyContent = shortifyContent;
 		Vue.prototype.getTypeName = getTypeName;
-		Vue.prototype.getTypeIcon = getTypeIcon
+		Vue.prototype.getTypeIcon = getTypeIcon;
+		Vue.prototype.goToUrl = goTo;
 		uni.getSystemInfo({
 			success: function(e) {
 				Vue.prototype.StatusBar = e.statusBarHeight;

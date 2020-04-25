@@ -1,19 +1,22 @@
 <template>
 	<view>
-		<div class="mask" @tap.stop="setShowUserPage" @touchmove.stop="setShowUserPage" v-show="showUserPage"></div>
+		<div class="mask" @tap.stop="clickMask" @touchmove.stop="clickMask" v-show="showUserPage"></div>
 		<div @tap.stop="" @touchmove.stop="" class="user-container" :class="showUserPage ? 'user-move-in' : 'user-move-out'">
 			<div class="avatar"><image mode="aspectFill" :src="userInfo.avatar"></image></div>
 			<div class="name">{{ userInfo.name }}</div>
 			<div class="userDays">已记账{{ userInfo.useDays }}天</div>
-			<div class="settingTip">设置</div>
+			<div class="settingTip" @tap="goToUrl('/pages/setting')">设置</div>
 		</div>
 	</view>
 </template>
 
 <script>
+import { debounce } from '@/assets/js/help.js';
 export default {
 	data() {
-		return {};
+		return {
+			clickFunc: null
+		};
 	},
 	computed: {
 		userInfo() {
@@ -23,9 +26,14 @@ export default {
 			return this.$store.state.system.showUserPage;
 		}
 	},
-	methods: {
-		setShowUserPage() {
+	created() {
+		this.clickFunc = debounce(() => {
 			this.$emit('setShowUserPage');
+		}, 300);
+	},
+	methods: {
+		clickMask() {
+			this.clickFunc();
 		}
 	}
 };

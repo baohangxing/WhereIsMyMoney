@@ -17,8 +17,19 @@ export const shortifyContent = (content, len) => {
 	if (content.length < len) {
 		return content
 	}
-	const result = content.substr(0, len) + '...'
-	return result
+	return content.substr(0, len) + '...'
+}
+
+/**
+ * @description navigateTo
+ * @param  {url}   string 
+ */
+export function goTo(url) {
+	if (url) {
+		uni.navigateTo({
+			url: url
+		});
+	}
 }
 
 /**
