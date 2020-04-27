@@ -9,6 +9,10 @@
 			<span>版本号</span>
 			<span>{{ version }}</span>
 		</div>
+		<div class="option-contaienr">
+			<span>官网</span>
+			<span>{{ link }}</span>
+		</div>
 		<div @tap="logout" class="logout-container"><span>退出登录</span></div>
 	</view>
 </template>
@@ -19,7 +23,8 @@ export default {
 	data() {
 		return {
 			email: config.contactEmail,
-			version: config.AppVersion
+			version: config.AppVersion,
+			link: config.webLink
 		};
 	},
 	methods: {
@@ -33,10 +38,6 @@ export default {
 		copyEmail() {
 			uni.setClipboardData({
 				data: this.email
-			});
-			uni.showToast({
-				icon: 'none',
-				title: '邮箱已经复制'
 			});
 		}
 	}

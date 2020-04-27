@@ -24,6 +24,7 @@
                 设置
                 <div v-show="showSettingOption" class="setting-option-container">
                     <div class="option-item" @click="logout">退出登录</div>
+                    <div class="option-item" @click="goToAbout">关于</div>
                 </div>
             </div>
         </div>
@@ -59,6 +60,9 @@
                 this.$store.dispatch("clearStateData");
                 window.localStorage.clear();
                 window.location.pathname = '/login';
+            },
+            goToAbout() {
+                this.$router.push({name: "About"});
             }
         },
         watch: {
