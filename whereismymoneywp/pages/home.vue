@@ -24,8 +24,7 @@
 				</mescroll-uni>
 			</swiper-item>
 		</swiper>
-		<view class="fixed-btn" @tap="goToAddBill"><icon name="icon_add" color="#FFF"></icon></view>
-
+		<view class="fixed-btn"><recording @goToAddBill="goToAddBill"></recording></view>
 		<user-page @setShowUserPage="setShowUserPage(false)"></user-page>
 		<pop-up-selected-bill></pop-up-selected-bill>
 	</view>
@@ -41,6 +40,7 @@ import incomeMonthSum from '@/components/incomeMonthSum.vue';
 import dayBillsList from '@/components/dayBillsList.vue';
 import popUpSelectedBill from '@/components/popUpSelctedBill.vue';
 import monthBillList from '@/components/monthBillsList.vue';
+import recording from '@/components/zhanggp-recording/recording.vue';
 
 export default {
 	data() {
@@ -86,7 +86,8 @@ export default {
 		incomeMonthSum,
 		dayBillsList,
 		popUpSelectedBill,
-		monthBillList
+		monthBillList,
+		recording
 	},
 	onLoad() {
 		if (!uni.getStorageSync('accessToken')) {
@@ -274,14 +275,12 @@ export default {
 	left: 50%;
 	transform: translateX(-50%);
 	bottom: 44px;
-	width: 44px;
-	height: 44px;
-	background: $system-color-blue;
 	box-shadow: $box-shadow-btn;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	border-radius: $border-radius-circle;
 	z-index: 999;
+	overflow: hidden;
 }
 </style>
