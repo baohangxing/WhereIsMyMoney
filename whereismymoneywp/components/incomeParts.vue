@@ -17,7 +17,7 @@
 					<div class="type-line-color-cover" :style="{ width: (Number(item.Sum) / typeSum) * 100 + '%' }"></div>
 				</div>
 
-				<div class="item-amount">{{ item.Sum }}</div>
+				<div class="item-amount">{{ formatMoney(item.Sum) }}</div>
 			</div>
 		</div>
 	</view>

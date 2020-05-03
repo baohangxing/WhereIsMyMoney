@@ -2,16 +2,16 @@
 	<view class="sum-container">
 		<div class="item-container align-center">
 			<div class="item-title">{{ selectedDateInfo.month }}月结余</div>
-			<div class="item-smount">{{ sumLeft }}</div>
+			<div class="item-smount">{{ formatMoney(sumLeft) }}</div>
 		</div>
 		<div class="items-container">
 			<div class="item-container">
 				<div class="item-title">月收入</div>
-				<div class="item-smount">{{ sumData.incomeSum }}</div>
+				<div class="item-smount">{{ formatMoney(sumData.incomeSum) }}</div>
 			</div>
 			<div class="item-container">
 				<div class="item-title">月支出</div>
-				<div class="item-smount">{{ sumData.outcomeSum }}</div>
+				<div class="item-smount">{{ formatMoney(sumData.outcomeSum) }}</div>
 			</div>
 		</div>
 	</view>
@@ -29,7 +29,7 @@ export default {
 			return this.$store.state.billData;
 		},
 		sumLeft() {
-			return (this.sumData.incomeSum - this.sumData.outcomeSum).toFixed(2);
+			return this.sumData.incomeSum - this.sumData.outcomeSum;
 		},
 		selectedDateInfo() {
 			return this.$store.state.selectedDateInfo;

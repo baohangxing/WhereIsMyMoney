@@ -10,28 +10,17 @@
 <script>
 // #ifdef APP-PLUS || H5
 import MD5 from './md5.js';
-import config from '../../config/index.js';
-const recorderManager = uni.getRecorderManager();
+
 //  #endif
 export default {
 	// #ifdef APP-PLUS || H5
 	data() {
 		return {
 			max: 10000, // 录音最大时长，单位毫秒
-			frame: 50, // 执行绘画的频率，单位毫秒
 			longTag: false, // 判定长按和点击的标识
 			maxTiming: false, // 最长录音时间的定时器
-			draw: false,
-			voicePath: ''
+			draw: false
 		};
-	},
-	created() {
-		let self = this;
-		recorderManager.onStop(function(res) {
-			console.log('recorder stop' + res.tempFilePath);
-			self.voicePath = res.tempFilePath;
-			self.send();
-		});
 	},
 	//  #endif
 	methods: {
@@ -57,44 +46,31 @@ export default {
 				// timeout不是false证明没有触发recording或者touchmove事件
 				this.$emit('goToAddBill');
 			} else {
-				recorderManager.stop();
+				plus.speech.stopRecognize();
 			}
 			this.longTag = false;
 		},
 
 		recording() {
 			let self = this;
-			// 开始录音
 			this.longTag = false;
-			console.log('开始录音');
-			recorderManager.start({
-				sampleRate: 16000
-			});
-			// 最大录音时间10秒
+			plus.speech.startRecognize(
+				{
+					engine: 'baidu'
+				},
+				function(s) {
+					self.end();
+					console.log(s);
+				},
+				function() {
+					self.end();
+				}
+			);
+
 			this.maxTiming = setTimeout(function() {
-				this.draw = false;
-				console.log('时间到');
+				self.end();
 			}, self.max);
 			this.draw = true;
-		},
-		send() {
-			uni.request({
-				url: 'http://vop.baidu.com/server_api',
-				method: 'POST',
-				header: {
-					'Content-Type': 'application/json'
-				},
-				data: {
-					format: 'pcm',
-					rate: 16000,
-					dev_pid: 1537,
-					channel: 1,
-					token: '25.16ff75f74518ba6ec8165d4963141672.315360000.1903701867.282335-1964384',
-					cuid: 'baidu_workshop',
-					len: 4096,
-					speech: this.voicePath
-				}
-			});
 		}
 		//  #endif
 	}

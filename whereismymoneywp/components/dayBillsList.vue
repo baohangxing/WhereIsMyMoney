@@ -4,9 +4,9 @@
 			<div class="date">{{ formatDate(billData.time) }}</div>
 			<div class="amount">
 				<span>支：</span>
-				<span class="outcome-color">{{ billData.outcomeSum }}</span>
+				<span class="outcome-color">{{ formatMoney(billData.outcomeSum) }}</span>
 				<span class="margin-line">收：</span>
-				<span class="income-color">{{ billData.incomeSum }}</span>
+				<span class="income-color">{{ formatMoney(billData.incomeSum) }}</span>
 			</div>
 		</div>
 
@@ -18,7 +18,7 @@
 					<div class="tip" v-if="item.description">{{ item.description }}</div>
 				</div>
 			</div>
-			<div class="amount" :class="item.type == 1 ? 'income-color' : 'outcome-color'">{{ item.amount }}</div>
+			<div class="amount" :class="item.type == 1 ? 'income-color' : 'outcome-color'">{{ formatMoney(item.amount) }}</div>
 		</div>
 	</view>
 </template>

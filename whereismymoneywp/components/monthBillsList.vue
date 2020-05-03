@@ -5,8 +5,8 @@
 		<div v-for="item in monthList" :key="item.id" class="bill-item" :style="{ height: item.incomeSum != 0 && item.outcomeSum != 0 ? '50px' : '40px' }">
 			<div class="time">{{ selectedDateInfo.month }}-{{ item.day }}</div>
 			<div class="amount-container">
-				<div v-if="item.outcomeSum && item.outcomeSum != 0" class="amount outcome-color">{{ item.outcomeSum }}</div>
-				<div v-if="item.incomeSum && item.incomeSum != 0" class="amount income-color">{{ item.incomeSum }}</div>
+				<div v-if="item.outcomeSum && item.outcomeSum != 0" class="amount outcome-color">{{ formatMoney(item.outcomeSum) }}</div>
+				<div v-if="item.incomeSum && item.incomeSum != 0" class="amount income-color">{{ formatMoney(item.incomeSum) }}</div>
 			</div>
 		</div>
 	</view>

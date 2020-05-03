@@ -20,11 +20,6 @@ const user = {
         type: Sequelize.STRING(64),
         allowNull: false,
     },
-    useDays: {
-        type: Sequelize.INTEGER(8),
-        allowNull: false,
-        defaultValue: 1
-    },
     avatar: {
         type: Sequelize.STRING(256),
         allowNull: true,

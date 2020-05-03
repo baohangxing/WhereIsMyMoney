@@ -18,16 +18,21 @@ instance.interceptors.response.use(
         }
         if (response.data.code !== '000001') {
             if (response.data.msg) {
-                throw (response.data.msg)
+                throw (response.data.msg);
             } else {
                 throw ("获取数据失败，网络异常");
             }
         } else {
-            return response.data.data
+            return response.data.data;
         }
     },
-    () => {
-        window.location.pathname = '/login';
+    (e) => {
+        if (e.message.includes("401") && window.location.pathname !== '/login') {
+            window.location.pathname = '/login';
+        } else {
+            console.table(e);
+        }
+
     }
 );
 

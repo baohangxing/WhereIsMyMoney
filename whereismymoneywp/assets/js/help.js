@@ -21,6 +21,18 @@ export const shortifyContent = (content, len) => {
 }
 
 /**
+ * @description 格式化金额
+ * 
+ * @param  {number/string}    money    金额
+ * @param  {number}   toFixedLen       保留小数位数
+ * @return {number}                    格式化后的金额
+ */
+export function formatMoney(money, toFixedLen = 2) {
+	return Number(money || 0).toFixed(toFixedLen)
+}
+
+
+/**
  * @description navigateTo
  * @param  {url}   string 
  */

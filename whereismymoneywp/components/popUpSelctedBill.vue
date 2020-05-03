@@ -5,7 +5,7 @@
 			<div class="title">账单详情</div>
 			<div class="item-box">
 				<span>金额</span>
-				<span>{{ billData ? billData.amount : '未知' }}</span>
+				<span>{{ billData ? formatMoney(billData.amount) : '未知' }}</span>
 			</div>
 			<div class="item-box">
 				<span>分类</span>

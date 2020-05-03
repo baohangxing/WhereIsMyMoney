@@ -3,6 +3,9 @@ const crypto = require('crypto'),
 	userModel = require('../lib/sequelize.js').UserModel;
 const CONFIG = require('../config/config');
 const redis = require("../lib/redis");
+const howDaysUse = function (startTime) {
+	return Math.floor((new Date().getTime() - new Date(startTime).getTime()) / (1000 * 60 * 60 * 24)) + 1;
+};
 
 class UserController {
 
@@ -23,7 +26,6 @@ class UserController {
 	 *     "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
 	 *     "userInfo": {
 	 *       "useDays": 1,
-	 *       "createdTime": "2020-04-22T13:09:12.669Z",
 	 *       "id": 11116,
 	 *       "avatar": "https://b-ssl.duitang.com/uploads/item/201704/10/20170410095843_SEvMy.thumb.700_0.jpeg",
 	 *       "name": "何足道",
@@ -41,12 +43,12 @@ class UserController {
 			return ctx.sendError('000002', '参数不合法');
 		}
 		const emailCode = await redis.get(data.email).then(function (result) {
-			return result
+			return result;
 		});
 		if (emailCode !== data.code) {
 			return ctx.sendError('000002', '验证码错误');
-		}else {
-			redis.del(data.email)
+		} else {
+			redis.del(data.email);
 		}
 		const checkUser = await userModel.findOne({
 			attributes: {exclude: ['deleteFlag']},
@@ -61,12 +63,11 @@ class UserController {
 			name: data.name,
 			password: crypto.createHash('md5').update(data.password).digest('hex'),     // 密码加密存储
 			email: data.email,
-			avatar: 'https://b-ssl.duitang.com/uploads/item/201704/10/20170410095843_SEvMy.thumb.700_0.jpeg'
+			avatar: 'http://img2.imgtn.bdimg.com/it/u=2443852970,3855863032&fm=26&gp=0.jpg'
 		});
 		if (result !== null) {
 			let userInfo = {
-				useDays: result.useDays,
-				createdTime: result.createdTime,
+				useDays: howDaysUse(result.createdTime),
 				id: result.id,
 				avatar: result.avatar,
 				name: result.name,
@@ -102,7 +103,6 @@ class UserController {
 	 *     "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
 	 *     "userInfo": {
 	 *       "useDays": 1,
-	 *       "createdTime": "2020-04-22T13:09:12.669Z",
 	 *       "id": 11116,
 	 *       "avatar": "https://b-ssl.duitang.com/uploads/item/201704/10/20170410095843_SEvMy.thumb.700_0.jpeg",
 	 *       "name": "何足道",
@@ -120,12 +120,12 @@ class UserController {
 			return ctx.sendError('000002', '参数不合法');
 		}
 		const emailCode = await redis.get(data.email).then(function (result) {
-			return result
+			return result;
 		});
 		if (emailCode !== data.code) {
 			return ctx.sendError('000002', '验证码错误');
-		}else {
-			redis.del(data.email)
+		} else {
+			redis.del(data.email);
 		}
 		const checkUser = await userModel.findOne({
 			attributes: {exclude: ['deleteFlag']},
@@ -152,8 +152,7 @@ class UserController {
 		});
 		if (result !== null) {
 			let userInfo = {
-				useDays: result.useDays,
-				createdTime: result.createdTime,
+				useDays: howDaysUse(result.createdTime),
 				id: result.id,
 				avatar: result.avatar,
 				name: result.name,
@@ -188,7 +187,6 @@ class UserController {
 	 *     "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
 	 *     "userInfo": {
 	 *       "useDays": 1,
-	 *       "createdTime": "2020-04-22T13:09:12.669Z",
 	 *       "id": 11116,
 	 *       "name": "何足道",
 	 *       "email": "123456@qq.com"
@@ -220,7 +218,13 @@ class UserController {
 			}, CONFIG.jwt_secret, {expiresIn: '30d'});
 			let data = {
 				token: token,
-				userInfo: result,
+				userInfo: {
+					useDays: howDaysUse(result.createdTime),
+					id: result.id,
+					avatar: result.avatar,
+					name: result.name,
+					email: result.email
+				}
 			};
 			return ctx.send(data, '登录成功');
 		} else {
@@ -264,7 +268,7 @@ class UserController {
 				}
 			});
 			if (nameUser) ctx.sendError('000002', '用户名已被注册');
-			update.name = data.name
+			update.name = data.name;
 		}
 		if (data.email) {
 			let nameUser = await userModel.findOne({
@@ -274,16 +278,16 @@ class UserController {
 				}
 			});
 			if (nameUser) ctx.sendError('000002', '邮箱已被注册');
-			update.email = data.email
+			update.email = data.email;
 		}
 		if (data.avatar) {
-			update.avatar = data.avatar
+			update.avatar = data.avatar;
 		}
 		if (data.weixinId) {
-			update.weixinId = data.weixinId
+			update.weixinId = data.weixinId;
 		}
 		if (data.qqId) {
-			update.qqId = data.qqId
+			update.qqId = data.qqId;
 		}
 		const result = await userModel.update(update, {
 			where: {
@@ -334,7 +338,7 @@ class UserController {
 				id: user.id,
 				name: user.name,
 				email: user.email,
-				useDays: user.useDays,
+				useDays: howDaysUse(user.createdTime),
 				avatar: user.avatar,
 				weixinId: user.weixinId,
 				qqId: user.qqId

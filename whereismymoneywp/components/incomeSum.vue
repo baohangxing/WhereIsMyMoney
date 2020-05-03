@@ -4,40 +4,37 @@
 		<div class="items-container">
 			<div class="item-container">
 				<div class="item-title">收入</div>
-				<div class="item-smount">{{ sumData.incomeSum }}</div>
+				<div class="item-smount">{{ formatMoney(sumData.incomeSum) }}</div>
 			</div>
 			<div class="item-container">
 				<div class="item-title">支出</div>
-				<div class="item-smount">{{ sumData.outcomeSum }}</div>
+				<div class="item-smount">{{ formatMoney(sumData.outcomeSum) }}</div>
 			</div>
 			<div class="item-container">
 				<div class="item-title">结余</div>
-				<div class="item-smount">{{ sumLeft }}</div>
+				<div class="item-smount">{{ formatMoney(sumLeft) }}</div>
 			</div>
 			<div class="item-container">
 				<div class="item-title">每天平均支出</div>
-				<div class="item-smount">{{ dayOut }}</div>
+				<div class="item-smount">{{ formatMoney(dayOut) }}</div>
 			</div>
 		</div>
 	</view>
 </template>
 
 <script>
-import {getHowManyDays} from '@/assets/js/help.js'
-
+import { getHowManyDays } from '@/assets/js/help.js';
 
 export default {
 	data() {
-		return {
-
-		};
+		return {};
 	},
-	computed:{
+	computed: {
 		sumData() {
 			return this.$store.state.billData;
 		},
 		sumLeft() {
-			return (this.sumData.incomeSum - this.sumData.outcomeSum).toFixed(2);
+			return this.sumData.incomeSum - this.sumData.outcomeSum;
 		},
 		dateInfo() {
 			return this.$store.state.dateInfo;
@@ -46,19 +43,17 @@ export default {
 			return this.$store.state.selectedDateInfo;
 		},
 		days() {
-			if( this.dateInfo.year == this.selectedDateInfo.year &&  this.dateInfo.month == this.selectedDateInfo.month ){
-				return this.dateInfo.day
+			if (this.dateInfo.year == this.selectedDateInfo.year && this.dateInfo.month == this.selectedDateInfo.month) {
+				return this.dateInfo.day;
+			} else {
+				return getHowManyDays(this.selectedDateInfo.year, this.selectedDateInfo.month) || 30;
 			}
-			else{
-				return getHowManyDays(this.selectedDateInfo.year, this.selectedDateInfo.month) || 30
-			}
-
 		},
 		dayOut() {
-			return Number(this.sumData.outcomeSum / this.days).toFixed(2);
+			return Number(this.sumData.outcomeSum / this.days);
 		}
 	}
-}
+};
 </script>
 
 <style lang="scss" scoped>
