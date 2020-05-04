@@ -9,6 +9,7 @@
             <div class="right-content-container">
                 <income-sum></income-sum>
                 <active-graph></active-graph>
+                <web-info></web-info>
             </div>
         </div>
 
@@ -29,6 +30,7 @@
     import addBillOver from "../components/addBillOver";
     import typeListCharts from "../components/typeListCharts";
     import activeGraph from "../components/activeGraph";
+    import webInfo from "../components/webInfo";
     import {
         BILL_GET_GROUP0BY_MONTH,
         BILL_GET_GROUP0BY_TYPE,
@@ -45,7 +47,8 @@
             dayBillsList,
             addBillOver,
             typeListCharts,
-            activeGraph
+            activeGraph,
+            webInfo
         },
         data() {
             return {

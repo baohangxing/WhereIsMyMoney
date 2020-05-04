@@ -21,3 +21,8 @@ cd /usr/local/BHX/redis
 
 ./redis-server redis.conf
 
+### nginx
+
+cd /etc/nginx/
+
+nginx -s reload

@@ -113,7 +113,18 @@
                 <span @click="goTo('login')">已有账户</span>
             </div>
         </div>
-        <div class="copy-right"> {{copyRight}}</div>
+        <div class="copy-right"> {{copyRight}} {{contactWay}}
+            <div class="beiAn-link">
+                <a
+                    href="http://www.beian.miit.gov.cn/">网站备案/许可证号：
+                    {{beiAnNumber}}</a>
+                <!--                <a-->
+                <!--                    href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=53011402000392"><img-->
+                <!--                    src="./../../static/image/policeIcon.png" style="float:left;"/>-->
+                <!--                    <p style="float:left;">滇公网安备-->
+                <!--                        53011402000392号</p></a>-->
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -125,6 +136,7 @@
         USER_REGISTER,
         UT_GETALL
     } from "./../api/api";
+    import config from "./../config/index";
     import {setHeader} from "./../assets/js/help";
 
     export default {
@@ -148,12 +160,14 @@
 
                 resetPwTip: '获取验证码',
                 mode: 'login',
-                copyRight: "Copyright © 2020 Bao HangXing All Rights Reserved       版权所有  包航行  联系方式：483053800@qq.com"
+                copyRight: config.copyRight,
+                contactWay: config.contactWay,
+                beiAnNumber: config.beiAnNumber,
             };
         },
         computed: {
             userId() {
-                return this.$store.state.userInfo.id
+                return this.$store.state.userInfo.id;
             }
         },
         methods: {
@@ -216,7 +230,7 @@
                 })
                     .catch(e => {
                         this.$message.error("登录失败，" + e);
-                    })
+                    });
             },
             register() {
                 if (this.registerTip === "获取验证码") {
@@ -228,7 +242,7 @@
                         });
                         return;
                     }
-                    this.sendCaptcha(this.newUserEmail)
+                    this.sendCaptcha(this.newUserEmail);
                     this.registerTip = "注册";
                 } else {
                     // eslint-disable-next-line
@@ -283,7 +297,7 @@
                         this.$store.commit("setUserInfo", res.userInfo);
                         this.getTypesInfo();
                         this.$router.push('/');
-                    })
+                    });
                 }
             },
             resetPw() {
@@ -344,7 +358,7 @@
                         this.$store.commit("setUserInfo", res.userInfo);
                         this.getTypesInfo();
                         this.$router.push('/');
-                    })
+                    });
                 }
             },
             sendCaptcha(email) {
@@ -448,9 +462,27 @@
                     color $text-color
         .copy-right
             position fixed
-            bottom 20px
+            bottom 30px
             left 50%
             transform translateX(-50%)
-            color #000
-            font-size 14px
+            color $text-color
+            font-size $font-size-ssm
+            background-color rgba(255, 255, 255, 0.5)
+            padding 8px 15px
+            border-radius 10px
+            .beiAn-link
+                display flex
+                margin-top 4px
+                justify-content space-around
+            a
+                color $text-color
+                display inline-block
+                text-decoration none
+                height 20px
+                line-height 20px
+                vertical-align top
+                p
+                    margin 0
+            a:hover
+                color $bg-color-grey
 </style>
