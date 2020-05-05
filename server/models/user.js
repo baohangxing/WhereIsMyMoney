@@ -34,6 +34,11 @@ const user = {
         allowNull: false,
         defaultValue: 0
     },
+    administrator: {
+        type: Sequelize.TINYINT(1),
+        allowNull: false,
+        defaultValue: 0
+    },
     weixinId: {
         type: Sequelize.STRING(16),
         allowNull: true,

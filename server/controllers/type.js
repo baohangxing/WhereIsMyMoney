@@ -153,8 +153,6 @@ class TypeController {
      * @apiVersion 1.0.0
      */
     static async getAll(ctx) {
-        const data = ctx.query;
-
         const types = await DefaultTypeModel.findAll({
             attributes: {exclude: ['deleteFlag']},
             where: {

@@ -1,14 +1,14 @@
-const router = require('koa-router')(),
-    bill = require('../controllers/bill.js');
+const Router = require('koa-router'),
+	bill = require('../controllers/bill.js');
+const router = new Router();
+router.post('/add', bill.add);
+router.delete('/delete', bill.delete);
+router.get('/getPage', bill.getPage);
+router.get('/get', bill.get);
+router.get('/getSumInfo', bill.getSumInfo);
+router.get('/getMonthDetailList', bill.getMonthDetailList);
+router.get('/getMonthTypeList', bill.getMonthTypeList);
+router.get('/getUserActive', bill.getUserActive);
+router.put('/update', bill.updateBill);
 
-router.post('/api/bill/add', bill.add);
-router.delete('/api/bill/delete', bill.delete);
-router.get('/api/bill/getPage', bill.getPage);
-router.get('/api/bill/get', bill.get);
-router.get('/api/bill/getSumInfo', bill.getSumInfo);
-router.get('/api/bill/getMonthDetailList', bill.getMonthDetailList);
-router.get('/api/bill/getMonthTypeList', bill.getMonthTypeList);
-router.get('/api/bill/getUserActive', bill.getUserActive);
-router.put('/api/bill/update', bill.updateBill);
-
-module.exports = router;
+module.exports = router.routes();

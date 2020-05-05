@@ -9,12 +9,7 @@ const logger = require('koa-logger');
 const koajwt = require('koa-jwt');
 
 const CONFIG = require('./config/config');
-const index = require('./routes/index');
-const users = require('./routes/users');
-const bills = require('./routes/bill');
-const types = require('./routes/type');
-const email = require('./routes/email');
-const userTypes = require('./routes/userType');
+const route = require('./routes/index');
 
 const errorHandle = require('./middlewares/errorHandle.js');
 const sendHandle = require('./middlewares/sendHandle.js');
@@ -46,21 +41,12 @@ app.use(async (ctx, next) => {
     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 });
 
-//
-
 app.use(koajwt({
     secret: CONFIG.jwt_secret
 }).unless({
     path: [/\/api\/user\/register/, /\/api\/user\/login/, /\/api\/email\/sendCaptcha/, /\/api\/user\/resetPassword/]
 }));
 
-// routes
-app.use(index.routes(), index.allowedMethods());
-app.use(users.routes(), users.allowedMethods());
-app.use(bills.routes(), bills.allowedMethods());
-app.use(types.routes(), types.allowedMethods());
-app.use(email.routes(), email.allowedMethods());
-app.use(userTypes.routes(), userTypes.allowedMethods());
-
+app.use(route.routes(), route.allowedMethods());
 
 module.exports = app;

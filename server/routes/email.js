@@ -1,6 +1,6 @@
-const router = require('koa-router')(),
+const Router = require('koa-router'),
 	email = require('../controllers/email.js');
+const router = new Router();
+router.post('/sendCaptcha', email.sendCaptcha);
 
-router.post('/api/email/sendCaptcha', email.sendCaptcha);
-
-module.exports = router;
+module.exports = router.routes();

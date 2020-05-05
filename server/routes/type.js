@@ -1,10 +1,10 @@
-const router = require('koa-router')(),
+const Router = require('koa-router'),
     type = require('../controllers/type.js');
+const router = new Router();
+router.post('/add', type.add);
+router.delete('/delete', type.delete);
+router.get('/getAll', type.getAll);
+router.get('/get', type.get);
+router.put('/update', type.update);
 
-router.post('/api/type/add', type.add);
-router.delete('/api/type/delete', type.delete);
-router.get('/api/type/getAll', type.getAll);
-router.get('/api/type/get', type.get);
-router.put('/api/type/update', type.update);
-
-module.exports = router;
+module.exports = router.routes();

@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize');
-const sequelize = require('./../lib/sequelize.js');
 
 const bill = {
     id: {

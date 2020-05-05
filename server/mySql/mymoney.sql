@@ -10,10 +10,24 @@ Target Server Type    : MYSQL
 Target Server Version : 50727
 File Encoding         : 65001
 
-Date: 2020-04-11 14:06:00
+Date: 2020-05-05 16:02:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for appVersions
+-- ----------------------------
+DROP TABLE IF EXISTS `appVersions`;
+CREATE TABLE `appVersions` (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `appVersion` varchar(10) CHARACTER SET utf8 DEFAULT NULL COMMENT '版本号',
+  `appDownloadLink` varchar(128) CHARACTER SET utf8 DEFAULT NULL COMMENT 'app下载链接',
+  `updateTip` varchar(4000) CHARACTER SET utf8 DEFAULT NULL COMMENT '版本说明',
+  `deleteFlag` tinyint(1) NOT NULL DEFAULT '0',
+  `createdTime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for bills
@@ -31,11 +45,7 @@ CREATE TABLE `bills` (
   `deleteFlag` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除',
   `amount` decimal(8,2) NOT NULL COMMENT '金额',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of bills
--- ----------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for defaultTypes
@@ -51,33 +61,6 @@ CREATE TABLE `defaultTypes` (
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of defaultTypes
--- ----------------------------
-INSERT INTO `defaultTypes` VALUES ('1', '三餐', '0', 'type_food', '0');
-INSERT INTO `defaultTypes` VALUES ('2', '衣服', '0', 'type_clothes', '0');
-INSERT INTO `defaultTypes` VALUES ('3', '交通', '0', 'type_ditie', '0');
-INSERT INTO `defaultTypes` VALUES ('4', '旅行', '0', 'type_tour', '0');
-INSERT INTO `defaultTypes` VALUES ('5', '网费话费', '0', 'type_online', '0');
-INSERT INTO `defaultTypes` VALUES ('6', '学习', '0', 'type_study', '0');
-INSERT INTO `defaultTypes` VALUES ('7', '日用品', '0', 'type_dayuse', '0');
-INSERT INTO `defaultTypes` VALUES ('8', '住房', '0', 'type_house', '0');
-INSERT INTO `defaultTypes` VALUES ('9', '医疗', '0', 'type_hospitol', '0');
-INSERT INTO `defaultTypes` VALUES ('10', '发红包', '0', 'type_hongbao', '0');
-INSERT INTO `defaultTypes` VALUES ('11', '娱乐游戏', '0', 'type_funny', '0');
-INSERT INTO `defaultTypes` VALUES ('12', '请客送礼', '0', 'type_dinner', '0');
-INSERT INTO `defaultTypes` VALUES ('13', '电器数码', '0', 'type_electric', '0');
-INSERT INTO `defaultTypes` VALUES ('14', '运动', '0', 'type_sports', '0');
-INSERT INTO `defaultTypes` VALUES ('15', '零食', '0', 'type_eat', '0');
-INSERT INTO `defaultTypes` VALUES ('16', '水果', '0', 'type_fruit', '0');
-INSERT INTO `defaultTypes` VALUES ('17', '其他', '0', 'type_others', '0');
-INSERT INTO `defaultTypes` VALUES ('18', '工资', '1', 'type_CombinedShape', '0');
-INSERT INTO `defaultTypes` VALUES ('19', '生活费', '1', 'type_life', '0');
-INSERT INTO `defaultTypes` VALUES ('20', '收红包', '1', 'type_hongbao', '0');
-INSERT INTO `defaultTypes` VALUES ('21', '外快', '1', 'type_WaiKuai', '0');
-INSERT INTO `defaultTypes` VALUES ('22', '股票基金', '1', 'type_gupiao', '0');
-INSERT INTO `defaultTypes` VALUES ('23', '其他', '1', 'type_others', '0');
-
--- ----------------------------
 -- Table structure for users
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
@@ -86,19 +69,14 @@ CREATE TABLE `users` (
   `name` varchar(16) NOT NULL COMMENT '用户名',
   `password` varchar(64) NOT NULL COMMENT '密码',
   `email` varchar(64) NOT NULL COMMENT '邮箱',
-  `useDays` int(8) unsigned NOT NULL DEFAULT '0',
   `avatar` varchar(256) DEFAULT NULL COMMENT '头像',
   `createdTime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '用户创建时间',
   `deleteFlag` tinyint(1) unsigned zerofill NOT NULL DEFAULT '0' COMMENT '是否删除',
   `weixinId` varchar(16) DEFAULT NULL,
   `qqId` varchar(16) DEFAULT NULL,
+  `administrator` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11113 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of users
--- ----------------------------
-INSERT INTO `users` VALUES ('11111', '何足道', 'e10adc3949ba59abbe56e057f20f883e', '2292398086@qq.com', '28', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586355963649&di=e0f367c162e9a003457886460c0705a8&imgtype=0&src=http%3A%2F%2Fa4.att.hudong.com%2F21%2F09%2F01200000026352136359091694357.jpg', '2020-04-08 19:38:53', '0', null, null);
+) ENGINE=InnoDB AUTO_INCREMENT=11122 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for userTypes
@@ -112,8 +90,4 @@ CREATE TABLE `userTypes` (
   `icon` varchar(16) CHARACTER SET ascii NOT NULL COMMENT '类型的图片',
   `deleteFlag` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of userTypes
--- ----------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
