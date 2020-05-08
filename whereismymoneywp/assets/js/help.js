@@ -1,40 +1,38 @@
-import {
-	http
-} from '@/assets/js/luch-request/index.js';
+import {http} from '@/assets/js/luch-request/index.js';
 
 
 /**
  * @description 裁剪字符串
- * 
+ *
  * @param  {string} content       字符串
  * @param  {number}   len         长度
  * @return {string}               裁剪后的字符串
  */
 export const shortifyContent = (content, len) => {
 	if (!content) {
-		return ''
+		return '';
 	}
 	if (content.length < len) {
-		return content
+		return content;
 	}
-	return content.substr(0, len) + '...'
-}
+	return content.substr(0, len) + '...';
+};
 
 /**
  * @description 格式化金额
- * 
+ *
  * @param  {number/string}    money    金额
  * @param  {number}   toFixedLen       保留小数位数
  * @return {number}                    格式化后的金额
  */
 export function formatMoney(money, toFixedLen = 2) {
-	return Number(money || 0).toFixed(toFixedLen)
+	return Number(money || 0).toFixed(toFixedLen);
 }
 
 
 /**
  * @description navigateTo
- * @param  {url}   string 
+ * @param  {url}   string
  */
 export function goTo(url) {
 	if (url) {
@@ -53,42 +51,42 @@ export function goTo(url) {
  * @return {function}             返回客户调用函数
  */
 export function debounce(func, wait = 500, immediate = true) {
-	let timer, context, args
+	let timer, context, args;
 
 	const later = () => setTimeout(() => {
-		timer = null
+		timer = null;
 		if (!immediate) {
-			func.apply(context, args)
-			context = args = null
+			func.apply(context, args);
+			context = args = null;
 		}
-	}, wait)
+	}, wait);
 
-	return function(...params) {
+	return function (...params) {
 		if (!timer) {
-			timer = later()
+			timer = later();
 			if (immediate) {
-				func.apply(this, params)
+				func.apply(this, params);
 			} else {
-				context = this
-				args = params
+				context = this;
+				args = params;
 			}
 		} else {
-			clearTimeout(timer)
-			timer = later()
+			clearTimeout(timer);
+			timer = later();
 		}
-	}
+	};
 }
 
 /**
  * @description获取token
  */
 export function genAuth() {
-	const token = uni.getStorageSync('accessToken')
+	const token = uni.getStorageSync('accessToken');
 	if (!!token) {
-		const auth = 'Bearer' + ' ' + token
-		return auth
+		const auth = 'Bearer' + ' ' + token;
+		return auth;
 	} else {
-		return ''
+		return '';
 	}
 }
 
@@ -97,9 +95,9 @@ export function setHeader() {
 		config.header = {
 			...config.header,
 			"Authorization": genAuth()
-		}
-		return config
-	})
+		};
+		return config;
+	});
 }
 
 /**
@@ -110,15 +108,15 @@ export function setHeader() {
  * @return {function}         返回客户调用函数
  */
 export function throtting(fn, delay) {
-	let canRun = true
-	return function() {
-		if (!canRun) return
-		canRun = false
+	let canRun = true;
+	return function () {
+		if (!canRun) return;
+		canRun = false;
 		setTimeout(() => {
-			fn.apply(this, arguments)
-			canRun = true
-		}, delay)
-	}
+			fn.apply(this, arguments);
+			canRun = true;
+		}, delay);
+	};
 }
 
 /**
@@ -130,7 +128,7 @@ export function throtting(fn, delay) {
  */
 export function getHowManyDays(year, month) {
 	let d = new Date(year, month, 0);
-	return d.getDate()
+	return d.getDate();
 }
 
 /**
@@ -158,7 +156,7 @@ export function dateFormat(year, month, day, hour, minute, second) {
 	let s = second || '0'; //秒
 	if (s < 10) s = '0' + s;
 	let str = y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s;
-	return str
+	return str;
 }
 
 /**

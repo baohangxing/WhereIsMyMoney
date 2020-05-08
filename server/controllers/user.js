@@ -1,8 +1,11 @@
-const crypto = require('crypto'),
-	jwt = require('jsonwebtoken'),
-	userModel = require('../lib/sequelize.js').UserModel;
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const userModel = require('../lib/sequelize.js').UserModel;
+const BillModel = require('../lib/sequelize.js').BillModel;
+const sequelize = require('sequelize');
 const CONFIG = require('../config/config');
 const redis = require("../lib/redis");
+const dateFormat = require("./../middlewares/help").dateFormat;
 const howDaysUse = function (startTime) {
 	return Math.floor((new Date().getTime() - new Date(startTime).getTime()) / (1000 * 60 * 60 * 24)) + 1;
 };
@@ -166,6 +169,8 @@ class UserController {
 				token: token,
 				userInfo: userInfo,
 			};
+			if (result.administrator === 1)
+				data.userInfo.administrator = result.administrator;
 			return ctx.send(data, '重设密码成功');
 		} else {
 			ctx.sendError('000002', '重设密码失败');
@@ -226,6 +231,8 @@ class UserController {
 					email: result.email
 				}
 			};
+			if (result.administrator === 1)
+				data.userInfo.administrator = result.administrator;
 			return ctx.send(data, '登录成功');
 		} else {
 			return ctx.sendError('000002', '用户名或密码错误');
@@ -343,10 +350,106 @@ class UserController {
 				weixinId: user.weixinId,
 				qqId: user.qqId
 			};
+			if (user.administrator === 1)
+				data.administrator = user.administrator;
 			return ctx.send(data);
 		} else {
 			return ctx.sendError('000002', '未获取到用户信息');
 		}
+	}
+
+	/**
+	 * @api {get} /api/user/platformUserInfo 获取平台用户数据信息
+	 * @apiDescription 获取平台用户数据信息, allUserAmount为平台用户总数，lastMonthUserAmount最近一个月新注册用户， lastMonthActiveUserAmount为最近一个月的活跃用户
+	 * @apiName platformUserInfo
+	 * @apiGroup User
+	 * @apiSuccess {json} result
+	 * @apiSuccessExample {json} Success-Response:
+	 *  {
+	 *        "code": "000001",
+	 *        "data": {
+	 *            "allUserAmount": 6,
+	 *            "lastMonthUserAmount": [
+	 *              {
+	 *                "time": "2020-05-05",
+	 *                "amount": 4
+	 *              },
+	 *              {
+	 *                "time": "2020-05-07",
+	 *                "amount": 2
+	 *              }
+	 *            ],
+	 *            "lastMonthActiveUserAmount": [
+	 *              {
+	 *               "time": "2020-04-13",
+	 *                "amount": 1
+	 *              },
+	 *              {
+	 *                "time": "2020-04-16",
+	 *                "amount": 1
+	 *              },
+	 *              {
+	 *                "time": "2020-04-17",
+	 *                "amount": 1
+	 *              }
+	 *          ]
+	 *        },
+	 *        "msg": "请求成功"
+	 *  }
+	 * @apiSampleRequest http://localhost:3000/api/user/platformUserInfo
+	 * @apiVersion 1.0.0
+	 */
+	static async getPlatformUserInfo(ctx) {
+		let data = {};
+
+		data.allUserAmount = await userModel.count({
+			where: {
+				deleteFlag: 0
+			}
+		});
+		let where = {};
+		let endTime = dateFormat(new Date());
+		let startTime = dateFormat(new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 30));
+
+		where.createdTime = {
+			[sequelize.Op.gte]: startTime,
+			[sequelize.Op.lt]: endTime,
+		};
+		data.lastMonthUserAmount = await userModel.findAll({
+			attributes: [
+				[sequelize.fn('substr', sequelize.col('createdTime'), 1, 10), 'time'],
+				[sequelize.fn('count', sequelize.col('*')), 'amount'],
+			],
+			group: sequelize.fn('substr', sequelize.col('createdTime'), 1, 10),
+			where: where
+		});
+		let activeUserList = await BillModel.findAll({
+			attributes: [
+				[sequelize.fn('substr', sequelize.col('createdTime'), 1, 10), 'time'],
+			],
+			group: [sequelize.fn('substr', sequelize.col('createdTime'), 1, 10), "userId"],
+			where: where
+		});
+		let activeUserInfo = [];
+		activeUserList.forEach(e => {
+			if (activeUserInfo.some(data => {
+				return data.time === e.time;
+			})) {
+				let index = activeUserInfo.findIndex(a => {
+					return a.time === e.time;
+				});
+				if (index !== -1)
+					activeUserInfo[index].amount++;
+			} else {
+				activeUserInfo.push({
+					time: e.time,
+					amount: 1
+				});
+			}
+
+		});
+		data.lastMonthActiveUserAmount = activeUserInfo;
+		return ctx.send(data);
 	}
 }
 
