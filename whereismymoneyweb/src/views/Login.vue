@@ -7,7 +7,7 @@
         </div>
 
         <div class="login-container" v-if="mode === 'login'">
-            <div class="title">账户登录</div>
+            <div class="title">{{superLogin ? '管理员登录' : '账户登录'}}</div>
             <div class="input-container height-margin">
                 <el-input
                     placeholder="请输入邮箱"
@@ -23,14 +23,18 @@
                 >
                 </el-input>
             </div>
-            <div class="bottom" @click="login">登录</div>
+            <el-button class="bottom" @click="login">登录</el-button>
             <div class="other-option">
                 <span @click="goTo('register')">新用户注册</span>
                 <span @click="goTo('forgotPw')">忘记密码</span>
             </div>
             <div class="other-option">
+                <span @click="superLogin = !superLogin">{{superLogin? '普通登录' : '管理员登录'}}</span>
+            </div>
+            <div class="other-option">
                 <span @click="goTo('introduction')">关于</span>
             </div>
+
         </div>
         <div class="login-container" style="height:400px" v-if="mode === 'register'">
             <div class="title">新用户注册</div>
@@ -73,7 +77,7 @@
                 >
                 </el-input>
             </div>
-            <div class="bottom" @click="register">{{registerTip}}</div>
+            <el-button class="bottom" @click="register">{{registerTip}}</el-button>
             <div class="other-option">
                 <span @click="goTo('login')">已有账户</span>
             </div>
@@ -111,7 +115,7 @@
                 >
                 </el-input>
             </div>
-            <div class="bottom" @click="resetPw">{{resetPwTip}}</div>
+            <el-button class="bottom" @click="resetPw">{{resetPwTip}}</el-button>
             <div class="other-option">
                 <span @click="goTo('login')">已有账户</span>
             </div>
@@ -159,6 +163,7 @@
                 oldUserPwAgain: '',
                 oldUserCode: '',
 
+                superLogin: false, //管理员登录
                 registerTip: '获取验证码',
 
                 resetPwTip: '获取验证码',
@@ -175,14 +180,15 @@
         },
         methods: {
             goTo(value) {
-                if(value === "introduction"){
+                if (value === "introduction") {
                     this.$router.push({name: "Introduction"});
-                    return
+                    return;
                 }
                 this.mode = value;
                 this.resetForm();
             },
             resetForm() {
+                this.superLogin = false;
                 switch (this.mode) {
                     case "login":
                         this.nameInput = "";
@@ -222,7 +228,8 @@
                 }
                 USER_LOGIN({
                     email: this.nameInput,
-                    password: this.password
+                    password: this.password,
+                    administrator: this.superLogin ? true : false
                 }).then(res => {
                     this.$message({
                         message: "登录成功",
@@ -428,7 +435,7 @@
                 height 100px
                 width 120px
         .login-container
-            height 300px
+            height 320px
             width 350px
             margin-right 200px
             margin-left auto
@@ -455,7 +462,6 @@
                 color #FFF
                 margin-bottom 15px
                 border-radius 4px
-                line-height 40px
                 text-align center
                 font-size 16px
             .other-option

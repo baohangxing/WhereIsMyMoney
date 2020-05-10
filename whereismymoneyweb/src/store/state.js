@@ -7,7 +7,8 @@ const state = {
         useDays: null,
         avatar: null,
         weixinId: null,
-        qqId: null
+        qqId: null,
+        administrator: false,
     },
 
     system: {
@@ -71,6 +72,12 @@ const state = {
     temporary: {
         isSelected: false,
         selectedBillItem: {}
+    },
+
+    platformUserInfo: {
+        allUserAmount: null,
+        lastMonthUserAmount: [],
+        lastMonthActiveUserAmount: []
     }
 };
 

@@ -37,6 +37,15 @@ export const USER_REGISTER = params => {
 export const USER_GET_INFO = params => {
     return http.get('/user/info', params)
 };
+
+
+/**
+ * @description 获取平台用户数据信息
+ */
+export const USER_GET_PLATFORM_INFO = params => {
+    return http.get('/user/platformUserInfo', params)
+};
+
 /* ------------------------   EMAIL    ------------------------ */
 
 
@@ -111,7 +120,6 @@ export const UT_GETALL = params => {
 
 /**
  * @description 修改账单
-
  */
 export const BILL_UPDATE = params => {
     return http.put('/bill/update', params)
@@ -173,3 +181,53 @@ export const BILL_GET_GROUP0BY_MONTH = params => {
 export const BILL_GET_PAGE = params => {
     return http.get('/bill/getPage', params)
 };
+
+
+/* ----------------------APP_VERSION---------------------- */
+
+/**
+ * @description 修改版本信息
+ */
+export const APP_VERSION_UPDATE = params => {
+    return http.put('/appVersion/update', params)
+};
+
+/**
+ * @description 删除版本信息
+ */
+export const APP_VERSION_DELETE = params => {
+    return http.delete('/appVersion/delete', params)
+};
+
+
+/**
+ * @description 新增版本说明
+ */
+export const APP_VERSION_ADD = params => {
+    return http.post('/appVersion/add', params)
+};
+
+/**
+ * @description 获取单个版本信息
+ */
+export const APP_VERSION_GET_BY_ID = params => {
+    return http.get('/appVersion/get', params)
+};
+
+/**
+ * @description 获取所有版本信息
+ */
+export const APP_VERSION_GET_ALL = params => {
+    return http.get('/appVersion/getPage', params)
+};
+
+
+
+
+
+
+
+
+
+
+

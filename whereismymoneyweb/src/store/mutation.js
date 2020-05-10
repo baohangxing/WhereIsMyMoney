@@ -10,6 +10,9 @@ const mutations = {
             state.userInfo.weixinId = info.weixinId;
             state.userInfo.qqId = info.qqId;
         }
+        if (info.administrator && info.administrator === 1) {
+            state.userInfo.administrator = true;
+        }
     },
     changeAddBillBOverShow(state, data) {
         state.system.addBillBOverShow = data || !state.system.addBillBOverShow;
@@ -216,7 +219,13 @@ const mutations = {
             state.temporary.isSelected = false;
             state.temporary.selectedBillItem = {};
         }
-    }
+    },
+
+    setPlatformUserInfo(state, data) {
+        state.platformUserInfo.allUserAmount = data.allUserAmount;
+        state.platformUserInfo.lastMonthUserAmount = data.lastMonthUserAmount;
+        state.platformUserInfo.lastMonthActiveUserAmount = data.lastMonthActiveUserAmount;
+    },
 
 };
 

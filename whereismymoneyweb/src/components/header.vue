@@ -23,8 +23,9 @@
             <div class="setting" @mouseover=" showSettingOption = true" @mouseleave='showSettingOption = false'>
                 设置
                 <div v-show="showSettingOption" class="setting-option-container">
+                    <div class="option-item" @click="goTo('About')">关于</div>
+                    <div v-if="userInfo.administrator" class="option-item" @click="goTo('Admin')">管理员界面</div>
                     <div class="option-item" @click="logout">退出登录</div>
-                    <div class="option-item" @click="goToAbout">关于</div>
                 </div>
             </div>
         </div>
@@ -59,10 +60,11 @@
             logout() {
                 this.$store.dispatch("clearStateData");
                 window.localStorage.clear();
+                window.localStorage.setItem('firstIn', 'false');
                 window.location.pathname = '/login';
             },
-            goToAbout() {
-                this.$router.push({name: "About"});
+            goTo(pathName) {
+                this.$router.push({name: pathName});
             }
         },
         watch: {

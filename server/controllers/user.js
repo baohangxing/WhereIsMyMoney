@@ -184,6 +184,7 @@ class UserController {
 	 * @apiGroup User
 	 * @apiParam {string} password 密码
 	 * @apiParam {string} email 邮箱
+	 * @apiParam {Boolean} administrator 是否是管理员身份登录（可选）
 	 * @apiSuccess {json} result
 	 * @apiSuccessExample {json} Success-Response:
 	 * {
@@ -203,14 +204,14 @@ class UserController {
 	 * @apiVersion 1.0.0
 	 */
 	static async login(ctx) {
-		const data = ctx.request.body;
-		if (!data.password || !data.email) {
+		const body = ctx.request.body;
+		if (!body.password || !body.email) {
 			return ctx.sendError('000002', '参数不合法');
 		}
 		let where = {
-			password: crypto.createHash('md5').update(data.password).digest('hex'),
+			password: crypto.createHash('md5').update(body.password).digest('hex'),
 			deleteFlag: 0,
-			email: data.email
+			email: body.email
 		};
 		const result = await userModel.findOne({
 			attributes: {exclude: ['deleteFlag', 'password']},
@@ -231,6 +232,8 @@ class UserController {
 					email: result.email
 				}
 			};
+			if(body.administrator && result.administrator !== 1)
+				return ctx.sendError('000002', '该用户不是管理员身份');
 			if (result.administrator === 1)
 				data.userInfo.administrator = result.administrator;
 			return ctx.send(data, '登录成功');
