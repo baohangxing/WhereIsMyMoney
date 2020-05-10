@@ -3,7 +3,7 @@ var localhost = 'http://localhost:3000/api';
 
 const config = {
     AppVersion: "1.0.0",
-    requestTimeout: 2500, //超时时间长度
+    requestTimeout: 10000, //超时时间长度
     // API: production,
     copyRight: " Copyright © 2020 Bao HangXing All Rights Reserved  版权所有  包航行 ",
     contactWay: " 联系方式：483053800@qq.com ",

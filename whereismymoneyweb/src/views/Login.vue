@@ -2,7 +2,7 @@
     <div class="container">
 
         <div class="logo-container">
-            <el-image class="logo-image" src="./../../static/image/logo_hollow.png"></el-image>
+            <el-image class="logo-image cricle-image" src="./../../static/image/logo_hollow.png"></el-image>
             <el-image class="logo-image" src="./../../static/image/name_logo.png"></el-image>
         </div>
 
@@ -27,6 +27,9 @@
             <div class="other-option">
                 <span @click="goTo('register')">新用户注册</span>
                 <span @click="goTo('forgotPw')">忘记密码</span>
+            </div>
+            <div class="other-option">
+                <span @click="goTo('introduction')">关于</span>
             </div>
         </div>
         <div class="login-container" style="height:400px" v-if="mode === 'register'">
@@ -172,6 +175,10 @@
         },
         methods: {
             goTo(value) {
+                if(value === "introduction"){
+                    this.$router.push({name: "Introduction"});
+                    return
+                }
                 this.mode = value;
                 this.resetForm();
             },
@@ -413,12 +420,15 @@
             top 100px
             left 150px
             height 100px
-            width 500px
+            width 450px
             display flex
             .logo-image
                 height 100px
+            .cricle-image
+                height 100px
+                width 120px
         .login-container
-            height 280px
+            height 300px
             width 350px
             margin-right 200px
             margin-left auto
@@ -456,6 +466,7 @@
                 display flex
                 justify-content space-between
                 font-size $font-size-ssm
+                margin-bottom 10px
                 span
                     cursor pointer
                 span:hover
@@ -477,7 +488,6 @@
             a
                 color $text-color
                 display inline-block
-                text-decoration none
                 height 20px
                 line-height 20px
                 vertical-align top

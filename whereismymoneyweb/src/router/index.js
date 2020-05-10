@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login";
 import About from "../views/About";
+import Introduction from "../views/Introduction";
 
 Vue.use(VueRouter);
 
@@ -22,6 +23,11 @@ const routes = [
         name: "About",
         component: About
     },
+    {
+        path: "/Introduction",
+        name: "Introduction",
+        component: Introduction
+    }
 ];
 
 const router = new VueRouter({
@@ -30,11 +36,18 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    console.log(to);
     let token = window.localStorage.getItem('token');
+    let firstIn = window.localStorage.getItem('firstIn');
     if (to.matched.some(record => record.meta.requiresAuth) && (!token)) {
         next({
-            path: '/login',
-            query: {redirect: to.fullPath}
+            path: '/Login',
+            //query: {redirect: to.fullPath}
+        });
+    } else if (!firstIn) {
+        if (!firstIn) window.localStorage.setItem('firstIn', 'false');
+        next({
+            path: '/Introduction'
         });
     } else {
         next();
