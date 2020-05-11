@@ -2,30 +2,44 @@
     <div class="about-container">
         <nav-header></nav-header>
         <div class="content">
-            <h3>介绍</h3>
-            <p>
-                俗话说“你不理财，财不理你”，对于每天的花费的记录和管理不仅是一种好的生活习惯，而且有助于我们更加合理地管理我们的钱财，规划我们的生活。所谓省钱比赚钱容易,运用包括互联网在内的各种手段,为自己的日常开销找一个"无微不至"的"管家",成为时下很多人热衷的事情。
-                这款多平台的个人在线记账系统正是出于这样的目的诞生的，用户可以在不同的设备和平台上（电脑web端，手机端，小程序）进行记账，各个平台同步数据，此外该系统还具备语音输入，账单导出，后台管理等功能，方便用户随时随地的使用，满足用户记账的需求。经过测试，这是一段方便人们记账使用的系统。
-            </p>
-            <h3>版本更新</h3>
-            <h5>v 1.0.0</h5>
-            <p>
-                第一版</p>
-            <h3>联系我</h3>
-            <p>483053800@qq.com</p>
+            <div class="app-version-container" v-for="version in  appVersions">
+                <div class="title">{{version.title}} <span v-if="version.appVersion">{{version.appVersion}}</span> <a
+                    v-if="version.appDownloadLink"
+                    :href="version.appDownloadLink">下载链接</a></div>
+                <div class="ql-editor" v-html="version.updateTip">
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     import navHeader from "../components/navHeader";
+    import {APP_VERSION_GET_ALL} from "../api/api";
+    import 'quill/dist/quill.core.css';
+    import 'quill/dist/quill.snow.css';
+    import 'quill/dist/quill.bubble.css';
+
     export default {
         name: "About",
         components: {
             navHeader
         },
+        computed: {
+            appVersions() {
+                return this.$store.state.appVersions;
+            }
+        },
+        mounted() {
+            this.getAppVersions();
+        },
         methods: {
-
+            getAppVersions() {
+                APP_VERSION_GET_ALL().then(data => {
+                    this.$store.commit('setAppVersions', data);
+                    this.setVersionShow(this.versionSelectedId);
+                });
+            },
         }
     }
     ;
@@ -36,11 +50,21 @@
         .content
             width 1000px
             margin 100px auto 0 auto
-            h3
-                margin-top 50px
-            h5
-                padding 0 20px
-            p
-                letter-spacing 1.5px
-                padding 0 30px
+            .app-version-container
+                margin-top 30px
+                .title
+                    height 40px
+                    font-size $font-size-lllg
+                    text-align center
+                    font-weight bold
+                    color $text-color
+                    span
+                        margin-left 10px
+                        font-style italic
+                        font-weight normal
+                        font-size $font-size-sm
+                    a
+                        margin-left 15px
+                        font-weight normal
+                        font-size $font-size-base
 </style>

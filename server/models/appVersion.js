@@ -16,6 +16,10 @@ const appVersion = {
         type: Sequelize.STRING(128),
         allowNull: true,
     },
+    title: {
+        type: Sequelize.STRING(64),
+        allowNull: true,
+    },
     createdTime: {
         type: Sequelize.DATE,
         allowNull: false,

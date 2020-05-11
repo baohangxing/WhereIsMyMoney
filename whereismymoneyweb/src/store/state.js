@@ -78,7 +78,8 @@ const state = {
         allUserAmount: null,
         lastMonthUserAmount: [],
         lastMonthActiveUserAmount: []
-    }
+    },
+    appVersions: []
 };
 
 export default state;

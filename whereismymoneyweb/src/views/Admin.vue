@@ -16,26 +16,83 @@
                 </div>
                 <div id="activeGraph"></div>
             </div>
+            <div class="version-container">
+                <div class="left-option-container">
+                    <el-select v-model="versionSelectedId" placeholder="请选择">
+                        <el-option
+                            v-for="item in appVersions"
+                            :key="item.id"
+                            :label="item.title"
+                            :value="item.id">
+                        </el-option>
+                    </el-select>
+                    <div>
+                        <el-button type="primary" round @click="saveAppVersion">保存</el-button>
+                        <el-button type="success" round @click="createAppVersion">新增</el-button>
+                        <el-button type="danger" round @click="deleteAppVersion">删除</el-button>
+                    </div>
+                </div>
+                <div class="version-info-container">
+                    <div class="item"><span>标题</span>
+                        <el-input v-model="title"></el-input>
+                    </div>
+                    <div class="item">
+                        <span>版本</span>
+                        <el-input v-model="appVersion"></el-input>
+                    </div>
+                </div>
+                <div class="version-info-container">
+                    <div class="item"><span>下载链接</span>
+                        <el-input v-model="appDownloadLink"></el-input>
+                    </div>
+                </div>
+                <div class="editor-container">
+                    <quill-editor
+                        v-model="versionContent"
+                        ref="myQuillEditor"
+                        @blur="onEditorBlur($event)"
+                        @focus="onEditorFocus($event)"
+                        @change="onEditorChange($event)">
+                    </quill-editor>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     import navHeader from "../components/navHeader";
-    import {USER_GET_PLATFORM_INFO} from "./../api/api";
+    import {
+        APP_VERSION_ADD,
+        APP_VERSION_DELETE,
+        APP_VERSION_GET_ALL,
+        APP_VERSION_UPDATE,
+        USER_GET_PLATFORM_INFO
+    } from "./../api/api";
     import {howManyDays} from "./../assets/js/help";
+    import {quillEditor} from "vue-quill-editor";
+    import 'quill/dist/quill.core.css';
+    import 'quill/dist/quill.snow.css';
+    import 'quill/dist/quill.bubble.css';
 
     const echarts = require('echarts');
     export default {
         name: "About",
         components: {
-            navHeader
+            navHeader,
+            quillEditor
         },
         data() {
             return {
                 myChart: null,
                 typeSelected: 0,
                 xList: [],
+
+                versionSelectedId: "",
+                appVersion: "",
+                title: "",
+                appDownloadLink: "",
+                versionContent: ''
             };
         },
         computed: {
@@ -44,6 +101,9 @@
             },
             platformUserInfo() {
                 return this.$store.state.platformUserInfo;
+            },
+            appVersions() {
+                return this.$store.state.appVersions;
             },
             registerUserAmount() {
                 if (this.platformUserInfo.lastMonthUserAmount.length)
@@ -65,10 +125,14 @@
             this.xList = this.initData();
             this.myChart = echarts.init(document.getElementById('activeGraph'));
             this.showCharts();
+            this.setVersionShow();
         },
         watch: {
-            typeSelected(){
+            typeSelected() {
                 this.showCharts();
+            },
+            versionSelectedId() {
+                this.setVersionShow(this.versionSelectedId);
             }
         },
         methods: {
@@ -78,6 +142,84 @@
                     this.showCharts();
                 });
             },
+            saveAppVersion() {
+                APP_VERSION_UPDATE({
+                    id: this.versionSelectedId,
+                    appVersion: this.appVersion,
+                    title: this.title,
+                    appDownloadLink: this.appDownloadLink,
+                    updateTip: this.versionContent,
+                }).then(data => {
+                    if (data) {
+                        this.$message({
+                            message: "修改成功",
+                            type: "success"
+                        });
+                    }
+                    this.getAppVersions();
+                }).catch(e => {
+                    this.$message.error("修改失败，" + e);
+                });
+            },
+            createAppVersion() {
+                APP_VERSION_ADD({
+                    appVersion: this.appVersion,
+                    title: this.title,
+                    appDownloadLink: this.appDownloadLink,
+                    updateTip: this.versionContent,
+                }).then(data => {
+                    if (data) {
+                        this.$message({
+                            message: "新增成功",
+                            type: "success"
+                        });
+                    }
+                    this.getAppVersions();
+                }).catch(e => {
+                    this.$message.error("新增失败，" + e);
+                });
+            },
+            deleteAppVersion() {
+                APP_VERSION_DELETE({
+                    data: {
+                        id: this.versionSelectedId
+                    }
+                }).then(() => {
+                    this.$message({
+                        message: "删除成功",
+                        type: "success"
+                    });
+                    this.getAppVersions();
+                }).catch(e => {
+                    this.$message.error("删除失败，" + e);
+                });
+            },
+            setVersionShow(id) {
+                let item;
+                if (id) {
+                    item = this.appVersions.filter(e => e.id === id)[0];
+                } else {
+                    item = this.appVersions[this.appVersions.length - 1];
+                }
+                if (!item) item = this.appVersions[this.appVersions.length - 1];
+                this.versionSelectedId = item.id;
+                this.appVersion = item.appVersion;
+                this.title = item.title;
+                this.appDownloadLink = item.appDownloadLink;
+                this.versionContent = item.updateTip;
+            },
+            getAppVersions() {
+                APP_VERSION_GET_ALL().then(data => {
+                    this.$store.commit('setAppVersions', data);
+                    this.setVersionShow(this.versionSelectedId);
+                });
+            },
+            onEditorBlur() {
+            }, // 失去焦点事件
+            onEditorFocus() {
+            }, // 获得焦点事件
+            onEditorChange() {
+            }, // 内容改变事件
             changeTypeSelected(value) {
                 this.typeSelected = value;
             },
@@ -153,12 +295,12 @@
                     },
                     tooltip: {
                         trigger: 'item',
-                        formatter: `日期{b} <br>${this.typeSelected ===0 ? '活跃人数 ' : '新注册人数 '}{c}人   `
+                        formatter: `日期{b} <br>${this.typeSelected === 0 ? '活跃人数 ' : '新注册人数 '}{c}人   `
                     },
                     series: [{
                         data: yList,
                         type: 'line',
-                        color:['#5ecaff'],
+                        color: ['#5ecaff'],
                         itemStyle: {
                             normal: {
                                 lineStyle: {
@@ -181,17 +323,19 @@
             }
             if (this.platformUserInfo.allUserAmount === null)
                 this.getPlatformInfo();
+            this.getAppVersions();
         }
     };
 </script>
 
 <style scoped lang="stylus">
     .about-container
-        height 100vh
+        min-height 100vh
         width 100%
         background-color $bg-color-grey
         .content
             width 950px
+            padding-bottom 50px
             padding-top 80px
             margin 0 auto
             .graph-container
@@ -247,4 +391,38 @@
                 #activeGraph
                     width 950px
                     height 530px
+            .version-container
+                margin-bottom 15px
+                width 950px
+                padding 15px 0
+                background white
+                border-radius $border-radius-sm
+                box-shadow $box-shadow-box
+                .left-option-container
+                    width 300px
+                    padding-right 30px
+                    height 120px
+                    float right
+                    display flex
+                    flex-direction column
+                    align-items flex-end
+                    justify-content space-around
+                .version-info-container
+                    height 60px
+                    line-height 60px
+                    width 600px
+                    display flex
+                    .item
+                        margin-left 30px
+                        display flex
+                        width 600px
+                        font-size $font-size-base
+                        span
+                            flex-shrink 0
+                            margin-right 10px
+                            font-weight bold
+                .editor-container
+                    margin-top 30px
+                    margin-bottom 10px
+
 </style>

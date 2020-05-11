@@ -218,7 +218,7 @@ export const APP_VERSION_GET_BY_ID = params => {
  * @description 获取所有版本信息
  */
 export const APP_VERSION_GET_ALL = params => {
-    return http.get('/appVersion/getPage', params)
+    return http.get('/appVersion/getAll', params)
 };
 
 

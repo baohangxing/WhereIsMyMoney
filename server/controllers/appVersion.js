@@ -7,8 +7,9 @@ class SystemController {
 	 * @apiDescription 新增版本说明
 	 * @apiName add
 	 * @apiGroup AppVersion
-	 * @apiParam {string} appVersion 版本号 （必须）
+	 * @apiParam {string} appVersion 版本号 （可选）
 	 * @apiParam {string} appDownloadLink 版本下载链接 （可选）
+	 * @apiParam {string} title 标题 （可选）
 	 * @apiParam {string} updateTip 更新说明（必须，富文本 4000字内）
 	 * @apiSuccess {json} result
 	 * @apiSuccessExample {json} Success-Response:
@@ -19,7 +20,8 @@ class SystemController {
 	 *    "appVersion": "1.0.0",
 	 *    "appDownloadLink": "http://www.whereismymoney.icu/apk_link/1.0.0.apk",
 	 *    "createdTime": "2020-05-05 15:37:11",
-	 *    "updateTip": "测试"
+	 *    "updateTip": "测试",
+	 *    "title": "测试"
 	 *   },
 	 *   "msg": "新增成功"
 	 * }
@@ -28,13 +30,14 @@ class SystemController {
 	 */
 	static async add(ctx) {
 		const data = ctx.request.body;
-		if (data.appVersion == null || data.updateTip == null) {
+		if (data.updateTip == null) {
 			return ctx.sendError('000002', '参数不合法');
 		}
 		let addData = await AppVersionModel.create({
 			appVersion: data.appVersion,
 			appDownloadLink: data.appDownloadLink,
-			updateTip: data.updateTip
+			updateTip: data.updateTip,
+			title: data.title
 		});
 		const result = await AppVersionModel.findOne({
 			attributes: {exclude: ['deleteFlag']},
@@ -56,7 +59,8 @@ class SystemController {
 	 *  {
 	 *      "code": "000001",
 	 *      "data": null,
-	 *      "msg": "删除成功"
+	 *      "msg": "删除成功",
+	 *      "title": "测试"
 	 *  }
 	 * @apiSampleRequest http://localhost:3000/api/appVersion/delete
 	 * @apiVersion 1.0.0
@@ -95,7 +99,8 @@ class SystemController {
 	 *    "appVersion": "1.0.1",
 	 *    "appDownloadLink": "http://www.whereismymoney.icu/apk_link/1.0.1.apk",
 	 *    "createdTime": "2020-05-05 15:45:11",
-	 *    "updateTip": "测试修改"
+	 *    "updateTip": "测试修改",
+	 *    "title": "测试"
 	 *   },
 	 *   "msg": "修改成功"
 	 * }
@@ -117,7 +122,9 @@ class SystemController {
 		if (data.updateTip != null) {
 			update.updateTip = data.updateTip;
 		}
-
+		if (data.title != null) {
+			update.title = data.title;
+		}
 		const result = await AppVersionModel.update(update, {
 			where: {
 				id: Number(data.id),
@@ -133,7 +140,7 @@ class SystemController {
 	}
 
 	/**
-	 * @api {get} /api/appVersion/getPage 获取所有版本信息
+	 * @api {get} /api/appVersion/getAll 获取所有版本信息
 	 * @apiDescription 获取所有版本信息
 	 * @apiName getAll
 	 * @apiGroup AppVersion
@@ -148,14 +155,16 @@ class SystemController {
 	 *        "appVersion": "1.0.1",
 	 *        "appDownloadLink": "http://www.whereismymoney.icu/apk_link/1.0.1.apk",
 	 *        "createdTime": "2020-05-05 15:51:10",
-	 *        "updateTip": "测试"
+	 *        "updateTip": "测试",
+	 *        "title": "测试"
 	 *      },
 	 *      {
 	 *        "id": 3,
 	 *        "appVersion": "1.0.2",
 	 *        "appDownloadLink": "http://www.whereismymoney.icu/apk_link/1.0.2.apk",
 	 *        "createdTime": "2020-05-05 15:51:31",
-	 *        "updateTip": "测试222222222"
+	 *        "updateTip": "测试222222222",
+	 *        "title": "测试"
 	 *      }
 	 *    ]
 	 *  }
@@ -188,7 +197,8 @@ class SystemController {
 	 *         "appVersion": "1.0.1",
 	 *         "appDownloadLink": "http://www.whereismymoney.icu/apk_link/1.0.1.apk",
 	 *         "createdTime": "2020-05-05 15:45:11",
-	 *         "updateTip": "测试修改"
+	 *         "updateTip": "测试修改",
+	 *         "title": "测试"
 	 *    },
 	 *    "msg": "请求成功"
 	 *  }

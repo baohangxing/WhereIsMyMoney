@@ -226,7 +226,9 @@ const mutations = {
         state.platformUserInfo.lastMonthUserAmount = data.lastMonthUserAmount;
         state.platformUserInfo.lastMonthActiveUserAmount = data.lastMonthActiveUserAmount;
     },
-
+    setAppVersions(state, data) {
+        state.appVersions = data;
+    },
 };
 
 export default mutations;
