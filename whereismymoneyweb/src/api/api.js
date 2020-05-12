@@ -56,6 +56,12 @@ export const EMAIL_GET_CAPTCHA = params => {
     return http.post('/email/sendCaptcha', params)
 };
 
+/**
+ * @description 发送导出账单数据
+ */
+export const EMAIL_SEND_BILL_DATA = params => {
+    return http.post('/email/sendBillData', params)
+};
 
 /* ------------------------DEFAULT TYPE------------------------ */
 

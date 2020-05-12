@@ -2,9 +2,9 @@
     <div class="about-container">
         <nav-header></nav-header>
         <div class="content">
-            <div class="app-version-container" v-for="version in  appVersions">
-                <div class="title">{{version.title}} <span v-if="version.appVersion">{{version.appVersion}}</span> <a
-                    v-if="version.appDownloadLink"
+            <div class="app-version-container" v-for="version in  appVersions" :key="version.id">
+                <div class="title">{{version.title}} <span v-if="version.appVersion">{{version.appVersion}}</span>
+                    <a v-if="version.appDownloadLink"
                     :href="version.appDownloadLink">下载链接</a></div>
                 <div class="ql-editor" v-html="version.updateTip">
                 </div>

@@ -2,20 +2,6 @@
     <div class="about-container">
         <nav-header text="管理员界面"></nav-header>
         <div class="content">
-            <div class="graph-container">
-                <div class="select-container">
-                    <div class="box" @click="changeTypeSelected(0)" :class="{ 'active-box': typeSelected === 0 }">活跃情况
-                    </div>
-                    <div class="box" @click="changeTypeSelected(1)" :class="{ 'active-box': typeSelected === 1 }">注册情况
-                    </div>
-                </div>
-                <div class="user-info-container">
-                    <div class="item"><span>平台总人数：</span>{{platformUserInfo.allUserAmount || "获取中..."}}</div>
-                    <div class="item"><span>最近一个月注册人数：</span>{{registerUserAmount || "获取中..."}}</div>
-                    <div class="item"><span>最近一个月活跃次数：</span>{{activeUserAmount || "获取中..."}}日人次</div>
-                </div>
-                <div id="activeGraph"></div>
-            </div>
             <div class="version-container">
                 <div class="left-option-container">
                     <el-select v-model="versionSelectedId" placeholder="请选择">
@@ -55,6 +41,20 @@
                         @change="onEditorChange($event)">
                     </quill-editor>
                 </div>
+            </div>
+            <div class="graph-container">
+                <div class="select-container">
+                    <div class="box" @click="changeTypeSelected(0)" :class="{ 'active-box': typeSelected === 0 }">活跃情况
+                    </div>
+                    <div class="box" @click="changeTypeSelected(1)" :class="{ 'active-box': typeSelected === 1 }">注册情况
+                    </div>
+                </div>
+                <div class="user-info-container">
+                    <div class="item"><span>平台总人数：</span>{{platformUserInfo.allUserAmount || "获取中..."}}</div>
+                    <div class="item"><span>最近一个月注册人数：</span>{{registerUserAmount || "获取中..."}}</div>
+                    <div class="item"><span>最近一个月活跃次数：</span>{{activeUserAmount || "获取中..."}}日人次</div>
+                </div>
+                <div id="activeGraph"></div>
             </div>
         </div>
     </div>

@@ -20,12 +20,24 @@
             <div class="time-show">{{dateShow}}
                 <my-icon name="arrow-down" color="#333333" size="28"></my-icon>
             </div>
-            <div class="setting" @mouseover=" showSettingOption = true" @mouseleave='showSettingOption = false'>
+            <div class="setting" @mouseover=" showSettingOption = true"
+                 @mouseleave='showSettingOption = false;showSettingExportOption = false'>
                 设置
                 <div v-show="showSettingOption" class="setting-option-container">
-                    <div class="option-item" @click="goTo('About')">关于</div>
-                    <div v-if="userInfo.administrator" class="option-item" @click="goTo('Admin')">管理员界面</div>
-                    <div class="option-item" @click="logout">退出登录</div>
+                    <div class="option-item" @click="goTo('About')" @mouseover="showSettingExportOption = false">关于
+                    </div>
+                    <div class="option-item" @mouseover=" showSettingExportOption = true">导出账单</div>
+                    <div v-if="userInfo.administrator" class="option-item" @click="goTo('Admin')"
+                         @mouseover="showSettingExportOption = false">管理员界面
+                    </div>
+                    <div class="option-item" @click="logout" @mouseover="showSettingExportOption = false">退出登录</div>
+                </div>
+                <div class="setting-export-option-container" v-show="showSettingExportOption"
+                     @mouseleave='showSettingExportOption = false'>
+                    <div class="option-item" @click="exportBillData('all')">全部</div>
+                    <div class="option-item" @click="exportBillData('year')">今年</div>
+                    <div class="option-item" @click="exportBillData('month')">本月</div>
+                    <div class="option-item" @click="exportBillData('week')">本周</div>
                 </div>
             </div>
         </div>
@@ -39,6 +51,7 @@
             return {
                 dateSelected: '',
                 showSettingOption: false,
+                showSettingExportOption: false,
                 darkMode: null,
             };
         },
@@ -65,6 +78,11 @@
             },
             goTo(pathName) {
                 this.$router.push({name: pathName});
+            },
+            exportBillData(value) {
+                this.showSettingOption = false;
+                this.showSettingExportOption = false;
+                this.$emit("exportBillData", value);
             }
         },
         watch: {
@@ -152,7 +170,7 @@
         .setting
             position relative
 
-            .setting-option-container
+            .setting-option-container, .setting-export-option-container
                 font-size $font-size-sm
                 color $text-color
                 width 120px
@@ -171,6 +189,9 @@
                     text-align center
                 .option-item:hover
                     background-color: #eee;
-
+            .setting-export-option-container
+                position absolute
+                right -140px
+                top 70px
 
 </style>

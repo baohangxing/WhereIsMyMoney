@@ -1,6 +1,6 @@
 <template>
     <div class="home-container">
-        <Header @initData="initData"/>
+        <Header @initData="initData" @exportBillData="exportBillData"/>
         <div class="content-container">
             <div class="left-content-container">
                 <day-bills-list @updateBill="addBill"></day-bills-list>
@@ -36,6 +36,7 @@
         BILL_GET_GROUP0BY_TYPE,
         BILL_GET_MY_SUM,
         BILL_GET_USER_ACTIVE,
+        EMAIL_SEND_BILL_DATA,
         USER_GET_INFO
     } from './../api/api';
 
@@ -53,14 +54,17 @@
         data() {
             return {
                 userId: ''
-            }
+            };
         },
         computed: {
             addBillBOverShow() {
-                return this.$store.state.system.addBillBOverShow
+                return this.$store.state.system.addBillBOverShow;
             },
             dateInfo() {
                 return this.$store.state.dateInfo;
+            },
+            userInfo() {
+                return this.$store.state.userInfo;
             },
             selectedDateInfo() {
                 return this.$store.state.selectedDateInfo;
@@ -169,7 +173,7 @@
                         e.preventDefault();
                     };
                     document.body.style.overflow = 'hidden';
-                    document.addEventListener("touchmove", mo, false)
+                    document.addEventListener("touchmove", mo, false);
                 } else {
                     let mo = function (e) {
                         e.preventDefault();
@@ -178,9 +182,38 @@
                     document.removeEventListener("touchmove", mo, false);
                 }
                 this.$store.commit('changeAddBillBOverShow', val);
+            },
+            exportBillData(value) {
+                let startTime = "";
+                let endTime = "";
+                switch (value) {
+                    case "year":
+                        startTime = new Date(this.dateInfo.year, 0).toISOString();
+                        endTime = new Date(this.dateInfo.year + 1, 0).toISOString();
+                        break;
+                    case "month":
+                        startTime = new Date(this.dateInfo.year, this.dateInfo.month - 1).toISOString();
+                        endTime = new Date(this.dateInfo.year, this.dateInfo.month).toISOString();
+                        break;
+                    case "week":
+                        startTime = new Date((new Date().getTime()) - (new Date().getDay() + 1) * 60 * 60 * 24 * 1000).toISOString();
+                        endTime = new Date(this.dateInfo.year, this.dateInfo.month).toISOString();
+                        break;
+                }
+                EMAIL_SEND_BILL_DATA({
+                    email: this.userInfo.email,
+                    userId: this.userInfo.id,
+                    startTime: startTime,
+                    endTime: endTime
+                }).then(() => {
+                    this.$message({
+                        message: "发送成功,请注意查收",
+                        type: "success"
+                    });
+                });
             }
         }
-    }
+    };
 </script>
 <style scoped lang="stylus">
     .home-container
