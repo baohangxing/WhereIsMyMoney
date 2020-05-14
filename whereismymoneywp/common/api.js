@@ -22,7 +22,7 @@ export const USER_CHANGE_INFO = params => {
  * @description 用户忘记密码
  */
 export const USER_FORGET_PASSWORD = params => {
-    return http.post('/user/resetPassword', params)
+	return http.post('/user/resetPassword', params)
 };
 
 /**
@@ -103,7 +103,7 @@ export const UT_GETALL = params => {
  * @description 获取验证码
  */
 export const EMAIL_GET_CAPTCHA = params => {
-    return http.post('/email/sendCaptcha', params)
+	return http.post('/email/sendCaptcha', params)
 };
 
 
@@ -167,4 +167,14 @@ export const BILL_GET_GROUP0BY_MONTH = params => {
  */
 export const BILL_GET_PAGE = params => {
 	return http.get('/bill/getPage', params)
+}
+
+
+/* ------------------------NLP------------------------ */
+
+/**
+ * @description 语音输入账单
+ */
+export const NLP_ADDBILL = params => {
+	return http.post('/NLP/addBill', params)
 }

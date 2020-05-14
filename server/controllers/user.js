@@ -4,7 +4,7 @@ const userModel = require('../lib/sequelize.js').UserModel;
 const BillModel = require('../lib/sequelize.js').BillModel;
 const sequelize = require('sequelize');
 const CONFIG = require('../config/config');
-const redis = require("../lib/redis");
+const redis = require("../lib/codeRedis");
 const dateFormat = require("./../middlewares/help").dateFormat;
 const howDaysUse = function (startTime) {
 	return Math.floor((new Date().getTime() - new Date(startTime).getTime()) / (1000 * 60 * 60 * 24)) + 1;

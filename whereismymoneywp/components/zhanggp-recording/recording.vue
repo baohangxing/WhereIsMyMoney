@@ -10,7 +10,7 @@
 <script>
 // #ifdef APP-PLUS || H5
 import MD5 from './md5.js';
-
+import { NLP_ADDBILL } from '@/common/api.js';
 //  #endif
 export default {
 	// #ifdef APP-PLUS || H5
@@ -61,6 +61,24 @@ export default {
 				function(s) {
 					self.end();
 					console.log(s);
+					NLP_ADDBILL({
+						text: s,
+						userId: uni.getStorageSync('userId')
+					}).then(result => {
+						console.log(result);
+						if (result.data.code == '000001') {
+							uni.showToast({
+								title: '添加成功',
+								icon: 'none'
+							});
+							this.$store.commit('addMonthListItem', result.data.data);
+						} else {
+							uni.showToast({
+								title: result.data.msg,
+								icon: 'none'
+							});
+						}
+					});
 				},
 				function() {
 					self.end();

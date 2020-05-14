@@ -1,6 +1,6 @@
 const mailTransport = require("../lib/mailTransport");
 const CONFIG = require('./../config/config');
-const redis = require("../lib/redis");
+const redis = require("../lib/codeRedis");
 const getCaptchaCode = require("./../middlewares/help").getCaptchaCode;
 const BillModel = require('../lib/sequelize.js').BillModel;
 const Excel = require('exceljs');
