@@ -136,7 +136,7 @@
 
                 .info-container
                     height 100%
-                    width 135px
+                    width 335px
                     display flex
                     flex-direction column
                     justify-content center

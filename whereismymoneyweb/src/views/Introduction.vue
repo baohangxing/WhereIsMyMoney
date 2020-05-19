@@ -18,12 +18,15 @@
                 <div v-show="isIOSHover" class="box box-ios"></div>
                 <div v-show="isADHover" class="box box-ad"></div>
                 <div v-show="isMPHover" class="box box-mp"></div>
-                <a @mouseenter="isIOSHover = true" @mouseleave="isIOSHover = false" class="btn-iOS" href=""></a>
+                <a @mouseenter="isIOSHover = true" @mouseleave="isIOSHover = false" class="btn-iOS"
+                   href="http://www.whereismymoney.icu/static/whereismymoney.apk"></a>
                 <div @mouseenter="isMPHover = true" @mouseleave="isMPHover = false" class="btn-mp"></div>
-                <a @mouseenter="isADHover = true" @mouseleave="isADHover = false" class="btn-ad" href=""></a>
+                <a @mouseenter="isADHover = true" @mouseleave="isADHover = false" class="btn-ad"
+                   href="http://www.whereismymoney.icu/static/whereismymoney.apk"></a>
             </div>
         </div>
         <div class="footer-container">
+            <div class="tip">*因为费用和微信安全限制，暂时还未在ios上打包上架，微信小程序只有测试版本，暂无发布版。以上的链接和二维码均为安卓版本。</div>
             <p>{{copyRight}} </p> |
             <a
                 href="http://www.beian.miit.gov.cn/">网站备案/许可证号：
@@ -104,10 +107,12 @@
                 .name
                     height 150px
             .text
-                font-size $font-size-lllg
                 color $text-color
                 font-family "Times New Roman", Times, serif
+            .text
+                font-size $font-size-lllg
                 margin-bottom 100px
+
             .bottom-container
                 width 460px
                 display flex
@@ -151,18 +156,22 @@
                     width 44px
                     height 44px
                 .box-ios
-                    background-image url('./../../static/image/example.png')
+                    background-image url('./../../static/image/downloadImage.png')
                 .box-ad
-                    background-image url('./../../static/image/example.png')
+                    background-image url('./../../static/image/downloadImage2.png')
                     right 0
                 .box-mp
                     right 144px
-                    background-image url('./../../static/image/example.png')
+                    background-image url('./../../static/image/wechat.png')
         .footer-container
             text-align center
             position fixed
             bottom 30px
             width 100vw
+            .tip
+                font-size $font-size-ssm
+                font-weight 600
+                margin-bottom  9px
             a, p
                 display inline-block
                 color $text-color

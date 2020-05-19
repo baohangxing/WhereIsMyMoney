@@ -149,8 +149,8 @@
     export default {
         data() {
             return {
-                nameInput: "",
-                password: "",
+                nameInput: "text@qq.com",
+                password: "123456",
 
                 newUserEmail: '',
                 newUserName: '',
@@ -484,7 +484,7 @@
             transform translateX(-50%)
             color $text-color
             font-size $font-size-ssm
-            background-color rgba(255, 255, 255, 0.5)
+            background-color rgba(255, 255, 255, 0.75)
             padding 8px 15px
             border-radius 10px
             .beiAn-link

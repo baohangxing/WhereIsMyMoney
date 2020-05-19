@@ -110,8 +110,7 @@ Python的依赖库
 * http
 * urllib
 
-## Data Sets 数据集
-* **清华大学THCHS30中文语音数据集**
+## Data Ses 数据集* **清华大学THCHS30中文语音数据集**
 
   data_thchs30.tgz 
 [OpenSLR国内镜像](<http://cn-mirror.openslr.org/resources/18/data_thchs30.tgz>)

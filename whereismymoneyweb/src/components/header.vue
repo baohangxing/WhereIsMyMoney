@@ -30,6 +30,10 @@
                     <div v-if="userInfo.administrator" class="option-item" @click="goTo('Admin')"
                          @mouseover="showSettingExportOption = false">管理员界面
                     </div>
+                    <div v-if="userInfo.administrator" class="option-item" @mouseover="showSettingExportOption = false"
+                         @click="goToUrl('http://39.105.33.31:3000/apidoc/index.html')">
+                        接口界面
+                    </div>
                     <div class="option-item" @click="logout" @mouseover="showSettingExportOption = false">退出登录</div>
                 </div>
                 <div class="setting-export-option-container" v-show="showSettingExportOption"
@@ -78,6 +82,9 @@
             },
             goTo(pathName) {
                 this.$router.push({name: pathName});
+            },
+            goToUrl(url) {
+                window.location.href = url;
             },
             exportBillData(value) {
                 this.showSettingOption = false;
