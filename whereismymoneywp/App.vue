@@ -48,4 +48,5 @@ export default {
 /*每个页面公共css */
 @import 'assets/css/normalize.css';
 @import 'assets/css/font.css';
+@import "/static/iconfont/iconfont.css";
 </style>

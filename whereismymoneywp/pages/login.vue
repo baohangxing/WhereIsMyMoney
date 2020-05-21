@@ -159,7 +159,7 @@
 			</div>
 
 			<div class="login-button" @click="loginClick">
-				<div class="button"><icon name="icon-arrow" color="#07bbff" size="26"></icon></div>
+				<div class="button"><icon :name="'icon-arrow-right'" color="#07bbff" size="26"></icon></div>
 			</div>
 		</div>
 	</div>
