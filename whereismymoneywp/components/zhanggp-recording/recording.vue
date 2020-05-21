@@ -65,13 +65,12 @@ export default {
 						text: s,
 						userId: uni.getStorageSync('userId')
 					}).then(result => {
-						console.log(result);
 						if (result.data.code == '000001') {
 							uni.showToast({
 								title: '添加成功',
 								icon: 'none'
 							});
-							this.$store.commit('addMonthListItem', result.data.data);
+							self.$store.commit('addMonthListItem', result.data.data);
 						} else {
 							uni.showToast({
 								title: result.data.msg,
