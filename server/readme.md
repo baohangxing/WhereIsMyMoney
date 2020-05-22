@@ -1,4 +1,4 @@
-### run:
+### apidoc生成:
 
 apidoc -i controllers/ -o public/apidoc/
 
