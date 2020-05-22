@@ -35,6 +35,11 @@ const getCaptchaCode = function (length = 6, radix = 16) {
  * @returns {Number}  数字
  */
 const chineseNumerToAmount = function (chnStr) {
+
+	let num = chnStr.replace(/[^0-9]/ig, "");
+	if (num.length >= 1)
+		return Number(num);
+
 	let chnNumChar = {
 		零: 0,
 		一: 1,
