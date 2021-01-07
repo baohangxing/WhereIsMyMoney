@@ -13,5 +13,4 @@ yarn-error.log*
 *.keystore
 *.njsproj
 *.sln
-Server/config/config.js
 whereismymoneywp/unpackage
