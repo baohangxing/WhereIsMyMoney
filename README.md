@@ -7,11 +7,10 @@
 &emsp; 这款多平台的个人在线记账系统使用Koa作为后端框架，采用前后分离的结构，web端主要使用Vue框架，
 微信小程序和手机APP端使用H5混合APP开发框架uni-app。用户可以在不同的设备和平台上进行记账，
 编辑账单类型，查看统计数据，各个平台同步数据，此外该系统还具备语音输入，账单导出，后台管理等功能，
-保证系统的完整性，方便用户随时随地的使用，满足用户记账的需求。经过测试，这是一个方便人们记账使用的系统。
+保证系统的完整性，方便用户随时随地的使用，满足用户记账的需求。
 
-&emsp; As the saying goes, "You don't care about money, money doesn't care about you", the recording and management of daily expenses is not only a good lifestyle, but also helps us to manage our money and plan our lives more reasonably. Saving money is easier than making money. Using various means, including the Internet, to find a "housekeeper" for your daily expenses has become a passion for many people nowadays.
+经过测试，这是一个方便人们记账使用的系统。
 
-&emsp; This multi-platform personal online money bookkeeping system uses Koa as the back-end framework and adopts a front and rear separation structure. The web side mainly uses the Vue framework, and the WeChat applet and mobile APP use the H5 hybrid APP development framework Hbuilder. Users can keep accounts on different devices and platforms, edit bill types, view statistical data, and synchronize data on each platform. In addition, the system also has voice input, bill export, background management and other functions to ensure the integrity of the system and facilitate users at any time Use anywhere to meet the needs of users to keep accounts. After testing, this is a system that is convenient for people to keep accounts. 
 
 ## 主要功能
 
@@ -30,7 +29,7 @@
 
 #### 数据库
 
-模型转存为server/mySql下的mymoney.sql
+模型转存为 server/mySql 下的 mymoney.sql
 
 #### 服务器
 
@@ -54,6 +53,7 @@ ASRT是一套基于深度学习实现的语音识别系统，本项目声学模�
 参考见：https://github.com/nl8590687/ASRT_SpeechRecognition。
 
 ##### 相关参考
+
 * Krizhevsky A , Sutskever I , Hinton G . ImageNet Classification with Deep Convolutional Neural Networks[J]. Advances in neural information processing systems, 2012, 25(2).
 * Hochreiter S , Schmidhuber J . Long Short-Term Memory[J]. Neural computation, 1997, 9(8):1735-1780.
 * Alex Graves, Santiago Fernández, Faustino Gomez. Connectionist temporal classification: Labelling unsegmented sequence data with recurrent neural networks[C]// International Conference on Machine Learning. ACM, 2006.
