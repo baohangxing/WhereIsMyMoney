@@ -84,33 +84,3 @@ ASRT是一套基于深度学习实现的语音识别系统，本项目声学模�
 1. 配置数据库
 2. 一些config里的配置文件需要自行更改，包括数据库密码等配置，redis配置，邮箱配置，识别接口的key, uniapp的id, 打包密钥等等
 3. 项目下个几个redeme有相关运行的说明
-
-
-#### 最后
-
-只是做了一点微小的工作，开源精神万岁，thanks！
-**任何的建议和意见欢迎联系我 483053800@qq.com**
-
-```
-MIT License
-
-Copyright (c) 2020 何足道
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
